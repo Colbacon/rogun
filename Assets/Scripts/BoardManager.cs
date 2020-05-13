@@ -10,6 +10,7 @@ public class BoardManager : MonoBehaviour
     public GameObject wall;
     public GameObject ladder;
     public GameObject enemy;
+    public GameObject player;
 
     private Transform boardTransform;
 
@@ -21,11 +22,11 @@ public class BoardManager : MonoBehaviour
         boardTransform = new GameObject("Board").transform;
 
         Debug.Log("wall");
-        for(int x = -1; x < columns + 1; x++)
+        for (int x = -1; x < columns + 1; x++)
         {
-            for(int y = -1; y < rows + 1; y++)
+            for (int y = -1; y < rows + 1; y++)
             {
-                if(x == -1 || x == columns || y == -1 || y == rows)
+                if (x == -1 || x == columns || y == -1 || y == rows)
                 {
                     toInstantiate = wall;
                 }
@@ -39,10 +40,11 @@ public class BoardManager : MonoBehaviour
             }
         }
     }
-    
+
     public void SetupScene()
     {
         BoardSetup();
+        Instantiate(player, new Vector3(columns - 2, rows - 2, 0f), Quaternion.identity);
         Instantiate(ladder, new Vector3(columns - 7, rows - 7, 0f), Quaternion.identity);
         Instantiate(enemy, new Vector3(columns - 4, rows - 4, 0f), Quaternion.identity);
     }
