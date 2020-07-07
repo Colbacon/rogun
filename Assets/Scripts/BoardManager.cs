@@ -3,8 +3,8 @@
 public class BoardManager : MonoBehaviour
 {
 
-    public int rows = 8;
-    public int columns = 8;
+    public int rows = 10;
+    public int columns = 10;
 
     public GameObject floor;
     public GameObject wall;
@@ -21,7 +21,6 @@ public class BoardManager : MonoBehaviour
         GameObject instance;
         boardTransform = new GameObject("Board").transform;
 
-        Debug.Log("wall");
         for (int x = -1; x < columns + 1; x++)
         {
             for (int y = -1; y < rows + 1; y++)
@@ -43,9 +42,10 @@ public class BoardManager : MonoBehaviour
 
     public void SetupScene()
     {
+
         BoardSetup();
-        Instantiate(player, new Vector3(columns - 2, rows - 2, 0f), Quaternion.identity);
-        Instantiate(ladder, new Vector3(columns - 7, rows - 7, 0f), Quaternion.identity);
+        //Instantiate(player, new Vector3(columns - 2, rows - 2, 0f), Quaternion.identity);
+        Instantiate(ladder, new Vector3(columns - 3, rows - 3, 0f), Quaternion.identity);
         Instantiate(enemy, new Vector3(columns - 4, rows - 4, 0f), Quaternion.identity);
     }
 }

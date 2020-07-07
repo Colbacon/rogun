@@ -4,18 +4,20 @@ using System.Collections;
 public abstract class MovingGameObject : MonoBehaviour
 {
 
-    public float speed = 0.1f;
+    public float speed = 10f;
+    public int healthPoints = 10;
+    public int attackPoints = 10;
     public LayerMask collisionLayer;
 
     private BoxCollider2D boxCollider;
     private Rigidbody2D rigidBody;
 
-    private bool isMoving;
+    protected bool isMoving;
 
     protected virtual void Start()
-    {
-        boxCollider = GetComponent<BoxCollider2D>();
+    {        boxCollider = GetComponent<BoxCollider2D>();
         rigidBody = GetComponent<Rigidbody2D>();
+        isMoving = false;
     }
 
 
@@ -33,11 +35,13 @@ public abstract class MovingGameObject : MonoBehaviour
         Vector3 initPosition = transform.position;
         Vector3 targetPosition = initPosition + direction;
 
-        RaycastHit2D hit = CheckPath(initPosition, direction);
+        //RaycastHit2D hit = CheckPath(initPosition, direction);
+        RaycastHit2D hit = CheckPath(initPosition, targetPosition);
 
-        if (hit.transform != null)
+        //Debug.Log(hit.transform);
+        if (hit.collider)
         {
-            Debug.Log("CantMove");
+            //Debug.Log("CantMove");
             return false;
         }
         StartCoroutine(SmoothMovement(targetPosition));
@@ -46,42 +50,43 @@ public abstract class MovingGameObject : MonoBehaviour
 
     protected IEnumerator SmoothMovement(Vector3 targetPosition)
     {
-        Debug.Log("StartMoving");
+        //Debug.Log("StartMoving");
         isMoving = true;
 
         float sqrRemainingDistance = (transform.position - targetPosition).sqrMagnitude; //better performance than vector3.distance
-
+        //Debug.Log(targetPosition);
         while (sqrRemainingDistance > float.Epsilon) //epsilon is almost 0
         {
+            
             Vector3 position = Vector3.MoveTowards(rigidBody.position, targetPosition, speed * Time.deltaTime);
             rigidBody.MovePosition(position);
-
+            
             sqrRemainingDistance = (transform.position - targetPosition).sqrMagnitude;
 
             yield return null;
         }
-        Debug.Log("StopMoving");
+        //Debug.Log("StopMoving");
         isMoving = false;
     }
-
+     
     /**
       * -------------------------------
       * -------------------------------
-      *            MOVEMENT 
+      *            COMMON
       * -------------------------------
       * -------------------------------
       *  
       * */
 
     //return a raycast with the object detected on the path
-    protected RaycastHit2D CheckPath(Vector3 position, Vector3 direction)
+    protected RaycastHit2D CheckPath(Vector2 initPosition, Vector2 targetPosition)
     {
         //disable the boxcollider so linecast doesn't hit object's own collider
         boxCollider.enabled = false;
 
-        //check if there is a gameobject with boxcollider in the way
-        RaycastHit2D hit = Physics2D.Linecast(position, direction, collisionLayer);
-
+        Debug.DrawLine(initPosition, targetPosition, Color.red);
+        RaycastHit2D hit = Physics2D.Linecast(initPosition, targetPosition, collisionLayer);
+        //Debug.Log("hit" + hit.transform);
         boxCollider.enabled = true;
 
         return hit;
