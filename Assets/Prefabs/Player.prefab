@@ -163,9 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d2685eec8019e40a1c410b4fca99f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 40
-  healthPoints: 10
-  attackPoints: 10
+  moveTime: 0.01
   collisionLayer:
     serializedVersion: 2
     m_Bits: 256

@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     public float startLevelDelay= 2f;
+    public float turnDelay = 0.1f;
     public BoardManager boardScript;
     public static GameManager instance = null;
-    public float turnDelay = 0.2f;
     public bool playersTurn = true;
 
     private GameObject levelImage;
@@ -27,23 +28,10 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
+        enemies = new List<Enemy>();
         boardScript = GetComponent<BoardManager>();
 
-        enemies = new List<Enemy>();
-
         InitGame();
-    }
-
-
-
-    private void Update()
-    {
-        /*
-        if (playersTurn || enemiesMoving)
-            return;
-
-        StartCoroutine(MoveEnemies());
-        */
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
@@ -79,12 +67,20 @@ public class GameManager : MonoBehaviour
         doingSetup = false;
     }
 
+    private void Update()
+    {
+
+        if (playersTurn || enemiesMoving || doingSetup)
+            //Debug.Log(" p: " + playersTurn  + " e: "+ enemiesMoving + " s: " + doingSetup);
+            return;
+        StartCoroutine(MoveEnemies());
+    }
+
     public void AddEnemy(Enemy enemy)
     {
         enemies.Add(enemy);
     }
 
-    /*
     IEnumerator MoveEnemies()
     {
         enemiesMoving = true;
@@ -100,11 +96,13 @@ public class GameManager : MonoBehaviour
         {
             enemies[i].MoveEnemy();
 
-            yield return new WaitForSeconds(1f/enemies[i].speed);
+            //yield return new WaitForSeconds(1f / enemies[i].speed);
+            yield return new WaitForSeconds(enemies[i].moveTime);
         }
-        playersTurn = true;
 
+        yield return new WaitForSeconds(0.5f);
+        playersTurn = true;
         enemiesMoving = false;
     }
-    */
+
 }

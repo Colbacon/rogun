@@ -27,7 +27,7 @@ public class Enemy : MovingGameObject
         }
 
         base.Move(direction);
-        if (!base.Move(direction))
-            Debug.Log("Attack");
+        /*if (!base.Move(direction))
+            Debug.Log("Attack");*/
     }
 }

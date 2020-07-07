@@ -4,19 +4,20 @@ using System.Collections;
 public abstract class MovingGameObject : MonoBehaviour
 {
 
-    public float speed = 10f;
-    public int healthPoints = 10;
-    public int attackPoints = 10;
+    public float moveTime = 0.1f ; //Time taken to move one tile
+    
     public LayerMask collisionLayer;
 
     private BoxCollider2D boxCollider;
     private Rigidbody2D rigidBody;
-
+    private float inverseMoveTime;
     protected bool isMoving;
 
     protected virtual void Start()
-    {        boxCollider = GetComponent<BoxCollider2D>();
+    {
+        boxCollider = GetComponent<BoxCollider2D>();
         rigidBody = GetComponent<Rigidbody2D>();
+        inverseMoveTime = 1f / moveTime;
         isMoving = false;
     }
 
@@ -58,7 +59,7 @@ public abstract class MovingGameObject : MonoBehaviour
         while (sqrRemainingDistance > float.Epsilon) //epsilon is almost 0
         {
             
-            Vector3 position = Vector3.MoveTowards(rigidBody.position, targetPosition, speed * Time.deltaTime);
+            Vector3 position = Vector3.MoveTowards(rigidBody.position, targetPosition, inverseMoveTime * Time.deltaTime);
             rigidBody.MovePosition(position);
             
             sqrRemainingDistance = (transform.position - targetPosition).sqrMagnitude;

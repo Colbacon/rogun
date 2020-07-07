@@ -30,8 +30,7 @@ public class Player : MovingGameObject
             {
                 //Debug.Log("going to move");
                 base.Move(new Vector3(horizontal, vertical));
-               // GameManager.instance.playersTurn = false;
-                
+                GameManager.instance.playersTurn = false;
             }
         }
     }
