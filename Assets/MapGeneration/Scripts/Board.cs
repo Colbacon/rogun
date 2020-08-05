@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System.Linq;
+using QuickGraph;
+using QuickGraph.Algorithms;
 
 namespace MapGeneration
 {
     public class Board : MonoBehaviour
     {
 
-        public static int rows = 50;
-        public static int columns = 50;
+        public static int rows = 100;
+        public static int columns = 100;
 
         public Tile[][] tileMap;
 
         private List<Room> rooms;
-        public static int roomsToAttemp = 6;
+        public static int roomsToAttemp = 50;
 
         public GameObject floor;
         public GameObject wall;
@@ -29,9 +30,66 @@ namespace MapGeneration
 
             InitTileMap();
             CreateRooms();
-            CreateCorridors();
+            //CreateCorridors();
+            CreateCorridorsMST();
             //AddTilesNeighbours();
             InstantiateTiles();
+
+            //TestQuickgraph();
+        }
+        private void TestQuickgraph()
+        {
+            var g = new UndirectedGraph<int, TaggedUndirectedEdge<int, int>>();
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    g.AddVerticesAndEdge(new TaggedUndirectedEdge<int, int>(i, j, i+j));
+                }
+            }
+            var vertices = g.Vertices.ToList();
+            Debug.Log("total vertices added "+ vertices.Count);
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                Debug.Log(vertices[i]);
+
+            }
+            var edges = g.Edges.ToList();
+            Debug.Log("total edges added " + edges.Count);
+            for (int i = 0; i < edges.Count; i++)
+            {
+                Debug.Log(edges[i]);
+
+            }
+            var mst = g.MinimumSpanningTreePrim(e => e.Tag).ToList();
+            for (int i = 0; i < mst.Count; i++)
+            {
+                Debug.Log(mst[i]);
+            }
+            //https://stackoverflow.com/questions/14557896/minimum-spanning-tree-quick-graph
+            /*var g = new UndirectedGraph<int, TaggedUndirectedEdge<int, int>>();
+
+            var e1 = new TaggedUndirectedEdge<int, int>(1, 2, 57);
+            var e2 = new TaggedUndirectedEdge<int, int>(1, 4, 65);
+            var e3 = new TaggedUndirectedEdge<int, int>(2, 3, 500);
+            var e4 = new TaggedUndirectedEdge<int, int>(2, 4, 1);
+            var e5 = new TaggedUndirectedEdge<int, int>(3, 4, 78);
+            var e6 = new TaggedUndirectedEdge<int, int>(3, 5, 200);
+
+            g.AddVerticesAndEdge(e1);
+            g.AddVerticesAndEdge(e2);
+            g.AddVerticesAndEdge(e3);
+            g.AddVerticesAndEdge(e4);
+            g.AddVerticesAndEdge(e5);
+            g.AddVerticesAndEdge(e6);
+
+            var mst = g.MinimumSpanningTreePrim(e => e.Tag).ToList();
+            for (int i = 0; i < mst.Count; i++)
+            {
+                Debug.Log(mst[i]);
+            }*/
+
+
         }
 
         private void InitTileMap()
@@ -111,6 +169,50 @@ namespace MapGeneration
         /**
          * CORRIDORS
          **/
+        private void CreateCorridorsMST()
+        {
+            var g = new UndirectedGraph<int, TaggedUndirectedEdge<int, float>>();
+
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                for (int j = 0; j < rooms.Count; j++)
+                {
+                    if(i != j)
+                    {
+                        g.AddVerticesAndEdge(new TaggedUndirectedEdge<int, float>(i, j, rooms[i].GetDistanceToRoom(rooms[j])));
+                    }
+                } 
+            }
+
+            var vertices = g.Vertices.ToList();
+            Debug.Log("total vertices added " + vertices.Count);
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                Debug.Log(vertices[i]);
+
+            }
+            var edges = g.Edges.ToList();
+            Debug.Log("total edges added " + edges.Count);
+            for (int i = 0; i < edges.Count; i++)
+            {
+                Debug.Log(edges[i]);
+
+            }
+            
+            var mst = g.MinimumSpanningTreePrim(e => e.Tag).ToList();
+
+            Debug.Log("-------------");
+            for (int i = 0; i < mst.Count; i++)
+            {
+                Debug.Log(mst[i]);
+                Room room1 = rooms[mst[i].Source];
+                Room room2 = rooms[mst[i].Target];
+                UpdateCorridorTiles(room1, room2);
+            }
+
+
+        }
+
         private void CreateCorridors()
         {
             Dictionary<Room, Room> connectedRooms = new Dictionary<Room, Room>();
