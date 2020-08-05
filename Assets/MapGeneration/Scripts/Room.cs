@@ -38,7 +38,7 @@ namespace MapGeneration
 
         public Vector2 GetCenterPoint()
         {
-            return new Vector2(Mathf.Floor(x + width) / 2, Mathf.Floor(y + height) / 2);
+            return new Vector2(Mathf.Floor(x + (x + width)) / 2, Mathf.Floor(y + (y + height)) / 2);
         }
 
     }

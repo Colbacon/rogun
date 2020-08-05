@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System.Linq;
 
 namespace MapGeneration
 {
@@ -13,7 +15,7 @@ namespace MapGeneration
         public Tile[][] tileMap;
 
         private List<Room> rooms;
-        public static int roomsToAttemp = 10;
+        public static int roomsToAttemp = 6;
 
         public GameObject floor;
         public GameObject wall;
@@ -27,7 +29,7 @@ namespace MapGeneration
 
             InitTileMap();
             CreateRooms();
-            //CreateCorridors();
+            CreateCorridors();
             //AddTilesNeighbours();
             InstantiateTiles();
         }
@@ -60,17 +62,17 @@ namespace MapGeneration
 
             for (int i = 0; i < roomsToAttemp; i++)
             {
-                width = Random.Range(4, 10);
-                height = Random.Range(4, 10);
+                width = Random.Range(5, 7);
+                height = Random.Range(5, 7);
 
                 x = Random.Range(0, columns - width);
                 y = Random.Range(0, rows - height);
 
                 room = new Room(x, y, width, height);
-                Debug.Log("Trying room " + i);
+                //Debug.Log("Trying room " + i);
                 if (!CollidesWithBoardsRooms(room))
                 {
-                    Debug.Log("Success room " + i);
+                    //Debug.Log("--------Success room " + i);
                     rooms.Add(room);
                     UpdateRoomTiles(room);
                 }
@@ -81,7 +83,7 @@ namespace MapGeneration
         {
             for (int i = 0; i < rooms.Count; i++)
             {
-                if (room.IsRoomCollision(room))
+                if (room.IsRoomCollision(rooms[i]))
                     return true;
             }
 
@@ -109,7 +111,7 @@ namespace MapGeneration
         /**
          * CORRIDORS
          **/
-        private void GenerateCorridors()
+        private void CreateCorridors()
         {
             Dictionary<Room, Room> connectedRooms = new Dictionary<Room, Room>();
             Dictionary<Room, bool> selectedRooms = new Dictionary<Room, bool>();
@@ -125,31 +127,46 @@ namespace MapGeneration
 
                 for (int j = 0; j < rooms.Count; j++)
                 {
+                    /*if (selectedRooms.ContainsKey(rooms[j]))
+                        Debug.Log("---Previous selected: " + rooms[j].GetCenterPoint());*/
                     //continue if is the same room or if it was previously selected
-                    if (i == j || selectedRooms.ContainsKey(rooms[i]))
-                        continue;
-
-                    distance = rooms[i].GetDistanceToRoom(rooms[j]);
-                    if (distance < minDistance)
+                    if (!(i == j || selectedRooms.ContainsKey(rooms[j])))
                     {
-                        minDistance = distance;
-                        candidateRoom = rooms[j];
+                        //Debug.Log("iterate: " + i+" con1");
+                        if (!(connectedRooms.ContainsKey(rooms[j]) && connectedRooms[rooms[j]] == rooms[i]))
+                        {
+                            //Debug.Log("iterate: " + i + " con2");
+                            distance = rooms[i].GetDistanceToRoom(rooms[j]);
+                            if (distance < minDistance)
+                            {
+                                minDistance = distance;
+                                candidateRoom = rooms[j];
+                            }
+                        }
                     }
                 }
-
+                
                 if (candidateRoom != null)
                 {
-                    connectedRooms.Add(rooms[i], candidateRoom);
+                    //Debug.Log("candidate: " + candidateRoom.GetCenterPoint());
+                    connectedRooms.Add(rooms[i], candidateRoom); //to delete, no es necesario guardar la info
                     selectedRooms.Add(candidateRoom, true);
                     UpdateCorridorTiles(rooms[i], candidateRoom);
                 }
             }
+            var keys = connectedRooms.Keys.ToList();
+            var values = connectedRooms.Values.ToList();
+            for (int i = 0; i<connectedRooms.Count; i++)
+            {
+                Debug.Log("key-> "+keys[i].GetCenterPoint()+"  value-> "+values[i].GetCenterPoint());
+            } 
         }
 
         private void UpdateCorridorTiles(Room room1, Room room2)
         {
             int r1x = (int)room1.GetCenterPoint().x;
             int r1y = (int)room1.GetCenterPoint().y;
+
             int r2x = (int)room2.GetCenterPoint().x;
             int r2y = (int)room2.GetCenterPoint().y;
 
@@ -157,16 +174,16 @@ namespace MapGeneration
             {
                 if (r1x != r2x)
                 {
-                    //TODO update tiles
-                    r1x += r1x < r2x ? 1 : -1;
+                    tileMap[r1x][r1y].SetTileType(TileType.FLOOR);
+                    r1x += (r1x < r2x) ? 1 : -1;
                 }
                 else
                 {
-                    //TODO update tiles
-                    r1y += r1y < r2y ? 1 : -1;
+                    tileMap[r1x][r1y].SetTileType(TileType.FLOOR);
+                    r1y += (r1y < r2y) ? 1 : -1;
                 }
 
-                //TODO change surrounding tiles from void to grass
+                //TODO change surrounding tiles from void to wall
             }
         }
 
