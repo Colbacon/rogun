@@ -18,8 +18,13 @@ namespace MapGeneration
         private List<Room> rooms;
         public static int roomsToAttemp = 50;
 
+        public GameObject _void;
         public GameObject floor;
         public GameObject wall;
+        public GameObject wallUp;
+        public GameObject wallDown;
+        public GameObject wallRight;
+        public GameObject wallLeft;
         public GameObject ladder;
 
         private Transform boardTransform;
@@ -32,7 +37,7 @@ namespace MapGeneration
             CreateRooms();
             //CreateCorridors();
             CreateCorridorsMST();
-            //AddTilesNeighbours();
+            AddTilesNeighbours();
             InstantiateTiles();
 
             //TestQuickgraph();
@@ -120,8 +125,8 @@ namespace MapGeneration
 
             for (int i = 0; i < roomsToAttemp; i++)
             {
-                width = Random.Range(5, 7);
-                height = Random.Range(5, 7);
+                width = Random.Range(10, 15);
+                height = Random.Range(10, 15);
 
                 x = Random.Range(0, columns - width);
                 y = Random.Range(0, rows - height);
@@ -150,19 +155,46 @@ namespace MapGeneration
 
         private void UpdateRoomTiles(Room room)
         {
+            TileType tileType;
+
             for (int x = 0; x < room.width; x++)
             {
                 for (int y = 0; y < room.height; y++)
                 {
-                    if (x == 0 || x == room.width || y == 0 || y == room.height)
+                    /*
+                    if (x == 0 || x == room.width -1|| y == 0 || y == room.height -1)
                     {
-                        //tileMap[room.x + x][room.y + y].SetTileType(TileType.FLOOR);
+                        tileMap[room.x + x][room.y + y].SetTileType(TileType.WALL);
                     }
                     else
                     {
                         tileMap[room.x + x][room.y + y].SetTileType(TileType.FLOOR);
+                    }*/
+                    if (x == 0)
+                    {
+                        tileType = TileType.WALL_RIGHT;
                     }
+                    else if (x == room.width - 1)
+                    {
+                        tileType = TileType.WALL_LEFT;
+                    }
+                    else if (y == 0)
+                    {
+                        tileType = TileType.WALL_UP;
+                    }
+                    else if (y == room.height - 1)
+                    {
+                        tileType = TileType.WALL_DOWN;
+                    }
+                    else
+                    {
+                        tileType = TileType.FLOOR;
+                    }
+
+                    tileMap[room.x + x][room.y + y].SetTileType(tileType);
                 }
+
+                //TODO: set corners
             }
         }
 
@@ -266,6 +298,8 @@ namespace MapGeneration
 
         private void UpdateCorridorTiles(Room room1, Room room2)
         {
+            //TODO BETER GENERATION DON OVERLAB WITH OTHER WALLS IN ORDER TO SPRITES BE NICE
+            //TODO fix possible out of bounds bug
             int r1x = (int)room1.GetCenterPoint().x;
             int r1y = (int)room1.GetCenterPoint().y;
 
@@ -274,24 +308,44 @@ namespace MapGeneration
 
             while (r1x != r2x || r1y != r2y)
             {
-                if (r1x != r2x)
+                if (r1x != r2x && r1y != room2.y && r1y != room2.y + room2.height)
                 {
                     tileMap[r1x][r1y].SetTileType(TileType.FLOOR);
+                    /*
+                    if (tileMap[r1x][r1y + 1].tileType == TileType.VOID)
+                        tileMap[r1x][r1y + 1].SetTileType(TileType.WALL);
+
+                    if (tileMap[r1x][r1y - 1].tileType == TileType.VOID)
+                        tileMap[r1x][r1y - 1].SetTileType(TileType.WALL);
+                        */
                     r1x += (r1x < r2x) ? 1 : -1;
                 }
                 else
                 {
                     tileMap[r1x][r1y].SetTileType(TileType.FLOOR);
+                    /*
+                    if (tileMap[r1x + 1][r1y].tileType == TileType.VOID)
+                        tileMap[r1x + 1][r1y].SetTileType(TileType.WALL);
+
+                    if (tileMap[r1x - 1][r1y].tileType == TileType.VOID)
+                        tileMap[r1x - 1][r1y].SetTileType(TileType.WALL);
+                        */
                     r1y += (r1y < r2y) ? 1 : -1;
                 }
-
-                //TODO change surrounding tiles from void to wall
             }
+        }
+
+        private void AddTilesNeighbours()
+        {
+            /*
+            for (int x = 0; x < columns; x++)
+            {
+                //for (int y)
+            }*/
         }
 
         private void InstantiateTiles()
         {
-            TileType tileType;
             GameObject toInstantiate;
             GameObject instance;
 
@@ -299,6 +353,28 @@ namespace MapGeneration
             {
                 for (int y = 0; y < rows; y++)
                 {
+                    switch (tileMap[x][y].tileType)
+                    {
+                        case TileType.WALL_UP:
+                            toInstantiate = wallUp;
+                            break;
+                        case TileType.WALL_DOWN:
+                            toInstantiate = wallDown;
+                            break;
+                        case TileType.WALL_RIGHT:
+                            toInstantiate = wallRight;
+                            break;
+                        case TileType.WALL_LEFT:
+                            toInstantiate = wallLeft;
+                            break;
+                        case TileType.FLOOR:
+                            toInstantiate = floor;
+                            break;
+                        default:
+                            toInstantiate = _void;
+                            break;
+                    }
+                    /*
                     tileType = tileMap[x][y].tileType;
                     if (tileType == TileType.FLOOR)
                     {
@@ -311,7 +387,7 @@ namespace MapGeneration
                     else
                     {
                         toInstantiate = ladder;
-                    }
+                    }*/
                     instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
                     instance.transform.SetParent(boardTransform);
                 }

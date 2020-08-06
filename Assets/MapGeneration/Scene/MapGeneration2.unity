@@ -158,7 +158,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.14509805, g: 0.07450981, b: 0.101960786, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -217,6 +217,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fac371cd1559e7941bf642be8f3fc445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _void: {fileID: 4549808191876422352, guid: d1001cb06e746d14b8b9278507bc3bbf, type: 3}
   floor: {fileID: 2853706433295622151, guid: 446348c10aaed0e418dfa922e74445ab, type: 3}
   wall: {fileID: 3262697631214554028, guid: 586d16c1bc2099b458c7916d73214ccb, type: 3}
+  wallUp: {fileID: 8705691749585178269, guid: 047e8a841a13d69488781662f1f66f9d, type: 3}
+  wallDown: {fileID: 3262697631214554028, guid: 586d16c1bc2099b458c7916d73214ccb,
+    type: 3}
+  wallRight: {fileID: 539064318846647264, guid: fe601c4949e9cf9478e5a61dd9e4f2a7,
+    type: 3}
+  wallLeft: {fileID: 3440547758900714541, guid: 0e12f503ed7e5d246a7f13891f238b60,
+    type: 3}
   ladder: {fileID: 2701800027187441370, guid: fc8880987f4f8064295d04ddc367b5f5, type: 3}

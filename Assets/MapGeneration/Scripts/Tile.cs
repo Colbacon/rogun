@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace MapGeneration
 {
     public enum TileType
     {
-        VOID = 0,
-        FLOOR = 1,
-        WALL = 2,
-        LADDER = 3
+        VOID,
+        FLOOR,
+        WALL_UP,
+        WALL_DOWN,
+        WALL_RIGHT,
+        WALL_LEFT,
+        LADDER
     }
     public class Tile
     {
@@ -17,7 +19,7 @@ namespace MapGeneration
         public int y;
 
         public TileType tileType;
-        //public bool isObstacle;
+        public bool isObstacle;
 
         public List<Tile> neighbours;
 
@@ -32,6 +34,14 @@ namespace MapGeneration
         public void SetTileType(TileType tileType)
         {
             this.tileType = tileType;
+        }
+
+        public bool IsWall()
+        {
+            return (tileType == TileType.WALL_UP ||
+                    tileType == TileType.WALL_DOWN ||
+                    tileType == TileType.WALL_RIGHT ||
+                    tileType == TileType.WALL_LEFT);
         }
     }
 }
