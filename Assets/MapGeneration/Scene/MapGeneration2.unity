@@ -227,4 +227,12 @@ MonoBehaviour:
     type: 3}
   wallLeft: {fileID: 3440547758900714541, guid: 0e12f503ed7e5d246a7f13891f238b60,
     type: 3}
+  wallCornerShortRight: {fileID: 5235604184480469866, guid: 1a1ed853332db9a4f82199c92d2b7de8,
+    type: 3}
+  wallCornerShortLeft: {fileID: 8861255347911995567, guid: 9e45f0d936c831244896c9f3e135bc2d,
+    type: 3}
+  wallCornerLargeRight: {fileID: 9043195785220000915, guid: 6b9208ca90c08694caf662d299ff351b,
+    type: 3}
+  wallCornerLargeLeft: {fileID: 5941520817176890448, guid: 4a5dee6c85718bd4cb4c101dccb53d76,
+    type: 3}
   ladder: {fileID: 2701800027187441370, guid: fc8880987f4f8064295d04ddc367b5f5, type: 3}

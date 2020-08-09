@@ -4,9 +4,45 @@ using UnityEngine;
 using System.Linq;
 using QuickGraph;
 using QuickGraph.Algorithms;
+using QuickGraph.Algorithms.ShortestPath;
+
 
 namespace MapGeneration
 {
+    public static class Extensions
+    {
+        class AStarWrapper<TVertex, TEdge>
+        where TEdge : IEdge<TVertex>
+        {
+            private TVertex target;
+            private AStarShortestPathAlgorithm<TVertex, TEdge> innerAlgorithm;
+            public AStarWrapper(AStarShortestPathAlgorithm<TVertex, TEdge> innerAlgo, TVertex root, TVertex target)
+            {
+                innerAlgorithm = innerAlgo;
+                this.innerAlgorithm.SetRootVertex(root);
+                this.target = target;
+                this.innerAlgorithm.FinishVertex += new VertexAction<TVertex>(innerAlgorithm_FinishVertex);
+            }
+            void innerAlgorithm_FinishVertex(TVertex vertex)
+            {
+                if (object.Equals(vertex, target))
+                    this.innerAlgorithm.Abort();
+            }
+            public double Compute()
+            {
+                this.innerAlgorithm.Compute();
+                return this.innerAlgorithm.Distances[target];
+            }
+        }
+
+        public static double ComputeDistanceBetween<TVertex, TEdge>(this AStarShortestPathAlgorithm<TVertex, TEdge> algo, TVertex start, TVertex end)
+            where TEdge : IEdge<TVertex>
+        {
+            var wrap = new AStarWrapper<TVertex, TEdge>(algo, start, end);
+            return wrap.Compute();
+        }
+    }
+
     public class Board : MonoBehaviour
     {
 
@@ -25,6 +61,10 @@ namespace MapGeneration
         public GameObject wallDown;
         public GameObject wallRight;
         public GameObject wallLeft;
+        public GameObject wallCornerShortRight;
+        public GameObject wallCornerShortLeft;
+        public GameObject wallCornerLargeRight;
+        public GameObject wallCornerLargeLeft;
         public GameObject ladder;
 
         private Transform boardTransform;
@@ -44,6 +84,7 @@ namespace MapGeneration
         }
         private void TestQuickgraph()
         {
+            /*
             var g = new UndirectedGraph<int, TaggedUndirectedEdge<int, int>>();
             for (int i = 0; i < 5; i++)
             {
@@ -71,8 +112,9 @@ namespace MapGeneration
             {
                 Debug.Log(mst[i]);
             }
+            */
             //https://stackoverflow.com/questions/14557896/minimum-spanning-tree-quick-graph
-            /*var g = new UndirectedGraph<int, TaggedUndirectedEdge<int, int>>();
+           /* var g = new UndirectedGraph<int, TaggedUndirectedEdge<int, int>>();
 
             var e1 = new TaggedUndirectedEdge<int, int>(1, 2, 57);
             var e2 = new TaggedUndirectedEdge<int, int>(1, 4, 65);
@@ -92,7 +134,14 @@ namespace MapGeneration
             for (int i = 0; i < mst.Count; i++)
             {
                 Debug.Log(mst[i]);
-            }*/
+            }
+
+            var vertices = g.Vertices.ToList();
+            var d = g.ShortestPathsDijkstra(e => e.Tag, verti).ToList();
+            //var astar = new AStarShortestPathAlgorithm<int, IEdge<int>>(g, x => 1.0, x => 0.0);
+            //var dist = astar.ComputeDistanceBetween(2, 4);
+            //astar.
+            */
 
 
         }
@@ -193,8 +242,9 @@ namespace MapGeneration
 
                     tileMap[room.x + x][room.y + y].SetTileType(tileType);
                 }
-
-                //TODO: set corners
+                //Setting corners
+                tileMap[room.x][room.y].SetTileType(TileType.WALL_CORNER_SHORT_RIGHT);
+                tileMap[room.x + room.width - 1][room.y].SetTileType(TileType.WALL_CORNER_SHORT_LEFT);
             }
         }
 
@@ -203,6 +253,7 @@ namespace MapGeneration
          **/
         private void CreateCorridorsMST()
         {
+            //TODO: to improve
             var g = new UndirectedGraph<int, TaggedUndirectedEdge<int, float>>();
 
             for (int i = 0; i < rooms.Count; i++)
@@ -215,7 +266,8 @@ namespace MapGeneration
                     }
                 } 
             }
-
+           
+            
             var vertices = g.Vertices.ToList();
             Debug.Log("total vertices added " + vertices.Count);
             for (int i = 0; i < vertices.Count; i++)
@@ -311,25 +363,46 @@ namespace MapGeneration
                 if (r1x != r2x && r1y != room2.y && r1y != room2.y + room2.height)
                 {
                     tileMap[r1x][r1y].SetTileType(TileType.FLOOR);
-                    /*
-                    if (tileMap[r1x][r1y + 1].tileType == TileType.VOID)
-                        tileMap[r1x][r1y + 1].SetTileType(TileType.WALL);
+                    
+                    /*if (tileMap[r1x][r1y + 1].tileType == TileType.VOID)
+                        tileMap[r1x][r1y + 1].SetTileType(TileType.WALL_DOWN);
 
                     if (tileMap[r1x][r1y - 1].tileType == TileType.VOID)
-                        tileMap[r1x][r1y - 1].SetTileType(TileType.WALL);
-                        */
+                        tileMap[r1x][r1y - 1].SetTileType(TileType.WALL_UP);
+
+                    //comprueba el vecino de la izquierda
+                    if (tileMap[r1x - 1][r1y].tileType == TileType.WALL_LEFT)
+                    {
+                        tileMap[r1x - 1][r1y + 1].SetTileType(TileType.WALL_DOWN);
+                        tileMap[r1x - 1][r1y - 1].SetTileType(TileType.WALL_CORNER_LARGE_LEFT);
+                    }
+
+                    //comprrueba el vecino de la derecha
+                    if (tileMap[r1x + 1][r1y].tileType == TileType.WALL_RIGHT)
+                    {
+                        tileMap[r1x + 1][r1y + 1].SetTileType(TileType.WALL_DOWN);
+                        tileMap[r1x + 1][r1y - 1].SetTileType(TileType.WALL_CORNER_LARGE_RIGHT);
+                    }*/
+
                     r1x += (r1x < r2x) ? 1 : -1;
                 }
                 else
                 {
                     tileMap[r1x][r1y].SetTileType(TileType.FLOOR);
+                    
                     /*
                     if (tileMap[r1x + 1][r1y].tileType == TileType.VOID)
-                        tileMap[r1x + 1][r1y].SetTileType(TileType.WALL);
+                        tileMap[r1x + 1][r1y].SetTileType(TileType.WALL_LEFT);
 
                     if (tileMap[r1x - 1][r1y].tileType == TileType.VOID)
-                        tileMap[r1x - 1][r1y].SetTileType(TileType.WALL);
-                        */
+                        tileMap[r1x - 1][r1y].SetTileType(TileType.WALL_RIGHT);
+
+                    if (tileMap[r1x][r1y + 1].tileType == TileType.WALL_UP)
+                    {
+                        tileMap[r1x + 1][r1y + 1].SetTileType(TileType.WALL_CORNER_LARGE_LEFT);
+                        tileMap[r1x - 1][r1y + 1].SetTileType(TileType.WALL_CORNER_LARGE_RIGHT);
+                    }*/
+
                     r1y += (r1y < r2y) ? 1 : -1;
                 }
             }
@@ -337,12 +410,34 @@ namespace MapGeneration
 
         private void AddTilesNeighbours()
         {
-            /*
+            List<Tile> reachableNeighbours = new List<Tile>();
+
             for (int x = 0; x < columns; x++)
             {
-                //for (int y)
-            }*/
+                for (int y = 0; y < rows; y++)
+                {
+                    if(x > 0 && tileMap[x - 1][y].IsReachable()) //left
+                    {
+                        reachableNeighbours.Add(tileMap[x - 1][y]);
+                    }
+                    if(x < columns-1 && tileMap[x + 1][y].IsReachable()) //right
+                    {
+                        reachableNeighbours.Add(tileMap[x + 1][y]);
+                    }
+                    if (y > 0 && tileMap[x][y - 1].IsReachable()) //bottom
+                    {
+                        reachableNeighbours.Add(tileMap[x][y - 1]);
+                    }
+                    if (y < rows-1  && tileMap[x][y + 1].IsReachable()) //top
+                    {
+                        reachableNeighbours.Add(tileMap[x][y + 1]);
+                    }
+
+                    tileMap[x][y].SetReachableNeighbours(reachableNeighbours);
+                }
+            }
         }
+
 
         private void InstantiateTiles()
         {
@@ -366,6 +461,18 @@ namespace MapGeneration
                             break;
                         case TileType.WALL_LEFT:
                             toInstantiate = wallLeft;
+                            break;
+                        case TileType.WALL_CORNER_SHORT_RIGHT:
+                            toInstantiate = wallCornerShortRight;
+                            break;
+                        case TileType.WALL_CORNER_SHORT_LEFT:
+                            toInstantiate = wallCornerShortLeft;
+                            break;
+                        case TileType.WALL_CORNER_LARGE_RIGHT:
+                            toInstantiate = wallCornerLargeRight;
+                            break;
+                        case TileType.WALL_CORNER_LARGE_LEFT:
+                            toInstantiate = wallCornerLargeLeft;
                             break;
                         case TileType.FLOOR:
                             toInstantiate = floor;
