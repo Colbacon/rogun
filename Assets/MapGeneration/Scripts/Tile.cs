@@ -27,7 +27,7 @@ namespace MapGeneration
 
         
         //related properties to A* pathfinding
-        private List<Tile> reachableNeighbours;
+        public List<Tile> reachableNeighbours;
         /*
         public Tile parent;
         public float distanceToTarget; //h value -> heuristic

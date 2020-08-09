@@ -81,6 +81,24 @@ namespace MapGeneration
             InstantiateTiles();
 
             //TestQuickgraph();
+
+            TestPathfinding();
+        }
+
+        private void TestPathfinding()
+        {
+            Tile start = tileMap[rooms[1].x+2][rooms[1].y+2];
+            Tile end = tileMap[rooms[3].x+6][rooms[3].y+6];
+            List<Tile> path = Pathfinding.AStartPathfinding(start, end);
+            if (path == null)
+                Debug.Log("nullito");
+            for(int i = 0; i < path.Count; i++)
+            {
+                int x = path[i].x;
+                int y = path[i].y;
+                Instantiate(ladder, new Vector3(x, y, 0f), Quaternion.identity);
+                Debug.Log("iteration " + i + "  x: " + x + "  y: " + y);
+            }
         }
         private void TestQuickgraph()
         {
@@ -269,26 +287,26 @@ namespace MapGeneration
            
             
             var vertices = g.Vertices.ToList();
-            Debug.Log("total vertices added " + vertices.Count);
-            for (int i = 0; i < vertices.Count; i++)
+            //Debug.Log("total vertices added " + vertices.Count);
+            /*or (int i = 0; i < vertices.Count; i++)
             {
                 Debug.Log(vertices[i]);
 
             }
             var edges = g.Edges.ToList();
-            Debug.Log("total edges added " + edges.Count);
+            //Debug.Log("total edges added " + edges.Count);
             for (int i = 0; i < edges.Count; i++)
             {
                 Debug.Log(edges[i]);
 
             }
-            
+            */
             var mst = g.MinimumSpanningTreePrim(e => e.Tag).ToList();
 
-            Debug.Log("-------------");
+            //Debug.Log("-------------");
             for (int i = 0; i < mst.Count; i++)
             {
-                Debug.Log(mst[i]);
+                //Debug.Log(mst[i]);
                 Room room1 = rooms[mst[i].Source];
                 Room room2 = rooms[mst[i].Target];
                 UpdateCorridorTiles(room1, room2);
@@ -410,12 +428,17 @@ namespace MapGeneration
 
         private void AddTilesNeighbours()
         {
-            List<Tile> reachableNeighbours = new List<Tile>();
+            List<Tile> reachableNeighbours;
 
             for (int x = 0; x < columns; x++)
             {
                 for (int y = 0; y < rows; y++)
                 {
+                    if (!tileMap[x][y].IsReachable())
+                        continue;
+
+                    reachableNeighbours = new List<Tile>();
+
                     if(x > 0 && tileMap[x - 1][y].IsReachable()) //left
                     {
                         reachableNeighbours.Add(tileMap[x - 1][y]);
@@ -434,6 +457,7 @@ namespace MapGeneration
                     }
 
                     tileMap[x][y].SetReachableNeighbours(reachableNeighbours);
+                    //Debug.Log("tile (" + x + "," + "y" + y + "): " + reachableNeighbours.Count);
                 }
             }
         }
