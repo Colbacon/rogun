@@ -87,9 +87,18 @@ namespace MapGeneration
 
         private void TestPathfinding()
         {
+            
+            // the code that you want to measure comes here
+            
+            
             Tile start = tileMap[rooms[1].x+2][rooms[1].y+2];
             Tile end = tileMap[rooms[3].x+6][rooms[3].y+6];
+
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             List<Tile> path = Pathfinding.AStartPathfinding(start, end);
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Debug.Log("----------TIme: " + elapsedMs);
             if (path == null)
                 Debug.Log("nullito");
             for(int i = 0; i < path.Count; i++)

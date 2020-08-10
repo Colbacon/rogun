@@ -23,15 +23,12 @@ namespace MapGeneration
 
             while(openSet.Count > 0)
             {
-                Debug.Log("entrao1");
                 current = openSet.Dequeue();
                 if (current == end)
                     break;
-                Debug.Log("entrao2: " + current.reachableNeighbours.Count);
                 
                 foreach (Tile neighbour in current.reachableNeighbours)
                 {
-                    Debug.Log("entrao3");
                     tentativeGScore = gScore[current] + 1;
 
                     if (!gScore.ContainsKey(neighbour) || tentativeGScore < gScore[neighbour])
@@ -73,14 +70,6 @@ namespace MapGeneration
             path.Reverse();
             Debug.Log(" "+path.Count);
             return path;
-            /*
-            path.Add(start);
-            return path;
-            */
         }
-
-
-
     }
-
 }
