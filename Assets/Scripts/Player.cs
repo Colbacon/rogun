@@ -21,6 +21,10 @@ public class Player : MovingGameObject
         horizontal = (int)(Input.GetAxisRaw("Horizontal"));
         vertical = (int)(Input.GetAxisRaw("Vertical"));
 
+        if (Input.GetKeyDown(KeyCode.Space)){
+            animator.SetTrigger("Attack");
+        }
+
         if (horizontal != 0)    //avoid diagonal movement
             vertical = 0;
 

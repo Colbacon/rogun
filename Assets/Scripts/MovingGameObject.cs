@@ -10,7 +10,7 @@ public abstract class MovingGameObject : MonoBehaviour
 
     private BoxCollider2D boxCollider;
     private Rigidbody2D rigidBody;
-    private Animator animator;
+    public Animator animator;
     private float inverseMoveTime;
     protected bool isMoving;
 
