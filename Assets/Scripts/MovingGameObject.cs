@@ -4,12 +4,13 @@ using System.Collections;
 public abstract class MovingGameObject : MonoBehaviour
 {
 
-    public float moveTime = 0.1f ; //Time taken to move one tile
+    public float moveTime = 0.01f ; //Time taken to move one tile 0.1
     
     public LayerMask collisionLayer;
 
     private BoxCollider2D boxCollider;
     private Rigidbody2D rigidBody;
+    private Animator animator;
     private float inverseMoveTime;
     protected bool isMoving;
 
@@ -17,6 +18,7 @@ public abstract class MovingGameObject : MonoBehaviour
     {
         boxCollider = GetComponent<BoxCollider2D>();
         rigidBody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         inverseMoveTime = 1f / moveTime;
         isMoving = false;
     }
@@ -36,29 +38,25 @@ public abstract class MovingGameObject : MonoBehaviour
         Vector3 initPosition = transform.position;
         Vector3 targetPosition = initPosition + direction;
 
-        //RaycastHit2D hit = CheckPath(initPosition, direction);
         RaycastHit2D hit = CheckPath(initPosition, targetPosition);
 
-        //Debug.Log(hit.transform);
         if (hit.collider)
-        {
-            //Debug.Log("CantMove");
             return false;
-        }
+
+        UpdateAnimator(direction);
         StartCoroutine(SmoothMovement(targetPosition));
         return true;
     }
 
     protected IEnumerator SmoothMovement(Vector3 targetPosition)
     {
-        //Debug.Log("StartMoving");
         isMoving = true;
-
+        
         float sqrRemainingDistance = (transform.position - targetPosition).sqrMagnitude; //better performance than vector3.distance
-        //Debug.Log(targetPosition);
         while (sqrRemainingDistance > float.Epsilon) //epsilon is almost 0
         {
             
+            //Vector3 position = Vector3.MoveTowards(rigidBody.position, targetPosition, inverseMoveTime * Time.deltaTime);
             Vector3 position = Vector3.MoveTowards(rigidBody.position, targetPosition, inverseMoveTime * Time.deltaTime);
             rigidBody.MovePosition(position);
             
@@ -66,7 +64,7 @@ public abstract class MovingGameObject : MonoBehaviour
 
             yield return null;
         }
-        //Debug.Log("StopMoving");
+        UpdateAnimator(new Vector3(0, 0, 0));
         isMoving = false;
     }
      
@@ -87,9 +85,29 @@ public abstract class MovingGameObject : MonoBehaviour
 
         Debug.DrawLine(initPosition, targetPosition, Color.red);
         RaycastHit2D hit = Physics2D.Linecast(initPosition, targetPosition, collisionLayer);
-        //Debug.Log("hit" + hit.transform);
+
         boxCollider.enabled = true;
 
         return hit;
     }
+
+    /**
+      * -------------------------------
+      * -------------------------------
+      *            COMMON
+      * -------------------------------
+      * -------------------------------
+      *  
+      * */
+
+    protected void UpdateAnimator(Vector3 direction)
+    {
+        animator.SetInteger("WalkX", direction.x < 0 ? -1 : direction.x > 0 ? 1 : 0);
+        animator.SetInteger("WalkY", direction.y < 0 ? -1 : direction.y > 0 ? 1 : 0);
+        
+        Debug.Log("-----------------------------");
+        Debug.Log("walkx" + (direction.x < 0 ? -1 : direction.x > 0 ? 1 : 0));
+        Debug.Log("walky" + (direction.y < 0 ? -1 : direction.y > 0 ? 1 : 0));
+    }
+
 }

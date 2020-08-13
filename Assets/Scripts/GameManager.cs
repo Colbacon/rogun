@@ -69,11 +69,12 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-
+        /*
         if (playersTurn || enemiesMoving || doingSetup)
             //Debug.Log(" p: " + playersTurn  + " e: "+ enemiesMoving + " s: " + doingSetup);
             return;
-        StartCoroutine(MoveEnemies());
+        //StartCoroutine(MoveEnemies());
+        */
     }
 
     public void AddEnemy(Enemy enemy)
@@ -101,7 +102,7 @@ public class GameManager : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.5f);
-        playersTurn = true;
+        //playersTurn = true;
         enemiesMoving = false;
     }
 

@@ -2,13 +2,11 @@
 
 public class Enemy : MovingGameObject
 {
-    private Animator animator;
     private Transform target;
 
     protected override void Start()
     {
         GameManager.instance.AddEnemy(this);
-        animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
         base.Start();
     }

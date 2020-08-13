@@ -13,7 +13,7 @@ public class Player : MovingGameObject
     void Update()
     {
 
-        if (!GameManager.instance.playersTurn) return;
+        //if (!GameManager.instance.playersTurn) return;
 
         int horizontal = 0;
         int vertical = 0;
@@ -28,12 +28,14 @@ public class Player : MovingGameObject
         {
             if (!base.isMoving)
             {
+                Vector3 direction = new Vector3(horizontal, vertical);
                 //Debug.Log("going to move");
-                base.Move(new Vector3(horizontal, vertical));
-                GameManager.instance.playersTurn = false;
+                base.Move(direction);
+                //GameManager.instance.playersTurn = false;
             }
         }
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
