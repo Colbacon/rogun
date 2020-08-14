@@ -13,7 +13,7 @@ public abstract class Character : MonoBehaviour
 
     protected Vector3 direction;
     public LayerMask collisionLayer;
-    public float moveTime = 0.01f; //Time taken to move one tile 0.1
+    public float moveTime = 0.1f; //Time taken to move one tile 0.1
     private BoxCollider2D boxCollider;
     private Rigidbody2D rigidBody;
     private float inverseMoveTime;
