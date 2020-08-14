@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Enemy : MovingGameObject
+public class Enemy : Character
 {
     private Transform target;
 
@@ -8,6 +8,11 @@ public class Enemy : MovingGameObject
     {
         GameManager.instance.AddEnemy(this);
         target = GameObject.FindGameObjectWithTag("Player").transform;
+
+        maxHealthPoints = 5;
+        healthPoints = maxHealthPoints;
+        attackPoints = 1;
+
         base.Start();
     }
 

@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Player : MovingGameObject
+public class Player : Character
 {
     public float restartLevelDelay = 1f;
 
     protected override void Start()
     {
+        maxHealthPoints = 10;
+        healthPoints = maxHealthPoints;
+        attackPoints = 1;
+
         base.Start();
     }
 
@@ -23,6 +27,7 @@ public class Player : MovingGameObject
 
         if (Input.GetKeyDown(KeyCode.Space)){
             animator.SetTrigger("Attack");
+            Attack();
         }
 
         if (horizontal != 0)    //avoid diagonal movement
@@ -30,11 +35,17 @@ public class Player : MovingGameObject
 
         if (horizontal != 0 || vertical != 0)
         {
-            if (!base.isMoving)
+            if (!base.isMoving) //really needed?
             {
                 Vector3 direction = new Vector3(horizontal, vertical);
-                //Debug.Log("going to move");
-                base.Move(direction);
+                bool hasMoved = base.Move(direction);
+                if (!hasMoved)
+                {
+                    //Debug.Log("Going to face");
+                    UpdateAnimatorFacing(direction);
+                    this.direction = direction; //update where player is facing
+                }
+                
                 //GameManager.instance.playersTurn = false;
             }
         }
