@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7839011097028449637}
   - component: {fileID: 7839011097028449636}
-  - component: {fileID: 7839011097028449635}
+  - component: {fileID: -3045466881527625515}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startLevelDelay: 2
-  boardScript: {fileID: 0}
   turnDelay: 0.1
+  boardScript: {fileID: 0}
   playersTurn: 1
---- !u!114 &7839011097028449635
+--- !u!114 &-3045466881527625515
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,13 +57,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 7839011097028449634}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c6a2cd48fe822f4e86fa8d642fbe468, type: 3}
+  m_Script: {fileID: 11500000, guid: fac371cd1559e7941bf642be8f3fc445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rows: 10
-  columns: 10
+  roomsMinWidth: 10
+  roomsMaxWidth: 20
+  roomsMinHeight: 10
+  roomsMaxHeight: 20
+  _void: {fileID: 4549808191876422352, guid: d1001cb06e746d14b8b9278507bc3bbf, type: 3}
   floor: {fileID: 2853706433295622151, guid: 446348c10aaed0e418dfa922e74445ab, type: 3}
   wall: {fileID: 3262697631214554028, guid: 586d16c1bc2099b458c7916d73214ccb, type: 3}
+  wallUp: {fileID: 8705691749585178269, guid: 047e8a841a13d69488781662f1f66f9d, type: 3}
+  wallDown: {fileID: 3262697631214554028, guid: 586d16c1bc2099b458c7916d73214ccb,
+    type: 3}
+  wallRight: {fileID: 539064318846647264, guid: fe601c4949e9cf9478e5a61dd9e4f2a7,
+    type: 3}
+  wallLeft: {fileID: 3440547758900714541, guid: 0e12f503ed7e5d246a7f13891f238b60,
+    type: 3}
+  wallCornerShortRight: {fileID: 5235604184480469866, guid: 1a1ed853332db9a4f82199c92d2b7de8,
+    type: 3}
+  wallCornerShortLeft: {fileID: 8861255347911995567, guid: 9e45f0d936c831244896c9f3e135bc2d,
+    type: 3}
+  wallCornerLargeRight: {fileID: 9043195785220000915, guid: 6b9208ca90c08694caf662d299ff351b,
+    type: 3}
+  wallCornerLargeLeft: {fileID: 5941520817176890448, guid: 4a5dee6c85718bd4cb4c101dccb53d76,
+    type: 3}
   ladder: {fileID: 2701800027187441370, guid: fc8880987f4f8064295d04ddc367b5f5, type: 3}
+  player: {fileID: 935485557199254649, guid: 20999bb186c915e43be93b38a67d066e, type: 3}
   enemy: {fileID: 5644467325131133773, guid: c124855430e43e140840ca01ad4a0d62, type: 3}
-  player: {fileID: 0}

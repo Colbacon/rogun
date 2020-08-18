@@ -2,16 +2,23 @@
 
 public class CameraController : MonoBehaviour
 {
-    public GameObject player;
+    public float smoothSpeed = 0.125f;
+    private Transform player;
     private Vector3 offset;
 
     void Start()
     {
-        offset = transform.position - player.transform.position;  
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    void LateUpdate()
+    void FixedUpdate()
     {
-        transform.position = player.transform.position + offset;
+        if (player)
+        {
+            Vector3 desiredPosition = player.position + offset;
+            Vector3 smoothedPosition = Vector3.Slerp(transform.position, desiredPosition, smoothSpeed);
+            smoothedPosition.z = -2;
+            transform.position = smoothedPosition;
+        }
     }
 }

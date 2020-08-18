@@ -23,6 +23,8 @@ public class Tile
 
     public TileType tileType;
 
+    public bool isOccupied; //tile is coccupied by a character
+
     //list of neighbours tiles (up, down, right, top) where a character could pass
     public List<Tile> reachableNeighbours;
 
@@ -31,6 +33,7 @@ public class Tile
         this.x = x;
         this.y = y;
         this.tileType = tileType;
+        this.isOccupied = false;
     }
 
     /// <summary>
@@ -74,5 +77,10 @@ public class Tile
     public float Distance(Tile target)
     {
         return (Mathf.Abs(this.x - target.x) + Mathf.Abs(this.y - target.y));
+    }
+
+    public Vector3 GetPosition()
+    {
+        return new Vector3(x, y, 0f);
     }
 }

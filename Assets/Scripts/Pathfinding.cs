@@ -28,12 +28,16 @@ public static class Pathfinding
 
         while(openSet.Count > 0)
         {
+            //getting current tile with lowest f value
             current = openSet.Dequeue();
             if (current == end)
                 break;
                 
             foreach (Tile neighbour in current.reachableNeighbours)
             {
+                if (neighbour.isOccupied && neighbour != end) //end tile tipically will be occupied by player
+                    continue;
+
                 tentativeGScore = gScore[current] + 1;
 
                 if (!gScore.ContainsKey(neighbour) || tentativeGScore < gScore[neighbour])

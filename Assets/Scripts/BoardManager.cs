@@ -47,6 +47,6 @@ public class BoardManager : MonoBehaviour
         //Instantiate(player, new Vector3(columns - 2, rows - 2, 0f), Quaternion.identity);
         Instantiate(ladder, new Vector3(columns - 3, rows - 3, 0f), Quaternion.identity);
         Instantiate(enemy, new Vector3(columns - 4, rows - 4, 0f), Quaternion.identity);
-        Instantiate(enemy, new Vector3(columns - 6, rows - 6, 0f), Quaternion.identity);
+        //Instantiate(enemy, new Vector3(columns - 6, rows - 6, 0f), Quaternion.identity);
     }
 }

@@ -14,11 +14,11 @@ public class Board : MonoBehaviour
     public static int columns = 100;
     
     //number of rooms to attempt to place on board
-    public static int roomsToAttemp = 50;
+    public static int roomsToAttemp = 1;
     public int roomsMinWidth = 10;
-    public int roomsMaxWidth = 15;
+    public int roomsMaxWidth = 20;
     public int roomsMinHeight = 10;
-    public int roomsMaxHeight = 15;
+    public int roomsMaxHeight = 20;
     private List<Room> rooms;
 
     public GameObject _void;
@@ -33,11 +33,13 @@ public class Board : MonoBehaviour
     public GameObject wallCornerLargeRight;
     public GameObject wallCornerLargeLeft;
     public GameObject ladder;
+    public GameObject player;
+    public GameObject enemy;
 
     //board's transform, that will hang all instanciated prefabs (tiles, objects and characters)
     private Transform boardTransform;
 
-    void Awake()
+    public void BoardSetUp()
     {
         boardTransform = new GameObject("Board").transform;
 
@@ -47,7 +49,22 @@ public class Board : MonoBehaviour
         AddTilesNeighbours();
         InstantiateTiles();
 
-        //TestPathfinding();
+        PlaceObjects();
+    }
+
+    private void PlaceObjects()
+    {
+        Room room = rooms[Random.Range(0, rooms.Count)];
+        Tile tile = room.GetRandomInnerTile();
+        tile.isOccupied = true;
+        Instantiate(player, new Vector3(tile.x, tile.y, 0f), Quaternion.identity);
+
+        tile = room.GetRandomInnerTile();
+        tile.isOccupied = true;
+        Instantiate(enemy, new Vector3(tile.x, tile.y, 0f), Quaternion.identity);
+
+
+        //Instantiate(enemy, new Vector3(tile.x, tile.y, 0f), Quaternion.identity);
     }
 
     /*
@@ -139,12 +156,14 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    /// <summary>
+    /// <summary> //SE PUEDE FUSIONAR CON BOARD SET TILES
     /// Update board's rooms' tiles with floor and wall tiles
     /// </summary>
     private void UpdateRoomTiles(Room room)
     {
         TileType tileType;
+        room.innerTiles = new List<Tile>();
+        room.borderTiles = new List<Tile>();
 
         for (int x = 0; x < room.width; x++)
         {
@@ -181,6 +200,16 @@ public class Board : MonoBehaviour
                 }
 
                 board[room.x + x][room.y + y].SetTileType(tileType);
+
+                if (tileType == TileType.FLOOR)
+                {
+                    room.innerTiles.Add(board[room.x + x][room.y + y]);
+                }
+                else
+                {
+                    room.borderTiles.Add(board[room.x + x][room.y + y]);
+                }
+                
             }
             //Setting corners
             board[room.x][room.y].SetTileType(TileType.WALL_CORNER_SHORT_RIGHT);
@@ -441,6 +470,16 @@ public class Board : MonoBehaviour
                 instance.transform.SetParent(boardTransform);
             }
         }
+    }
+
+    public Tile GetTile(Vector3 position)
+    {
+        return board[(int)position.x][(int)position.y];
+    }
+    
+    public void SetOccupiedTile(Vector3 position, bool occupied)
+    {
+        board[(int)position.x][(int)position.y].isOccupied = occupied;
     }
 }
 

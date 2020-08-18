@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Player : Character
@@ -17,7 +18,7 @@ public class Player : Character
     void Update()
     {
 
-        //if (!GameManager.instance.playersTurn) return;
+        if (!GameManager.instance.playersTurn) return;
 
         int horizontal = 0;
         int vertical = 0;
@@ -27,7 +28,9 @@ public class Player : Character
 
         if (Input.GetKeyDown(KeyCode.Space)){
             animator.SetTrigger("Attack");
-            Attack();
+            Attack <Enemy>();
+            //end player's turn if it moved
+            GameManager.instance.playersTurn = false;// controlar esto mejor. Ahora solo está en pla debug
         }
 
         if (horizontal != 0)    //avoid diagonal movement
@@ -45,12 +48,22 @@ public class Player : Character
                     UpdateAnimatorFacing(direction);
                     this.direction = direction; //update where player is facing
                 }
-                
-                //GameManager.instance.playersTurn = false;
+                else
+                {
+                    //end player's turn if it moved
+                    GameManager.instance.playersTurn = false;
+                }
             }
         }
     }
 
+
+    protected override void DealDamage<T>(T component)
+    {
+        Enemy enemy = component as Enemy;
+
+        enemy.TakeDamage(attackPoints);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

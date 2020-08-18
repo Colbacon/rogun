@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
 {
     public float startLevelDelay= 2f;
     public float turnDelay = 0.1f;
-    public BoardManager boardScript;
+    //public BoardManager boardScript;
+    public Board boardScript;
     public static GameManager instance = null;
     public bool playersTurn = true;
 
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         enemies = new List<Enemy>();
-        boardScript = GetComponent<BoardManager>();
+        boardScript = GetComponent<Board>();
 
         InitGame();
     }
@@ -49,7 +50,12 @@ public class GameManager : MonoBehaviour
     void InitGame()
     {
         doingSetup = true;
-
+        //for debugging
+        /*
+        GameObject canvasLevelTrans = GameObject.Find("CanvasLevelTransition");
+        canvasLevelTrans.SetActive(true);
+        */
+        //levelImage.SetActive(true); //delete
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
         levelText.text = "Level " + level;
@@ -58,7 +64,7 @@ public class GameManager : MonoBehaviour
 
 
         Debug.Log("Setting up level " + level + "- GetInstanceID: " + gameObject.GetInstanceID());
-        boardScript.SetupScene();
+        boardScript.BoardSetUp();
     }
 
     void HideLevelImage()
@@ -69,24 +75,19 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        /*
+        
         if (playersTurn || enemiesMoving || doingSetup)
             //Debug.Log(" p: " + playersTurn  + " e: "+ enemiesMoving + " s: " + doingSetup);
             return;
-        //StartCoroutine(MoveEnemies());
-        */
-    }
-
-    public void AddEnemy(Enemy enemy)
-    {
-        enemies.Add(enemy);
+        StartCoroutine(MoveEnemies());
+        
     }
 
     IEnumerator MoveEnemies()
     {
         enemiesMoving = true;
 
-        yield return new WaitForSeconds(turnDelay);
+        yield return new WaitForSeconds(0.2f);
 
         if (enemies.Count == 0)
         {
@@ -98,12 +99,21 @@ public class GameManager : MonoBehaviour
             enemies[i].MoveEnemy();
 
             //yield return new WaitForSeconds(1f / enemies[i].speed);
-            yield return new WaitForSeconds(enemies[i].moveTime);
+            yield return new WaitForSeconds(enemies[i].moveTime + 0.2f);
         }
 
-        yield return new WaitForSeconds(0.5f);
-        //playersTurn = true;
+        yield return new WaitForSeconds(0.1f); //colchonsito de seguridad
+        playersTurn = true;
         enemiesMoving = false;
     }
 
+    public void AddEnemy(Enemy enemy)
+    {
+        enemies.Add(enemy);
+    }
+
+    public void RemoveEnemy(Enemy enemy)
+    {
+        enemies.Remove(enemy);
+    }
 }

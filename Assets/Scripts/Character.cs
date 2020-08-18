@@ -51,15 +51,20 @@ public abstract class Character : MonoBehaviour
             return false;
 
         this.direction = direction; //update where character is facing
-        UpdateAnimatorWalk(direction);
+
         StartCoroutine(SmoothMovement(targetPosition));
+
+        GameManager.instance.boardScript.SetOccupiedTile(initPosition, false);
+        GameManager.instance.boardScript.SetOccupiedTile(targetPosition, true);
+
         return true;
     }
 
-    protected IEnumerator SmoothMovement(Vector3 targetPosition)
+    protected virtual IEnumerator SmoothMovement(Vector3 targetPosition)
     {
         isMoving = true;
-        
+        UpdateAnimatorWalk(direction);
+
         float sqrRemainingDistance = (transform.position - targetPosition).sqrMagnitude; //better performance than vector3.distance
         while (sqrRemainingDistance > float.Epsilon) //epsilon is almost 0
         {
@@ -74,7 +79,7 @@ public abstract class Character : MonoBehaviour
         //Make sure the object is exactly at the end of its movement.
         rigidBody.MovePosition(targetPosition);
 
-        UpdateAnimatorWalk(new Vector3(0, 0, 0));
+        UpdateAnimatorWalk(Vector3.zero);
         isMoving = false;
     }
 
@@ -87,23 +92,26 @@ public abstract class Character : MonoBehaviour
      *  
      * */
 
-    protected void Attack () //melee attack, range 1
+    protected void Attack <T> () //melee attack, range 1
+        where T : Component
     {
         Vector3 initPosition = transform.position;
         Vector3 targetPosition = initPosition + direction;
 
         RaycastHit2D hit = CheckPath(initPosition, targetPosition);
 
-        animator.SetTrigger("Attack"); //performs attacks animation, even if there is no character
-        //reproduce attack sound
         if (hit.collider)
         {
-            Character chara  = hit.transform.GetComponent<Character>();
-            chara.TakeDamage(attackPoints);
+            T hitComponent  = hit.transform.GetComponent<T>();
+            if(hitComponent)
+                DealDamage<T>(hitComponent);
         }
     }
 
-    protected void TakeDamage(int damage)
+    protected abstract void DealDamage<T>(T component)
+            where T : Component;
+
+    public void TakeDamage(int damage)
     {
         healthPoints -= damage;
         healthbar.SetHealth(healthPoints);
@@ -117,7 +125,7 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    protected void Die()
+    protected virtual void Die()
     {
         //reproduce animation diying
         //reproduce sound dying
