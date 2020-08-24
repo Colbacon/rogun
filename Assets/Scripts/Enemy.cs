@@ -71,9 +71,10 @@ public class Enemy : Character
 
         if (path != null)
         {
-            Debug.Log("----------------------------");
+            /*Debug.Log("----------------------------");
             Debug.Log(path[0].GetPosition());
             Debug.Log(path[path.Count - 1].GetPosition());
+            */
             for (int i = 0; i < path.Count - 1 ; i++)
             {
 

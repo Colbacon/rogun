@@ -19,6 +19,7 @@ public class Player : Character
     {
 
         if (!GameManager.instance.playersTurn) return;
+        if (InventoryUI.openedInventory || PauseMenu.gameIsPaused) return;
 
         int horizontal = 0;
         int vertical = 0;
@@ -65,12 +66,28 @@ public class Player : Character
         enemy.TakeDamage(attackPoints);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if(collision.tag == "Ladder")
+        if(collider.tag == "Ladder")
         {
             Invoke("Restart", restartLevelDelay);
             enabled = false;
+        }
+
+        if(collider.tag == "Item")
+        {
+            //Debug.Log("collide with item");
+            Item item = collider.gameObject.GetComponent<ItemDataAssigner>().item;
+
+            bool wasAdded = Inventory.instance.Add(item);
+            if (wasAdded)
+            {
+                Destroy(collider.gameObject);
+            }
+            else
+            {
+                Debug.Log("No empty space in inventory");
+            }
         }
     }
 

@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     private GameObject levelImage;
     private Text levelText;
-    private int level = 1;
+    private int level = 0;
     private List<Enemy> enemies;
     private bool enemiesMoving;
     private bool doingSetup;
@@ -27,14 +27,17 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
 
+        //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
 
         enemies = new List<Enemy>();
         boardScript = GetComponent<Board>();
 
-        InitGame();
+        instance.level++;
+        instance.InitGame();
     }
 
+    
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     static public void CallbackInitialization()
     {
@@ -51,18 +54,20 @@ public class GameManager : MonoBehaviour
     {
         doingSetup = true;
         //for debugging
-        /*
-        GameObject canvasLevelTrans = GameObject.Find("CanvasLevelTransition");
+
+        /*GameObject canvasLevelTrans = GameObject.Find("LevelImage");
         canvasLevelTrans.SetActive(true);
         */
         //levelImage.SetActive(true); //delete
+        
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
         levelText.text = "Level " + level;
         levelImage.SetActive(true);
+        
         Invoke("HideLevelImage", startLevelDelay);
-
-
+        
+        enemies.Clear();
         Debug.Log("Setting up level " + level + "- GetInstanceID: " + gameObject.GetInstanceID());
         boardScript.BoardSetUp();
     }

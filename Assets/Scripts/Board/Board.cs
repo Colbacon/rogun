@@ -36,6 +36,8 @@ public class Board : MonoBehaviour
     public GameObject player;
     public GameObject enemy;
 
+    public GameObject item;
+
     //board's transform, that will hang all instanciated prefabs (tiles, objects and characters)
     private Transform boardTransform;
 
@@ -56,6 +58,8 @@ public class Board : MonoBehaviour
     {
         Room room = rooms[Random.Range(0, rooms.Count)];
         Tile tile = room.GetRandomInnerTile();
+
+        //Make player a object from hierarchy and set not destroy on load
         tile.isOccupied = true;
         Instantiate(player, new Vector3(tile.x, tile.y, 0f), Quaternion.identity);
 
@@ -63,8 +67,15 @@ public class Board : MonoBehaviour
         tile.isOccupied = true;
         Instantiate(enemy, new Vector3(tile.x, tile.y, 0f), Quaternion.identity);
 
+        tile = room.GetRandomInnerTile();
+        Instantiate(ladder, new Vector3(tile.x, tile.y, 0f), Quaternion.identity);
 
-        //Instantiate(enemy, new Vector3(tile.x, tile.y, 0f), Quaternion.identity);
+        for(int i = 0; i < 5; i++)
+        {
+            tile = room.GetRandomInnerTile();
+            Instantiate(item, new Vector3(tile.x, tile.y, 0f), Quaternion.identity);
+        }
+        
     }
 
     /*
