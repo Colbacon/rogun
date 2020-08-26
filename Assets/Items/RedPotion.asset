@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Red Potion
   sprite: {fileID: -3679828817949995438, guid: dc7f9733945b8b7418db1bf24a5600d9, type: 3}
-  description: Seems and taste like fresh blood.
+  description: A medium-sized bottle containing a red liquid. It seems that inside
+    there are skull-shaped particles.
   useDialogue:
-  - You drink the potion. Now you are red.
+  - You drink the potion and you feel dizzy.

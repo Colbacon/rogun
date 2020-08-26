@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8a8ad5c70ab52e41aaba4eaca8c3f71, type: 3}
-  m_Name: MegaRedPotion
+  m_Name: BigRedPotion
   m_EditorClassIdentifier: 
-  name: Mega Red Potion
+  name: Big Red Potion
   sprite: {fileID: -3679828817949995438, guid: dc7f9733945b8b7418db1bf24a5600d9, type: 3}
-  description: Like the other potion, but better.
+  description: A large bottle containing a red liquid. It seems that inside it there
+    are particles shaped like a unicorn horn.
   useDialogue:
-  - FEEL THE POWAH
-  - "\xBF\xBFA qu\xE9 esperas?? \xA1\xA1Vete!!"
+  - You drink the potion and you feel very dizzy.
