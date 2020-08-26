@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8a8ad5c70ab52e41aaba4eaca8c3f71, type: 3}
-  m_Name: RedPotion
+  m_Name: MegaRedPotion
   m_EditorClassIdentifier: 
-  name: Red Potion
+  name: Mega Red Potion
   sprite: {fileID: -3679828817949995438, guid: dc7f9733945b8b7418db1bf24a5600d9, type: 3}
-  description: Seems and taste like fresh blood.
+  description: Like the other potion, but better.
   useDialogue:
-  - You drink the potion. Now you are red.
+  - FEEL THE POWAH
+  - "\xBF\xBFA qu\xE9 esperas?? \xA1\xA1Vete!!"

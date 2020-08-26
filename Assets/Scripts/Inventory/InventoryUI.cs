@@ -44,7 +44,7 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    void OpenInventory()
+    public void OpenInventory()
     {
         inventoryUI.SetActive(true);
         openedInventory = true;
@@ -54,7 +54,7 @@ public class InventoryUI : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(defaultSlotOption);
     }
 
-    void CloseInventory()
+    public void CloseInventory()
     {
         inventoryUI.SetActive(false);
         openedInventory = false;
