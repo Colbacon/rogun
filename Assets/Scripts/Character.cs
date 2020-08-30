@@ -135,6 +135,12 @@ public abstract class Character : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public void Heal(int heal)
+    {
+        healthPoints = (healthPoints + heal) < maxHealthPoints ? (healthPoints + heal) : maxHealthPoints;
+        healthbar.SetHealth(healthPoints);
+    }
+
     /**
       * -------------------------------
       * -------------------------------

@@ -6,8 +6,9 @@ public class ItemDataAssigner : MonoBehaviour
 
     public SpriteRenderer spriteRenderer;
 
-    void Start()
+    public void SetItem(Item item)
     {
+        this.item = item;
         spriteRenderer.sprite = item.sprite;
     }
 

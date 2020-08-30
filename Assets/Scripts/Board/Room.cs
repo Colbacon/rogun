@@ -11,7 +11,6 @@ public class Room
 
     public List<Tile> innerTiles;
     public List<Tile> borderTiles;
-    //public List<Tile> tiles;
 
     public Room(int x, int y, int width, int height)
     {
@@ -73,7 +72,12 @@ public class Room
 
     public Tile GetRandomInnerTile()
     {
-        return innerTiles[Random.Range(0, innerTiles.Count)];
+        Tile tile = innerTiles[Random.Range(0, innerTiles.Count)];
+        
+        //remove from list to avoid get one tile more than once (p.e place units or items)
+        innerTiles.Remove(tile);
+
+        return tile;
     }
 
 }

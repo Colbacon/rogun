@@ -32,11 +32,13 @@ public class Inventory : MonoBehaviour
     public bool Add (Item item)
     {
         if (items.Count >= space)
+        {
+            DialogueManager.instance.StartDialogue(new string[1] { "You cannot take the item, the inventory is full."});
             return false;
+        }
 
         items.Add(item);
 
-        Debug.Log("Added " + item.name);
         //Triggering callback
         if (onItemChangedCallback != null)
             onItemChangedCallback.Invoke();

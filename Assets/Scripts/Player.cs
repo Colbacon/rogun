@@ -4,10 +4,29 @@ using UnityEngine.SceneManagement;
 
 public class Player : Character
 {
+
+    #region Singleton
+
+    public static Player instance = null;
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+        Debug.Log("entro awake");
+        //Sets this to not be destroyed when reloading scene
+        DontDestroyOnLoad(gameObject);
+    }
+
+    #endregion
+
     public float restartLevelDelay = 1f;
 
     protected override void Start()
     {
+        Debug.Log("entro start");
         maxHealthPoints = 10;
         healthPoints = maxHealthPoints;
         attackPoints = 1;
@@ -17,7 +36,7 @@ public class Player : Character
 
     void Update()
     {
-
+        //Debug.Log("UPdate");
         if (!GameManager.instance.playersTurn) return;
         if (InventoryUI.openedInventory || PauseMenu.gameIsPaused) return;
 
@@ -29,6 +48,7 @@ public class Player : Character
 
         if (Input.GetKeyDown(KeyCode.Space)){
             animator.SetTrigger("Attack");
+            this.TakeDamage(2); 
             Attack <Enemy>();
             //end player's turn if it moved
             GameManager.instance.playersTurn = false;// controlar esto mejor. Ahora solo está en pla debug
@@ -70,28 +90,19 @@ public class Player : Character
     {
         if(collider.tag == "Ladder")
         {
-            Invoke("Restart", restartLevelDelay);
-            enabled = false;
+            Invoke("RestartScene", restartLevelDelay);
         }
 
         if(collider.tag == "Item")
         {
-            //Debug.Log("collide with item");
             Item item = collider.gameObject.GetComponent<ItemDataAssigner>().item;
 
-            bool wasAdded = Inventory.instance.Add(item);
-            if (wasAdded)
-            {
+            if (Inventory.instance.Add(item))
                 Destroy(collider.gameObject);
-            }
-            else
-            {
-                Debug.Log("No empty space in inventory");
-            }
         }
     }
 
-    private void Restart()
+    private void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }

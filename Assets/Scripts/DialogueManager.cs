@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class DialogManager : MonoBehaviour
+public class DialogueManager : MonoBehaviour
 {
 
-    #region Singleton
-
-    public static DialogManager instance;
+    public static DialogueManager instance;
 
     void Awake()
     {
@@ -17,11 +15,7 @@ public class DialogManager : MonoBehaviour
         else if (instance != this)
             Destroy(gameObject);
 
-        //Sets this to not be destroyed when reloading scene
-        DontDestroyOnLoad(gameObject);
     }
-
-    #endregion
 
     public static bool dialogueDisplay = false;
 

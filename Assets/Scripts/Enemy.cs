@@ -8,7 +8,7 @@ public class Enemy : Character
     protected override void Start()
     {
         GameManager.instance.AddEnemy(this);
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = Player.instance.transform;
 
         maxHealthPoints = 5;
         healthPoints = maxHealthPoints;

@@ -37,6 +37,8 @@ public class Board : MonoBehaviour
     public GameObject enemy;
 
     public GameObject item;
+    public Item[] commonItems;
+    public Item[] rareItems;
 
     //board's transform, that will hang all instanciated prefabs (tiles, objects and characters)
     private Transform boardTransform;
@@ -51,31 +53,49 @@ public class Board : MonoBehaviour
         AddTilesNeighbours();
         InstantiateTiles();
 
-        PlaceObjects();
+        PlaceObjectsOnBoard();
     }
 
-    private void PlaceObjects()
+    private void PlaceObjectsOnBoard()
     {
         Room room = rooms[Random.Range(0, rooms.Count)];
         Tile tile = room.GetRandomInnerTile();
 
-        //Make player a object from hierarchy and set not destroy on load
-        tile.isOccupied = true;
-        Instantiate(player, new Vector3(tile.x, tile.y, 0f), Quaternion.identity);
-
-        tile = room.GetRandomInnerTile();
-        tile.isOccupied = true;
-        Instantiate(enemy, new Vector3(tile.x, tile.y, 0f), Quaternion.identity);
-
-        tile = room.GetRandomInnerTile();
-        Instantiate(ladder, new Vector3(tile.x, tile.y, 0f), Quaternion.identity);
-
-        for(int i = 0; i < 5; i++)
+        if (Player.instance == null)
         {
-            tile = room.GetRandomInnerTile();
-            Instantiate(item, new Vector3(tile.x, tile.y, 0f), Quaternion.identity);
+            Debug.Log("is null");
+            Instantiate(player, tile.GetPosition(), Quaternion.identity);
+            tile.isOccupied = true;
+        }
+        else
+        {
+            //Debug.Log("is not null:  " + tile.GetPosition() + "");
+            Player.instance.transform.position = tile.GetPosition();
+            tile.isOccupied = true;
         }
         
+
+        tile = room.GetRandomInnerTile();
+        tile.isOccupied = true;
+        Instantiate(enemy, tile.GetPosition(), Quaternion.identity);
+
+        tile = room.GetRandomInnerTile();
+        Instantiate(ladder, tile.GetPosition(), Quaternion.identity);
+
+        ItemDataAssigner itemData = item.GetComponent<ItemDataAssigner>();
+        for (int i = 0; i < 3; i++)
+        {
+            tile = room.GetRandomInnerTile();
+            itemData.SetItem(commonItems[Random.Range(0, commonItems.Length)]);
+            Instantiate(item, tile.GetPosition(), Quaternion.identity);
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            tile = room.GetRandomInnerTile();
+            itemData.SetItem(rareItems[Random.Range(0, rareItems.Length)]);
+            Instantiate(item, tile.GetPosition(), Quaternion.identity);
+        }
     }
 
     /*

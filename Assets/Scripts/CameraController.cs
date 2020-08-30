@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = Player.instance.transform;
     }
 
     void LateUpdate()

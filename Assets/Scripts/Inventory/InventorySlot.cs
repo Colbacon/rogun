@@ -32,7 +32,7 @@ public class InventorySlot : MonoBehaviour
             if (item.useDialogue != null)
             {
                 //Debug.Log(item.useDialogue.Length);
-                DialogManager.instance.StartDialogue(item.useDialogue);
+                DialogueManager.instance.StartDialogue(item.useDialogue);
             }
 
             Inventory.instance.Remove(item);
@@ -45,7 +45,7 @@ public class InventorySlot : MonoBehaviour
     {
         if (item)
         {
-            DialogManager.instance.StartDialogue(new string[1] { "You dropped " + item.name });
+            DialogueManager.instance.StartDialogue(new string[1] { "You dropped " + item.name });
             Inventory.instance.Remove(item);
         }
     }
