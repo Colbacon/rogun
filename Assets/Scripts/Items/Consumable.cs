@@ -7,7 +7,6 @@ public class Consumable : Item
 
     public override void Use()
     {
-        Debug.Log("Using: "+ name);
 
         if(heal >= 0)
         {

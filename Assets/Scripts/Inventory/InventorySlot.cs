@@ -5,7 +5,7 @@ public class InventorySlot : MonoBehaviour
 {
 
     public Text useItemText;
-    public Text dropItemText;
+    public Image removeItemImage;
 
     Item item;
 
@@ -13,14 +13,15 @@ public class InventorySlot : MonoBehaviour
     {
         this.item = item;
         useItemText.text = item.name;
-        dropItemText.text = "Drop";
+        removeItemImage.enabled = true;
+
     }
 
     public void ClearSlot()
     {
         item = null;
         useItemText.text = string.Empty;
-        dropItemText.text = string.Empty;
+        removeItemImage.enabled = false;
     }
 
     public void UseItem()
@@ -31,7 +32,7 @@ public class InventorySlot : MonoBehaviour
             
             if (item.useDialogue != null)
             {
-                //Debug.Log(item.useDialogue.Length);
+                AudioManager.instance.Play("InventoryUseItem");
                 DialogueManager.instance.StartDialogue(item.useDialogue);
             }
 
@@ -45,6 +46,7 @@ public class InventorySlot : MonoBehaviour
     {
         if (item)
         {
+            AudioManager.instance.Play("InventoryRemoveItem");
             DialogueManager.instance.StartDialogue(new string[1] { "You dropped " + item.name });
             Inventory.instance.Remove(item);
         }

@@ -48,6 +48,7 @@ public class Player : Character
 
         if (Input.GetKeyDown(KeyCode.Space)){
             animator.SetTrigger("Attack");
+            AudioManager.instance.Play("PlayerAttack");
             this.TakeDamage(2); 
             Attack <Enemy>();
             //end player's turn if it moved

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -38,6 +37,8 @@ public class Inventory : MonoBehaviour
         }
 
         items.Add(item);
+
+        AudioManager.instance.Play("InventoryAddItem");
 
         //Triggering callback
         if (onItemChangedCallback != null)

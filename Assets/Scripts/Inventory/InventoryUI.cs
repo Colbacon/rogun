@@ -49,6 +49,8 @@ public class InventoryUI : MonoBehaviour
         inventoryUI.SetActive(true);
         openedInventory = true;
 
+        AudioManager.instance.Play("MenuOpen");
+
         EventSystem.current.SetSelectedGameObject(null);
         //highlight default option
         EventSystem.current.SetSelectedGameObject(defaultSlotOption);
@@ -58,6 +60,8 @@ public class InventoryUI : MonoBehaviour
     {
         inventoryUI.SetActive(false);
         openedInventory = false;
+
+        AudioManager.instance.Play("MenuClose");
     }
 
     //called using a delegate on the Inventory

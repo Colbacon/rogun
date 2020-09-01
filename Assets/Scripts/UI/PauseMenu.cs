@@ -41,6 +41,8 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
+
+        AudioManager.instance.Play("MenuClose");
     }
 
     public void AbandonRun()
@@ -63,6 +65,8 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         gameIsPaused = true;
+
+        AudioManager.instance.Play("MenuOpen");
 
         EventSystem.current.SetSelectedGameObject(null);
         //highlight default option
