@@ -12,16 +12,23 @@ public class InventorySlot : MonoBehaviour
     public void AddItem (Item item)
     {
         this.item = item;
-        useItemText.text = item.name;
-        removeItemImage.enabled = true;
 
+        if(useItemText != null && removeItemImage != null)
+        {
+            useItemText.text = item.name;
+            removeItemImage.enabled = true;
+        }
     }
 
     public void ClearSlot()
     {
         item = null;
-        useItemText.text = string.Empty;
-        removeItemImage.enabled = false;
+
+        if (useItemText != null && removeItemImage != null)
+        {
+            useItemText.text = string.Empty;
+            removeItemImage.enabled = false;
+        }
     }
 
     public void UseItem()
