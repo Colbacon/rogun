@@ -10,15 +10,15 @@ public class Board : MonoBehaviour
     //bidimensional array representing the board
     public Tile[][] board;
 
-    public static int rows = 100;
-    public static int columns = 100;
+    public static int rows = 150;
+    public static int columns = 150;
     
     //number of rooms to attempt to place on board
-    public static int roomsToAttemp = 1;
-    public int roomsMinWidth = 10;
-    public int roomsMaxWidth = 20;
-    public int roomsMinHeight = 10;
-    public int roomsMaxHeight = 20;
+    public static int roomsToAttemp = 200;
+    public int roomsMinWidth = 5;
+    public int roomsMaxWidth = 5;
+    public int roomsMinHeight = 5;
+    public int roomsMaxHeight = 5;
     private List<Room> rooms;
 
     public GameObject _void;
@@ -63,7 +63,6 @@ public class Board : MonoBehaviour
 
         if (Player.instance == null)
         {
-            Debug.Log("is null");
             Instantiate(player, tile.GetPosition(), Quaternion.identity);
             tile.isOccupied = true;
         }
@@ -81,7 +80,7 @@ public class Board : MonoBehaviour
 
         tile = room.GetRandomInnerTile();
         Instantiate(ladder, tile.GetPosition(), Quaternion.identity);
-
+        /*
         ItemDataAssigner itemData = item.GetComponent<ItemDataAssigner>();
         for (int i = 0; i < 3; i++)
         {
@@ -96,6 +95,7 @@ public class Board : MonoBehaviour
             itemData.SetItem(rareItems[Random.Range(0, rareItems.Length)]);
             Instantiate(item, tile.GetPosition(), Quaternion.identity);
         }
+        */
     }
 
     /*
@@ -359,60 +359,161 @@ public class Board : MonoBehaviour
     /// </summary>
     private void UpdateCorridorTiles(Room room1, Room room2)
     {
-        //TODO BETER GENERATION DON OVERLAB WITH OTHER WALLS IN ORDER TO SPRITES BE NICE
-        //TODO fix possible out of bounds bug
+        
         int r1x = (int)room1.GetCenterPoint().x;
         int r1y = (int)room1.GetCenterPoint().y;
 
         int r2x = (int)room2.GetCenterPoint().x;
         int r2y = (int)room2.GetCenterPoint().y;
 
-        while (r1x != r2x || r1y != r2y)
+        Vector3 lastDirection = Vector3.zero;
+
+        while (r1x != r2x || r1y != r2y) //not reached other room center
         {
-            if (r1x != r2x && r1y != room2.y && r1y != room2.y + room2.height)
+            if (r1x != r2x) //moved left/right
             {
+
                 board[r1x][r1y].SetTileType(TileType.FLOOR);
                     
-                /*if (tileMap[r1x][r1y + 1].tileType == TileType.VOID)
-                    tileMap[r1x][r1y + 1].SetTileType(TileType.WALL_DOWN);
-
-                if (tileMap[r1x][r1y - 1].tileType == TileType.VOID)
-                    tileMap[r1x][r1y - 1].SetTileType(TileType.WALL_UP);
-
-                //comprueba el vecino de la izquierda
-                if (tileMap[r1x - 1][r1y].tileType == TileType.WALL_LEFT)
+                //up is v || w_d || r_w || l_w || shr_r || shor_l
+                if (board[r1x][r1y + 1].tileType == TileType.VOID ||
+                    board[r1x][r1y + 1].tileType == TileType.WALL_DOWN ||
+                    board[r1x][r1y + 1].tileType == TileType.WALL_RIGHT || 
+                    board[r1x][r1y + 1].tileType == TileType.WALL_LEFT || 
+                    board[r1x][r1y + 1].tileType == TileType.WALL_CORNER_SHORT_RIGHT || 
+                    board[r1x][r1y + 1].tileType == TileType.WALL_CORNER_SHORT_LEFT)
                 {
-                    tileMap[r1x - 1][r1y + 1].SetTileType(TileType.WALL_DOWN);
-                    tileMap[r1x - 1][r1y - 1].SetTileType(TileType.WALL_CORNER_LARGE_LEFT);
+                    board[r1x][r1y + 1].SetTileType(TileType.WALL_DOWN);
+                }
+                else  //up is u_w || d_w || large_r || large _l
+                if (board[r1x][r1y + 1].tileType == TileType.WALL_UP ||
+                    board[r1x][r1y + 1].tileType == TileType.WALL_CORNER_LARGE_RIGHT ||
+                    board[r1x][r1y + 1].tileType == TileType.WALL_CORNER_LARGE_LEFT)
+                {
+                    board[r1x][r1y + 1].SetTileType(TileType.FLOOR);
                 }
 
-                //comprrueba el vecino de la derecha
-                if (tileMap[r1x + 1][r1y].tileType == TileType.WALL_RIGHT)
+                //down
+                if (board[r1x][r1y - 1].tileType == TileType.VOID ||
+                    board[r1x][r1y - 1].tileType == TileType.WALL_UP ||
+                    board[r1x][r1y - 1].tileType == TileType.WALL_CORNER_SHORT_LEFT ||
+                    board[r1x][r1y - 1].tileType == TileType.WALL_CORNER_SHORT_RIGHT)
                 {
-                    tileMap[r1x + 1][r1y + 1].SetTileType(TileType.WALL_DOWN);
-                    tileMap[r1x + 1][r1y - 1].SetTileType(TileType.WALL_CORNER_LARGE_RIGHT);
-                }*/
+                    board[r1x][r1y - 1].SetTileType(TileType.WALL_UP);
+                }
+                else
+                if (board[r1x][r1y - 1].tileType == TileType.WALL_RIGHT ||
+                    board[r1x][r1y - 1].tileType == TileType.WALL_CORNER_LARGE_RIGHT)
+                {
+                    board[r1x][r1y - 1].SetTileType(TileType.WALL_CORNER_LARGE_RIGHT);
+                }
+                else
+                if (board[r1x][r1y - 1].tileType == TileType.WALL_LEFT ||
+                    board[r1x][r1y - 1].tileType == TileType.WALL_CORNER_LARGE_LEFT)
+                {
+                    board[r1x][r1y - 1].SetTileType(TileType.WALL_CORNER_LARGE_LEFT);
+                }
+                else
+                if (board[r1x][r1y - 1].tileType == TileType.WALL_DOWN)
+                {
+                    board[r1x][r1y - 1].SetTileType(TileType.FLOOR);
+                }
 
                 r1x += (r1x < r2x) ? 1 : -1;
+
+                lastDirection = (r1x < r2x) ? Vector3.right : Vector3.left;
+                
             }
-            else
+            else //move up/down
             {
                 board[r1x][r1y].SetTileType(TileType.FLOOR);
-                    
-                /*
-                if (tileMap[r1x + 1][r1y].tileType == TileType.VOID)
-                    tileMap[r1x + 1][r1y].SetTileType(TileType.WALL_LEFT);
 
-                if (tileMap[r1x - 1][r1y].tileType == TileType.VOID)
-                    tileMap[r1x - 1][r1y].SetTileType(TileType.WALL_RIGHT);
-
-                if (tileMap[r1x][r1y + 1].tileType == TileType.WALL_UP)
+                //l is v
+                if (board[r1x - 1][r1y].tileType == TileType.VOID ||
+                    board[r1x - 1][r1y].tileType == TileType.WALL_RIGHT ||
+                    board[r1x - 1][r1y].tileType == TileType.WALL_CORNER_SHORT_RIGHT)
                 {
-                    tileMap[r1x + 1][r1y + 1].SetTileType(TileType.WALL_CORNER_LARGE_LEFT);
-                    tileMap[r1x - 1][r1y + 1].SetTileType(TileType.WALL_CORNER_LARGE_RIGHT);
-                }*/
+                    board[r1x - 1][r1y].SetTileType(TileType.WALL_RIGHT);
+                }
+                else
+                if (board[r1x - 1][r1y].tileType == TileType.WALL_DOWN)
+                {
+                    board[r1x - 1][r1y].SetTileType(TileType.WALL_DOWN);
+                }
+                else
+                if (board[r1x - 1][r1y].tileType == TileType.WALL_UP ||
+                    board[r1x - 1][r1y].tileType == TileType.WALL_CORNER_LARGE_RIGHT ||
+                    board[r1x - 1][r1y].tileType == TileType.WALL_CORNER_SHORT_LEFT)
+                {
+                    board[r1x - 1][r1y].SetTileType(TileType.WALL_CORNER_LARGE_RIGHT);
+                }
+                else
+                if (board[r1x - 1][r1y].tileType == TileType.WALL_LEFT ||
+                    board[r1x - 1][r1y].tileType == TileType.WALL_CORNER_LARGE_LEFT ||
+                    board[r1x - 1][r1y].tileType == TileType.WALL_CORNER_SHORT_LEFT)
+                {
+                    board[r1x - 1][r1y].SetTileType(TileType.FLOOR);
+                }
+                    
+
+                // r is v
+                if (board[r1x + 1][r1y].tileType == TileType.VOID ||
+                    board[r1x + 1][r1y].tileType == TileType.WALL_LEFT ||
+                    board[r1x + 1][r1y].tileType == TileType.WALL_CORNER_SHORT_LEFT)
+                {
+                    board[r1x + 1][r1y].SetTileType(TileType.WALL_LEFT);
+                }
+                else
+                if (board[r1x + 1][r1y].tileType == TileType.WALL_DOWN)
+                {
+                    board[r1x + 1][r1y].SetTileType(TileType.WALL_DOWN);
+                }
+                else
+                if (board[r1x + 1][r1y].tileType == TileType.WALL_UP ||
+                    board[r1x + 1][r1y].tileType == TileType.WALL_CORNER_LARGE_LEFT ||
+                    board[r1x + 1][r1y].tileType == TileType.WALL_CORNER_SHORT_RIGHT)
+                {
+                    board[r1x + 1][r1y].SetTileType(TileType.WALL_CORNER_LARGE_LEFT);
+                }
+                if (board[r1x + 1][r1y].tileType == TileType.WALL_RIGHT ||
+                    board[r1x + 1][r1y].tileType == TileType.WALL_CORNER_LARGE_RIGHT)
+                {
+                    board[r1x + 1][r1y].SetTileType(TileType.FLOOR);
+                }
 
                 r1y += (r1y < r2y) ? 1 : -1;
+
+                Debug.Log(lastDirection);
+                if(lastDirection == Vector3.left)
+                {
+                    Debug.Log("he entrad");
+                    if(r1y < 0) //moving down
+                    {
+                        Debug.Log("he entrad  menor");
+                        board[r1x][r1y + 1].SetTileType(TileType.WALL_DOWN);
+                        board[r1x + 1][r1y + 1].SetTileType(TileType.WALL_LEFT);
+                    }
+                    else //moving up
+                    {
+                        board[r1x][r1y - 1].SetTileType(TileType.WALL_UP);
+                        board[r1x + 1][r1y - 1].SetTileType(TileType.WALL_CORNER_SHORT_LEFT);
+                    }
+                }
+                /*
+                if(lastDirection == Vector3.right)
+                {
+                    if (r1y < 0) //moving down
+                    {
+                        board[r1x][r1y + 1].SetTileType(TileType.WALL_DOWN);
+                        
+                    }
+                    else
+                    {
+
+                    }
+                }*/
+
+                lastDirection = (r1y < r2y) ? Vector3.up : Vector3.down;
             }
         }
     }

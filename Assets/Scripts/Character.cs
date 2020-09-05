@@ -129,7 +129,6 @@ public abstract class Character : MonoBehaviour
     {
         //reproduce animation diying
         //reproduce sound dying
-        Debug.Log("Died");
         this.enabled = false;
         boxCollider.enabled = false;
         Destroy(gameObject);

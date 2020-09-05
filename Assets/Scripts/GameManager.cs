@@ -25,24 +25,35 @@ public class GameManager : MonoBehaviour
         if (instance == null)
             instance = this;
         else if (instance != this)
+        {
             Destroy(gameObject);
-
+            return;
+        }
+            
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        Debug.Log("suscribed");
+
+        AudioManager.instance.Play("Theme");
 
         enemies = new List<Enemy>();
         boardScript = GetComponent<Board>();
 
+        /*
         instance.level++;
         instance.InitGame();
+        */
     }
 
-    
+    /*
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     static public void CallbackInitialization()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
+    */
 
     static private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
@@ -86,6 +97,24 @@ public class GameManager : MonoBehaviour
             return;
         StartCoroutine(MoveEnemies());
         
+    }
+
+    public void GameOver()
+    {
+        //GameOver transition
+
+
+        AudioManager.instance.Stop("Theme");
+
+        //https://answers.unity.com/questions/1491238/undo-dontdestroyonload.html
+        
+        SceneManager.MoveGameObjectToScene(Inventory.instance.gameObject, SceneManager.GetActiveScene());
+        SceneManager.MoveGameObjectToScene(Player.instance.gameObject, SceneManager.GetActiveScene());
+        SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        Debug.Log("unsuscribe");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1, LoadSceneMode.Single);
     }
 
     IEnumerator MoveEnemies()

@@ -1,0 +1,1295 @@
+fileFormatVersion: 2
+guid: 630182e09677d7e4db4c803009c2e15a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3384262194860710149
+    second: 16x16dungeon-2_0
+  - first:
+      213: 3689756046474410005
+    second: 16x16dungeon-2_1
+  - first:
+      213: -6900994163630144727
+    second: 16x16dungeon-2_2
+  - first:
+      213: -4781207514661125114
+    second: 16x16dungeon-2_3
+  - first:
+      213: -21534053064710939
+    second: 16x16dungeon-2_4
+  - first:
+      213: 2954386009950573732
+    second: 16x16dungeon-2_5
+  - first:
+      213: -1587167536613701210
+    second: 16x16dungeon-2_6
+  - first:
+      213: 680665458410445037
+    second: 16x16dungeon-2_7
+  - first:
+      213: 4023291546973371007
+    second: 16x16dungeon-2_8
+  - first:
+      213: 6346897333043176009
+    second: 16x16dungeon-2_9
+  - first:
+      213: 8431824441628573408
+    second: 16x16dungeon-2_10
+  - first:
+      213: -3560825224259110551
+    second: 16x16dungeon-2_11
+  - first:
+      213: 1769383009907116229
+    second: 16x16dungeon-2_12
+  - first:
+      213: -3074098021473709535
+    second: 16x16dungeon-2_13
+  - first:
+      213: 1471075573643129949
+    second: 16x16dungeon-2_14
+  - first:
+      213: 866567019938522917
+    second: 16x16dungeon-2_15
+  - first:
+      213: -1617308502869836166
+    second: 16x16dungeon-2_16
+  - first:
+      213: -3237670162928497259
+    second: 16x16dungeon-2_17
+  - first:
+      213: -190422525827739840
+    second: 16x16dungeon-2_18
+  - first:
+      213: -7221311749050241891
+    second: 16x16dungeon-2_19
+  - first:
+      213: 6339189049721344928
+    second: 16x16dungeon-2_20
+  - first:
+      213: -3078288705439794829
+    second: 16x16dungeon-2_21
+  - first:
+      213: 1919085200744522044
+    second: 16x16dungeon-2_22
+  - first:
+      213: 7390638562589889179
+    second: 16x16dungeon-2_23
+  - first:
+      213: -618257561569550964
+    second: 16x16dungeon-2_24
+  - first:
+      213: 7877648210487157328
+    second: 16x16dungeon-2_25
+  - first:
+      213: -1984693324634946309
+    second: 16x16dungeon-2_26
+  - first:
+      213: 5500708962141092860
+    second: 16x16dungeon-2_27
+  - first:
+      213: -1841357692253004098
+    second: 16x16dungeon-2_28
+  - first:
+      213: -2696104524417553764
+    second: 16x16dungeon-2_29
+  - first:
+      213: -3789820917951199391
+    second: 16x16dungeon-2_30
+  - first:
+      213: -4738228016603102125
+    second: 16x16dungeon-2_31
+  - first:
+      213: -5194519722972098888
+    second: 16x16dungeon-2_32
+  - first:
+      213: -7370436629141407853
+    second: 16x16dungeon-2_33
+  - first:
+      213: 2891837703762802097
+    second: 16x16dungeon-2_34
+  - first:
+      213: -7049533454777684451
+    second: 16x16dungeon-2_35
+  - first:
+      213: -7199230696707072671
+    second: 16x16dungeon-2_36
+  - first:
+      213: 4001333803646629723
+    second: 16x16dungeon-2_37
+  - first:
+      213: -2272205702120774073
+    second: 16x16dungeon-2_38
+  - first:
+      213: -4889567045846146945
+    second: 16x16dungeon-2_39
+  - first:
+      213: 4145487745815390514
+    second: 16x16dungeon-2_40
+  - first:
+      213: -3706143802898620530
+    second: 16x16dungeon-2_41
+  - first:
+      213: 123335655243814251
+    second: 16x16dungeon-2_42
+  - first:
+      213: 4080171047509386027
+    second: 16x16dungeon-2_43
+  - first:
+      213: 3272069332393997274
+    second: 16x16dungeon-2_44
+  - first:
+      213: -9004934686024195236
+    second: 16x16dungeon-2_45
+  - first:
+      213: -630507296257680150
+    second: 16x16dungeon-2_46
+  - first:
+      213: -7804302664456566794
+    second: 16x16dungeon-2_47
+  - first:
+      213: -620223220400046490
+    second: 16x16dungeon-2_48
+  - first:
+      213: 1175629621882148928
+    second: 16x16dungeon-2_49
+  - first:
+      213: 2679311738309357376
+    second: 16x16dungeon-2_50
+  - first:
+      213: -2000797825871690926
+    second: 16x16dungeon-2_51
+  - first:
+      213: -4335625599506373925
+    second: 16x16dungeon-2_52
+  - first:
+      213: -3182492552259963125
+    second: 16x16dungeon-2_53
+  - first:
+      213: -3788487233237780267
+    second: 16x16dungeon-2_54
+  - first:
+      213: 4196665055859340293
+    second: 16x16dungeon-2_55
+  - first:
+      213: -4460964853940383707
+    second: 16x16dungeon-2_56
+  - first:
+      213: 7899539256642834289
+    second: 16x16dungeon-2_57
+  - first:
+      213: -8381514869458337323
+    second: 16x16dungeon-2_58
+  - first:
+      213: 6884203342266807093
+    second: 16x16dungeon-2_59
+  - first:
+      213: -1943341766591642022
+    second: 16x16dungeon-2_60
+  - first:
+      213: -2487009957136857478
+    second: 16x16dungeon-2_61
+  - first:
+      213: 3264109703314880195
+    second: 16x16dungeon-2_62
+  - first:
+      213: -3712798886423659411
+    second: 16x16dungeon-2_63
+  - first:
+      213: -6766971452482005283
+    second: 16x16dungeon-2_64
+  - first:
+      213: 379608053549025649
+    second: 16x16dungeon-2_65
+  - first:
+      213: 2377347475273470769
+    second: 16x16dungeon-2_66
+  - first:
+      213: 5245408082450618703
+    second: 16x16dungeon-2_67
+  - first:
+      213: 8947729175888077604
+    second: 16x16dungeon-2_68
+  - first:
+      213: -2129151771705304954
+    second: 16x16dungeon-2_69
+  - first:
+      213: -5107328922352051657
+    second: 16x16dungeon-2_70
+  - first:
+      213: 6339463297903686222
+    second: 16x16dungeon-2_71
+  - first:
+      213: -1474806934713047105
+    second: 16x16dungeon-2_72
+  - first:
+      213: -7747431212453994572
+    second: 16x16dungeon-2_73
+  - first:
+      213: 3557964442239702040
+    second: 16x16dungeon-2_74
+  - first:
+      213: 7087239734711273458
+    second: 16x16dungeon-2_75
+  - first:
+      213: 4596592592862826550
+    second: 16x16dungeon-2_76
+  - first:
+      213: -705594577316597712
+    second: 16x16dungeon-2_77
+  - first:
+      213: -3345415703941612569
+    second: 16x16dungeon-2_78
+  - first:
+      213: -9046905161232429717
+    second: 16x16dungeon-2_79
+  - first:
+      213: -1397254275178632402
+    second: 16x16dungeon-2_80
+  - first:
+      213: -6307994082581782841
+    second: 16x16dungeon-2_81
+  - first:
+      213: 7982597554210758339
+    second: 16x16dungeon-2_82
+  - first:
+      213: 8677983396582448809
+    second: 16x16dungeon-2_83
+  - first:
+      213: -5502088188825285720
+    second: 16x16dungeon-2_84
+  - first:
+      213: -3277276601056637466
+    second: 16x16dungeon-2_85
+  - first:
+      213: -6271233544236245688
+    second: 16x16dungeon-2_86
+  - first:
+      213: 6284121154561981022
+    second: 16x16dungeon-2_87
+  - first:
+      213: -8902948085553301177
+    second: 16x16dungeon-2_88
+  - first:
+      213: 520837875463179289
+    second: 16x16dungeon-2_89
+  - first:
+      213: 8621477654862695700
+    second: 16x16dungeon-2_90
+  - first:
+      213: -7607556924426317318
+    second: 16x16dungeon-2_91
+  - first:
+      213: -3831027117947418051
+    second: 16x16dungeon-2_92
+  - first:
+      213: -3463709593732431985
+    second: 16x16dungeon-2_93
+  - first:
+      213: -2354664920069138383
+    second: 16x16dungeon-2_94
+  - first:
+      213: -6560482755154943711
+    second: 16x16dungeon-2_95
+  - first:
+      213: -1165232677448077811
+    second: 16x16dungeon-2_96
+  - first:
+      213: -11253593386065834
+    second: 16x16dungeon-2_97
+  - first:
+      213: -7003924668052368258
+    second: 16x16dungeon-2_98
+  - first:
+      213: 2423558893228660131
+    second: 16x16dungeon-2_99
+  - first:
+      213: 1590740471453983162
+    second: 16x16dungeon-2_100
+  - first:
+      213: 3578121990957653050
+    second: 16x16dungeon-2_101
+  - first:
+      213: -4948573615787444411
+    second: 16x16dungeon-2_102
+  - first:
+      213: -8971109904789907712
+    second: 16x16dungeon-2_103
+  - first:
+      213: -2179209982697797220
+    second: 16x16dungeon-2_104
+  - first:
+      213: 8100174083281835490
+    second: 16x16dungeon-2_105
+  - first:
+      213: -5829923741802149427
+    second: 16x16dungeon-2_106
+  - first:
+      213: -2214188726149264961
+    second: 16x16dungeon-2_107
+  - first:
+      213: 6735562968736848334
+    second: 16x16dungeon-2_108
+  - first:
+      213: 4196256903268730030
+    second: 16x16dungeon-2_109
+  - first:
+      213: 4398614941557997071
+    second: 16x16dungeon-2_110
+  - first:
+      213: -2492513403256961535
+    second: 16x16dungeon-2_111
+  - first:
+      213: 6870263905314937103
+    second: 16x16dungeon-2_112
+  - first:
+      213: -3656154571576325087
+    second: 16x16dungeon-2_113
+  - first:
+      213: 343281100952912895
+    second: 16x16dungeon-2_114
+  - first:
+      213: -4560464834990365163
+    second: 16x16dungeon-2_115
+  - first:
+      213: -136181559994746671
+    second: 16x16dungeon-2_116
+  - first:
+      213: 849128591037696521
+    second: 16x16dungeon-2_117
+  - first:
+      213: 6546317309067592562
+    second: 16x16dungeon-2_118
+  - first:
+      213: -2505755224529942309
+    second: 16x16dungeon-2_119
+  - first:
+      213: 7929767620989501042
+    second: 16x16dungeon-2_120
+  - first:
+      213: 5090085353029250017
+    second: 16x16dungeon-2_121
+  - first:
+      213: 2604825408413593462
+    second: 16x16dungeon-2_122
+  - first:
+      213: 8763307771687297123
+    second: 16x16dungeon-2_123
+  - first:
+      213: -639945938538583266
+    second: 16x16dungeon-2_124
+  - first:
+      213: -2060141281577001895
+    second: 16x16dungeon-2_125
+  - first:
+      213: -4958209586309791843
+    second: 16x16dungeon-2_126
+  - first:
+      213: 3580935827903482268
+    second: 16x16dungeon-2_127
+  - first:
+      213: -5298811380798664064
+    second: 16x16dungeon-2_128
+  - first:
+      213: 770485020345390750
+    second: 16x16dungeon-2_129
+  - first:
+      213: 1120322924703466128
+    second: 16x16dungeon-2_130
+  - first:
+      213: 6889643521251282770
+    second: 16x16dungeon-2_131
+  - first:
+      213: -1085194458704767267
+    second: 16x16dungeon-2_132
+  - first:
+      213: 8362980295452896667
+    second: 16x16dungeon-2_133
+  - first:
+      213: 2063933390019065456
+    second: 16x16dungeon-2_134
+  - first:
+      213: -7837767621621702317
+    second: 16x16dungeon-2_135
+  - first:
+      213: -5688086001611513283
+    second: 16x16dungeon-2_136
+  - first:
+      213: -1461251173207059209
+    second: 16x16dungeon-2_137
+  - first:
+      213: 8269625056989962829
+    second: 16x16dungeon-2_138
+  - first:
+      213: -7371113913484960635
+    second: 16x16dungeon-2_139
+  - first:
+      213: 440403328687959211
+    second: 16x16dungeon-2_140
+  - first:
+      213: 7326307822848608680
+    second: 16x16dungeon-2_141
+  - first:
+      213: -6241402230446913296
+    second: 16x16dungeon-2_142
+  - first:
+      213: 8598381428500631424
+    second: 16x16dungeon-2_143
+  - first:
+      213: 3338820570072300284
+    second: 16x16dungeon-2_144
+  - first:
+      213: -1902011682914041397
+    second: 16x16dungeon-2_145
+  - first:
+      213: -6787851063884361862
+    second: 16x16dungeon-2_146
+  - first:
+      213: 4413848439143869539
+    second: 16x16dungeon-2_147
+  - first:
+      213: 5978254362400126621
+    second: 16x16dungeon-2_148
+  - first:
+      213: -8053361756600048150
+    second: 16x16dungeon-2_149
+  - first:
+      213: 37079725992394142
+    second: 16x16dungeon-2_150
+  - first:
+      213: 2572857248151939953
+    second: 16x16dungeon-2_151
+  - first:
+      213: -943875734889057364
+    second: 16x16dungeon-2_152
+  - first:
+      213: 2735877735054665134
+    second: 16x16dungeon-2_153
+  - first:
+      213: -678207700733835617
+    second: 16x16dungeon-2_154
+  - first:
+      213: 2589680381554346972
+    second: 16x16dungeon-2_155
+  - first:
+      213: 3280183064216983700
+    second: 16x16dungeon-2_156
+  - first:
+      213: -3772951722781969737
+    second: 16x16dungeon-2_157
+  - first:
+      213: 8812997412351313473
+    second: 16x16dungeon-2_158
+  - first:
+      213: 5975119812897249926
+    second: 16x16dungeon-2_159
+  - first:
+      213: 6808960821593228185
+    second: 16x16dungeon-2_160
+  - first:
+      213: 9178005174748079562
+    second: 16x16dungeon-2_161
+  - first:
+      213: 4564295442316474770
+    second: 16x16dungeon-2_162
+  - first:
+      213: 182121851758509390
+    second: 16x16dungeon-2_163
+  - first:
+      213: 1404827853029435706
+    second: 16x16dungeon-2_164
+  - first:
+      213: 6601020234833182086
+    second: 16x16dungeon-2_165
+  - first:
+      213: -9162165730941840083
+    second: 16x16dungeon-2_166
+  - first:
+      213: 3734000201211255976
+    second: 16x16dungeon-2_167
+  - first:
+      213: -7643740183744461465
+    second: 16x16dungeon-2_168
+  - first:
+      213: -949137260300703766
+    second: 16x16dungeon-2_169
+  - first:
+      213: 1703583127320444323
+    second: 16x16dungeon-2_170
+  - first:
+      213: -8458476342891123174
+    second: 16x16dungeon-2_171
+  - first:
+      213: -4106599985245264305
+    second: 16x16dungeon-2_172
+  - first:
+      213: 6296551492215100853
+    second: 16x16dungeon-2_173
+  - first:
+      213: 3208133922563388251
+    second: 16x16dungeon-2_174
+  - first:
+      213: 3609081285923007222
+    second: 16x16dungeon-2_175
+  - first:
+      213: -8854917545611462589
+    second: 16x16dungeon-2_176
+  - first:
+      213: 3827035138966396560
+    second: 16x16dungeon-2_177
+  - first:
+      213: 1290864012463616181
+    second: 16x16dungeon-2_178
+  - first:
+      213: 4768488118565605774
+    second: 16x16dungeon-2_179
+  - first:
+      213: -3395056781819243216
+    second: 16x16dungeon-2_180
+  - first:
+      213: 4953586392990534169
+    second: 16x16dungeon-2_181
+  - first:
+      213: -5307207521034048357
+    second: 16x16dungeon-2_182
+  - first:
+      213: 4617917783872665393
+    second: 16x16dungeon-2_183
+  - first:
+      213: 2192906610421576503
+    second: 16x16dungeon-2_184
+  - first:
+      213: 3018376538956886475
+    second: 16x16dungeon-2_185
+  - first:
+      213: 4980548285779912052
+    second: 16x16dungeon-2_186
+  - first:
+      213: 124681924098744599
+    second: 16x16dungeon-2_187
+  - first:
+      213: 8022397758419447017
+    second: 16x16dungeon-2_188
+  - first:
+      213: -5213856442091359082
+    second: 16x16dungeon-2_189
+  - first:
+      213: -7355950141461704910
+    second: 16x16dungeon-2_190
+  - first:
+      213: 4165648620872727983
+    second: 16x16dungeon-2_191
+  - first:
+      213: 5411617587786307474
+    second: 16x16dungeon-2_192
+  - first:
+      213: -1610601202052400648
+    second: 16x16dungeon-2_193
+  - first:
+      213: -2299655059381962108
+    second: 16x16dungeon-2_194
+  - first:
+      213: -3014574223843210295
+    second: 16x16dungeon-2_195
+  - first:
+      213: 6474344363693988730
+    second: 16x16dungeon-2_196
+  - first:
+      213: 6749077186484972499
+    second: 16x16dungeon-2_197
+  - first:
+      213: -7364454761948119660
+    second: 16x16dungeon-2_198
+  - first:
+      213: 6289126729093388155
+    second: 16x16dungeon-2_199
+  - first:
+      213: 7342495274737326969
+    second: 16x16dungeon-2_200
+  - first:
+      213: -3628825504411546148
+    second: 16x16dungeon-2_201
+  - first:
+      213: 3414194380092970184
+    second: 16x16dungeon-2_202
+  - first:
+      213: -8868744330221885373
+    second: 16x16dungeon-2_203
+  - first:
+      213: -659974476601178592
+    second: 16x16dungeon-2_204
+  - first:
+      213: -6371261219376860955
+    second: 16x16dungeon-2_205
+  - first:
+      213: 9136910332780082884
+    second: 16x16dungeon-2_206
+  - first:
+      213: 4080562384113699525
+    second: 16x16dungeon-2_207
+  - first:
+      213: 353505004450683083
+    second: 16x16dungeon-2_208
+  - first:
+      213: -2109956302009169245
+    second: 16x16dungeon-2_209
+  - first:
+      213: 7125878182500955343
+    second: 16x16dungeon-2_210
+  - first:
+      213: 1497831517474946828
+    second: 16x16dungeon-2_211
+  - first:
+      213: -8246850290806146761
+    second: 16x16dungeon-2_212
+  - first:
+      213: -5327877247437035697
+    second: 16x16dungeon-2_213
+  - first:
+      213: -1564653001207186112
+    second: 16x16dungeon-2_214
+  - first:
+      213: -3736613586868288863
+    second: 16x16dungeon-2_215
+  - first:
+      213: 6227273362618056299
+    second: 16x16dungeon-2_216
+  - first:
+      213: -4507216839482744603
+    second: 16x16dungeon-2_217
+  - first:
+      213: -6645249721790143807
+    second: 16x16dungeon-2_218
+  - first:
+      213: -3525021689277314314
+    second: 16x16dungeon-2_219
+  - first:
+      213: 1325916706970117695
+    second: 16x16dungeon-2_220
+  - first:
+      213: -850455944575620844
+    second: 16x16dungeon-2_221
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 16x16dungeon-2_0
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 346
+        width: 37
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 509d47f198057fe20800000000000000
+      internalID: 3384262194860710149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_1
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 346
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 518f4f93395a43330800000000000000
+      internalID: 3689756046474410005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_2
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 310
+        width: 26
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92308c70f5eba30a0800000000000000
+      internalID: -6900994163630144727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_3
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 283
+        width: 53
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 604023be81db5adb0800000000000000
+      internalID: -4781207514661125114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_4
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 283
+        width: 26
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e4e08094ee73bff0800000000000000
+      internalID: -21534053064710939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_5
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 283
+        width: 82
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a4dc7c4c66100920800000000000000
+      internalID: 2954386009950573732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_7
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 237
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de8de6bc0a5327900800000000000000
+      internalID: 680665458410445037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_8
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 221
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7afd2d785a95d730800000000000000
+      internalID: 4023291546973371007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_9
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 79
+        width: 32
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 942a9e14f75b41850800000000000000
+      internalID: 6346897333043176009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_10
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 90
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ee3abbe7abd30570800000000000000
+      internalID: 8431824441628573408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_11
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 90
+        width: 5
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 969f8c81358659ec0800000000000000
+      internalID: -3560825224259110551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_12
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 91
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c80021197c1e8810800000000000000
+      internalID: 1769383009907116229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_13
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 84
+        width: 8
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1221451032c9655d0800000000000000
+      internalID: -3074098021473709535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_14
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 92
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d54b0cca07f4a6410800000000000000
+      internalID: 1471075573643129949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_15
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 91
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52721850d1aa60c00800000000000000
+      internalID: 866567019938522917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_16
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 90
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7e793a4c7a2e89e0800000000000000
+      internalID: -1617308502869836166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_17
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 89
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59d04c6042c7113d0800000000000000
+      internalID: -3237670162928497259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_18
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 44
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04f0eceb8bb7b5df0800000000000000
+      internalID: -190422525827739840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_19
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 44
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9c6181793fb8cb90800000000000000
+      internalID: -7221311749050241891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_20
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 58
+        width: 8
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a3dfa0bad259f750800000000000000
+      internalID: 6339189049721344928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_21
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 58
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 379f92c5bb8b745d0800000000000000
+      internalID: -3078288705439794829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_22
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 58
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c31261482d5f1aa10800000000000000
+      internalID: 1919085200744522044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_23
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 58
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b92597a8d92d09660800000000000000
+      internalID: 7390638562589889179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_24
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 58
+        width: 34
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8d92fef5028b67f0800000000000000
+      internalID: -618257561569550964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 16x16dungeon-2_25
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 18
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05224935f47035d60800000000000000
+      internalID: 7877648210487157328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

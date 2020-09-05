@@ -15,7 +15,6 @@ public class Player : Character
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-        Debug.Log("entro awake");
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
     }
@@ -26,7 +25,6 @@ public class Player : Character
 
     protected override void Start()
     {
-        Debug.Log("entro start");
         maxHealthPoints = 10;
         healthPoints = maxHealthPoints;
         attackPoints = 1;
@@ -36,7 +34,6 @@ public class Player : Character
 
     void Update()
     {
-        //Debug.Log("UPdate");
         if (!GameManager.instance.playersTurn) return;
         if (InventoryUI.openedInventory || PauseMenu.gameIsPaused) return;
 

@@ -9,9 +9,13 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        AudioManager.instance.Play("MenuTheme");
+
         EventSystem.current.SetSelectedGameObject(null);
         //highlight default option
         EventSystem.current.SetSelectedGameObject(defaultOption);
+
+        Play();
     }
 
     void Update()
@@ -29,6 +33,8 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
+        AudioManager.instance.Stop("MenuTheme");
+
         //load next scene in the scene's queue, that's the game
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
     }

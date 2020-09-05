@@ -61,9 +61,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomsMinWidth: 10
-  roomsMaxWidth: 20
+  roomsMaxWidth: 10
   roomsMinHeight: 10
-  roomsMaxHeight: 20
+  roomsMaxHeight: 10
   _void: {fileID: 4549808191876422352, guid: d1001cb06e746d14b8b9278507bc3bbf, type: 3}
   floor: {fileID: 2853706433295622151, guid: 446348c10aaed0e418dfa922e74445ab, type: 3}
   wall: {fileID: 3262697631214554028, guid: 586d16c1bc2099b458c7916d73214ccb, type: 3}

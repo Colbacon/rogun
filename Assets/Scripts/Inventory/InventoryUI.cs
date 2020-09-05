@@ -69,7 +69,6 @@ public class InventoryUI : MonoBehaviour
     //called using a delegate on the Inventory
     void UpdateUI()
     {
-        //Debug.Log("Callback in action");
         for (int i = 0; i < slots.Length; i++)
         {
             if(i < inventory.items.Count)

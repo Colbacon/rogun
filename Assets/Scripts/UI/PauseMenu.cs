@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -41,14 +42,15 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
-
+        
         AudioManager.instance.Play("MenuClose");
     }
 
     public void AbandonRun()
     {
-        //invoke gameover
-        Debug.Log("GameOver");
+        Time.timeScale = 1f;
+        //gameIsPaused = false;
+        GameManager.instance.GameOver();
     }
 
     public void Quit()

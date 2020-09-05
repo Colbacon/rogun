@@ -85,7 +85,7 @@ public class Enemy : Character
         }
         else
         {
-            Debug.Log("NO SOLUTION"); 
+            Debug.Log("Pathfinding has not solution"); 
         }
 
         //base.Move(new Vector3(path[0].x, path[0].y));
