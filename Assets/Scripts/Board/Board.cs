@@ -3,10 +3,14 @@ using UnityEngine;
 using System.Linq;
 using QuickGraph;
 using QuickGraph.Algorithms;
+using UnityEngine.Tilemaps;
 
 public class Board : MonoBehaviour
 {
 
+    private Tilemap dungeonTileMap;
+    public TileBase dungeonTile;
+    
     //bidimensional array representing the board
     public Tile[][] board;
 
@@ -46,10 +50,11 @@ public class Board : MonoBehaviour
     public void BoardSetUp()
     {
         boardTransform = new GameObject("Board").transform;
+        dungeonTileMap = GameObject.Find("Dungeon").GetComponent<Tilemap>();
 
         InitTileMap();
         CreateRooms();
-        CreateCorridorsMST();
+        //CreateCorridorsMST();
         AddTilesNeighbours();
         InstantiateTiles();
 
@@ -73,10 +78,11 @@ public class Board : MonoBehaviour
             tile.isOccupied = true;
         }
         
-
+        /* 
         tile = room.GetRandomInnerTile();
         tile.isOccupied = true;
         Instantiate(enemy, tile.GetPosition(), Quaternion.identity);
+        */
 
         tile = room.GetRandomInnerTile();
         Instantiate(ladder, tile.GetPosition(), Quaternion.identity);
@@ -301,6 +307,15 @@ public class Board : MonoBehaviour
 
 
     }
+
+    private void UpdateCorridorTiles(Room room1, Room room2)
+    {
+        int r1x = (int)room1.GetCenterPoint().x;
+        int r1y = (int)room1.GetCenterPoint().y;
+
+        int r2x = (int)room2.GetCenterPoint().x;
+        int r2y = (int)room2.GetCenterPoint().y;
+    }
     /*
     private void CreateCorridors()
     {
@@ -352,8 +367,9 @@ public class Board : MonoBehaviour
             Debug.Log("key-> "+keys[i].GetCenterPoint()+"  value-> "+values[i].GetCenterPoint());
         } 
     }
-    */
+    
 
+        
     /// <summary>
     /// Update board's corridors' tiles with floor and wall tiles
     /// </summary>
@@ -511,13 +527,15 @@ public class Board : MonoBehaviour
                     {
 
                     }
-                }*/
+                }
 
                 lastDirection = (r1y < r2y) ? Vector3.up : Vector3.down;
             }
         }
     }
+    */
     #endregion
+
 
     /// <summary>
     /// For reachable tiles, sets reachables neighbours list.
@@ -598,8 +616,12 @@ public class Board : MonoBehaviour
                         break;
                 }
 
-                instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
-                instance.transform.SetParent(boardTransform);
+                if(toInstantiate != _void)
+                {
+                    dungeonTileMap.SetTile(new Vector3Int(x, y, 0), dungeonTile);
+                }
+                //instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+                //instance.transform.SetParent(boardTransform);
             }
         }
     }
