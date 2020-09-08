@@ -8,21 +8,23 @@ using UnityEngine.Tilemaps;
 public class Board : MonoBehaviour
 {
 
-    private Tilemap dungeonTileMap;
+    public Tilemap dungeonTileMap;
+    public Tilemap debugTilemap;
     public TileBase dungeonTile;
+    public TileBase debugtile;
     
     //bidimensional array representing the board
     public Tile[][] board;
 
-    public static int rows = 150;
-    public static int columns = 150;
+    public static int rows = 50;
+    public static int columns = 50;
     
     //number of rooms to attempt to place on board
-    public static int roomsToAttemp = 200;
-    public int roomsMinWidth = 5;
-    public int roomsMaxWidth = 5;
-    public int roomsMinHeight = 5;
-    public int roomsMaxHeight = 5;
+    public static int roomsToAttemp = 20;
+    public int roomsMinWidth;
+    public int roomsMaxWidth;
+    public int roomsMinHeight;
+    public int roomsMaxHeight;
     private List<Room> rooms;
 
     public GameObject _void;
@@ -51,20 +53,46 @@ public class Board : MonoBehaviour
     {
         boardTransform = new GameObject("Board").transform;
         dungeonTileMap = GameObject.Find("Dungeon").GetComponent<Tilemap>();
+        debugTilemap = GameObject.Find("Debug").GetComponent<Tilemap>();
 
         InitTileMap();
         CreateRooms();
-        //CreateCorridorsMST();
+        CreateCorridorsMST();
+        LoadTilesFromTileMap();
+        AddRoomsTiles();
         AddTilesNeighbours();
-        InstantiateTiles();
+        //InstantiateTiles();
 
         PlaceObjectsOnBoard();
+        //DebugPlaceObjectsOnBoard();
+    }
+
+    private void LoadTilesFromTileMap()
+    {
+        for(int x = 0; x < columns; x++)
+        {
+            for(int y = 0; y < rows; y++)
+            {
+                Sprite sprite = dungeonTileMap.GetSprite(new Vector3Int(x, y, 0));
+
+                if (sprite != null)
+                {
+                    int idx = sprite.name.LastIndexOf("_");
+                    if(idx != -1)
+                    {
+                        string str = sprite.name.Substring(0,idx);
+                        TileType tileType = (TileType)System.Enum.Parse(typeof(TileType), str, true);
+                        board[x][y].SetTileType(tileType);
+                    }    
+                }
+            }
+        }
     }
 
     private void PlaceObjectsOnBoard()
     {
         Room room = rooms[Random.Range(0, rooms.Count)];
-        Tile tile = room.GetRandomInnerTile();
+        Tile tile = room.GetRandomFloorTile();
 
         if (Player.instance == null)
         {
@@ -73,63 +101,112 @@ public class Board : MonoBehaviour
         }
         else
         {
-            //Debug.Log("is not null:  " + tile.GetPosition() + "");
             Player.instance.transform.position = tile.GetPosition();
             tile.isOccupied = true;
         }
-        
-        /* 
-        tile = room.GetRandomInnerTile();
+
+        /*
+        tile = room.GetRandomFloorTile();
         tile.isOccupied = true;
         Instantiate(enemy, tile.GetPosition(), Quaternion.identity);
         */
+        //room = rooms[Random.Range(0, rooms.Count)];
 
-        tile = room.GetRandomInnerTile();
+        
+        room = rooms[Random.Range(0, rooms.Count)];
+        tile = room.GetRandomFloorTile();
+        tile.isOccupied = true;
+        Instantiate(enemy, tile.GetPosition(), Quaternion.identity);
+        
+        room = rooms[Random.Range(0, rooms.Count)];
+        tile = room.GetRandomFloorTile();
+        tile.isOccupied = true;
+        Instantiate(enemy, tile.GetPosition(), Quaternion.identity);
+
+        room = rooms[Random.Range(0, rooms.Count)];
+        tile = room.GetRandomFloorTile();
+        tile.isOccupied = true;
+        Instantiate(enemy, tile.GetPosition(), Quaternion.identity);
+        
+        room = rooms[Random.Range(0, rooms.Count)];
+        tile = room.GetRandomFloorTile();
         Instantiate(ladder, tile.GetPosition(), Quaternion.identity);
-        /*
+
         ItemDataAssigner itemData = item.GetComponent<ItemDataAssigner>();
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 5; i++)
         {
-            tile = room.GetRandomInnerTile();
+            room = rooms[Random.Range(0, rooms.Count)];
+            tile = room.GetRandomFloorTile();
             itemData.SetItem(commonItems[Random.Range(0, commonItems.Length)]);
             Instantiate(item, tile.GetPosition(), Quaternion.identity);
         }
 
         for (int i = 0; i < 5; i++)
         {
-            tile = room.GetRandomInnerTile();
+            room = rooms[Random.Range(0, rooms.Count)];
+            tile = room.GetRandomFloorTile();
             itemData.SetItem(rareItems[Random.Range(0, rareItems.Length)]);
             Instantiate(item, tile.GetPosition(), Quaternion.identity);
         }
-        */
+
     }
 
-    /*
-    private void TestPathfinding()
+    private void DebugPlaceObjectsOnBoard()
     {
-            
-        // the code that you want to measure comes here
-            
-            
-        Tile start = tileMap[rooms[1].x+2][rooms[1].y+2];
-        Tile end = tileMap[rooms[3].x+6][rooms[3].y+6];
+        Room room = rooms[Random.Range(0, rooms.Count)];
+        Debug.Log("floor count: " + room.floorTiles.Count);
+        Tile tile = room.GetRandomFloorTile();
 
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        List<Tile> path = Pathfinding.AStartPathfinding(start, end);
-        watch.Stop();
-        var elapsedMs = watch.ElapsedMilliseconds;
-        Debug.Log("----------TIme: " + elapsedMs);
-        if (path == null)
-            Debug.Log("nullito");
-        for(int i = 0; i < path.Count; i++)
+        if (Player.instance == null)
         {
-            int x = path[i].x;
-            int y = path[i].y;
-            Instantiate(ladder, new Vector3(x, y, 0f), Quaternion.identity);
-            Debug.Log("iteration " + i + "  x: " + x + "  y: " + y);
+            Instantiate(player, tile.GetPosition(), Quaternion.identity);
+            tile.isOccupied = true;
         }
+        else
+        {
+            Player.instance.transform.position = tile.GetPosition();
+            tile.isOccupied = true;
+        }
+        
+        /*
+        tile = room.GetRandomFloorTile();
+        tile.isOccupied = true;
+        Instantiate(enemy, tile.GetPosition(), Quaternion.identity);
+        */
+        //room = rooms[Random.Range(0, rooms.Count)];
+
+        tile = room.GetRandomFloorTile();
+        tile.isOccupied = true;
+        Instantiate(enemy, tile.GetPosition(), Quaternion.identity);
+        
+        tile = room.GetRandomFloorTile();
+        tile.isOccupied = true;
+        Instantiate(enemy, tile.GetPosition(), Quaternion.identity);
+
+        tile = room.GetRandomFloorTile();
+        tile.isOccupied = true;
+        Instantiate(enemy, tile.GetPosition(), Quaternion.identity);
+
+
+        tile = room.GetRandomFloorTile();
+        Instantiate(ladder, tile.GetPosition(), Quaternion.identity);
+        
+        ItemDataAssigner itemData = item.GetComponent<ItemDataAssigner>();
+        for (int i = 0; i < 3; i++)
+        {
+            tile = room.GetRandomFloorTile();
+            itemData.SetItem(commonItems[Random.Range(0, commonItems.Length)]);
+            Instantiate(item, tile.GetPosition(), Quaternion.identity);
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            tile = room.GetRandomFloorTile();
+            itemData.SetItem(rareItems[Random.Range(0, rareItems.Length)]);
+            Instantiate(item, tile.GetPosition(), Quaternion.identity);
+        }
+        
     }
-    */
 
     /// <summary>
     /// Instantiate all tiles objects in TileMap and set them VOID type.
@@ -175,7 +252,7 @@ public class Board : MonoBehaviour
             if (!CollidesWithBoardsRooms(room))
             {
                 rooms.Add(room);
-                UpdateRoomTiles(room);
+                DrawRoomTiles(room);
             }
         }
     }
@@ -193,67 +270,38 @@ public class Board : MonoBehaviour
         return false;
     }
 
-    /// <summary> //SE PUEDE FUSIONAR CON BOARD SET TILES
     /// Update board's rooms' tiles with floor and wall tiles
     /// </summary>
-    private void UpdateRoomTiles(Room room)
+    private void DrawRoomTiles(Room room)
     {
-        TileType tileType;
-        room.innerTiles = new List<Tile>();
-        room.borderTiles = new List<Tile>();
-
         for (int x = 0; x < room.width; x++)
         {
             for (int y = 0; y < room.height; y++)
             {
-                /*
-                if (x == 0 || x == room.width -1|| y == 0 || y == room.height -1)
-                {
-                    tileMap[room.x + x][room.y + y].SetTileType(TileType.WALL);
-                }
-                else
-                {
-                    tileMap[room.x + x][room.y + y].SetTileType(TileType.FLOOR);
-                }*/
-                if (x == 0)
-                {
-                    tileType = TileType.WALL_RIGHT;
-                }
-                else if (x == room.width - 1)
-                {
-                    tileType = TileType.WALL_LEFT;
-                }
-                else if (y == 0)
-                {
-                    tileType = TileType.WALL_UP;
-                }
-                else if (y == room.height - 1)
-                {
-                    tileType = TileType.WALL_DOWN;
-                }
-                else
-                {
-                    tileType = TileType.FLOOR;
-                }
-
-                board[room.x + x][room.y + y].SetTileType(tileType);
-
-                if (tileType == TileType.FLOOR)
-                {
-                    room.innerTiles.Add(board[room.x + x][room.y + y]);
-                }
-                else
-                {
-                    room.borderTiles.Add(board[room.x + x][room.y + y]);
-                }
-                
+                dungeonTileMap.SetTile(new Vector3Int(room.x + x, room.y + y, 0), dungeonTile);
             }
-            //Setting corners
-            board[room.x][room.y].SetTileType(TileType.WALL_CORNER_SHORT_RIGHT);
-            board[room.x + room.width - 1][room.y].SetTileType(TileType.WALL_CORNER_SHORT_LEFT);
         }
     }
 
+    private void AddRoomsTiles()
+    {
+        foreach (Room room in rooms)
+        {
+            room.floorTiles = new List<Tile>();
+
+            for (int x = 0; x < room.width; x++)
+            {
+                for (int y = 0; y < room.height; y++)
+                {
+                    //add floor tiles
+                    if(board[room.x + x][room.y + y].tileType == TileType.FLOOR)
+                    {
+                        room.floorTiles.Add(board[room.x + x][room.y + y]);
+                    }
+                }
+            }
+        }
+    }
     #endregion
 
     #region Corridors
@@ -264,7 +312,7 @@ public class Board : MonoBehaviour
     /// </summary>
     private void CreateCorridorsMST()
     {
-        //TODO: to improve
+        
         var g = new UndirectedGraph<int, TaggedUndirectedEdge<int, float>>();
 
         for (int i = 0; i < rooms.Count; i++)
@@ -296,244 +344,50 @@ public class Board : MonoBehaviour
         */
         var mst = g.MinimumSpanningTreePrim(e => e.Tag).ToList();
 
-        //Debug.Log("-------------");
         for (int i = 0; i < mst.Count; i++)
         {
-            //Debug.Log(mst[i]);
             Room room1 = rooms[mst[i].Source];
             Room room2 = rooms[mst[i].Target];
-            UpdateCorridorTiles(room1, room2);
+            DrawCorridorTiles(room1, room2);
         }
-
-
     }
 
-    private void UpdateCorridorTiles(Room room1, Room room2)
+    private void DrawCorridorTiles(Room room1, Room room2)
     {
-        int r1x = (int)room1.GetCenterPoint().x;
-        int r1y = (int)room1.GetCenterPoint().y;
+        int r1x = Mathf.RoundToInt(room1.GetCenterPoint().x);
+        int r1y = Mathf.RoundToInt(room1.GetCenterPoint().y);
 
-        int r2x = (int)room2.GetCenterPoint().x;
-        int r2y = (int)room2.GetCenterPoint().y;
-    }
-    /*
-    private void CreateCorridors()
-    {
-        Dictionary<Room, Room> connectedRooms = new Dictionary<Room, Room>();
-        Dictionary<Room, bool> selectedRooms = new Dictionary<Room, bool>();
+        int r2x = Mathf.RoundToInt(room2.GetCenterPoint().x);
+        int r2y = Mathf.RoundToInt(room2.GetCenterPoint().y);
 
-        float minDistance;
-        float distance;
-        Room candidateRoom;
-
-        for (int i = 0; i < rooms.Count; i++)
+        while (r1x != r2x || r1y != r2y) //while not reached other room center
         {
-            minDistance = Mathf.Infinity;
-            candidateRoom = null;
-
-            for (int j = 0; j < rooms.Count; j++)
+            if (r1x != r2x) //move horizontally
             {
-                /*if (selectedRooms.ContainsKey(rooms[j]))
-                    Debug.Log("---Previous selected: " + rooms[j].GetCenterPoint());
-                //continue if is the same room or if it was previously selected
-                if (!(i == j || selectedRooms.ContainsKey(rooms[j])))
-                {
-                    //Debug.Log("iterate: " + i+" con1");
-                    if (!(connectedRooms.ContainsKey(rooms[j]) && connectedRooms[rooms[j]] == rooms[i]))
-                    {
-                        //Debug.Log("iterate: " + i + " con2");
-                        distance = rooms[i].GetDistanceToRoom(rooms[j]);
-                        if (distance < minDistance)
-                        {
-                            minDistance = distance;
-                            candidateRoom = rooms[j];
-                        }
-                    }
-                }
-            }
-                
-            if (candidateRoom != null)
-            {
-                //Debug.Log("candidate: " + candidateRoom.GetCenterPoint());
-                connectedRooms.Add(rooms[i], candidateRoom); //to delete, no es necesario guardar la info
-                selectedRooms.Add(candidateRoom, true);
-                UpdateCorridorTiles(rooms[i], candidateRoom);
-            }
-        }
-        var keys = connectedRooms.Keys.ToList();
-        var values = connectedRooms.Values.ToList();
-        for (int i = 0; i<connectedRooms.Count; i++)
-        {
-            Debug.Log("key-> "+keys[i].GetCenterPoint()+"  value-> "+values[i].GetCenterPoint());
-        } 
-    }
-    
-
-        
-    /// <summary>
-    /// Update board's corridors' tiles with floor and wall tiles
-    /// </summary>
-    private void UpdateCorridorTiles(Room room1, Room room2)
-    {
-        
-        int r1x = (int)room1.GetCenterPoint().x;
-        int r1y = (int)room1.GetCenterPoint().y;
-
-        int r2x = (int)room2.GetCenterPoint().x;
-        int r2y = (int)room2.GetCenterPoint().y;
-
-        Vector3 lastDirection = Vector3.zero;
-
-        while (r1x != r2x || r1y != r2y) //not reached other room center
-        {
-            if (r1x != r2x) //moved left/right
-            {
-
-                board[r1x][r1y].SetTileType(TileType.FLOOR);
-                    
-                //up is v || w_d || r_w || l_w || shr_r || shor_l
-                if (board[r1x][r1y + 1].tileType == TileType.VOID ||
-                    board[r1x][r1y + 1].tileType == TileType.WALL_DOWN ||
-                    board[r1x][r1y + 1].tileType == TileType.WALL_RIGHT || 
-                    board[r1x][r1y + 1].tileType == TileType.WALL_LEFT || 
-                    board[r1x][r1y + 1].tileType == TileType.WALL_CORNER_SHORT_RIGHT || 
-                    board[r1x][r1y + 1].tileType == TileType.WALL_CORNER_SHORT_LEFT)
-                {
-                    board[r1x][r1y + 1].SetTileType(TileType.WALL_DOWN);
-                }
-                else  //up is u_w || d_w || large_r || large _l
-                if (board[r1x][r1y + 1].tileType == TileType.WALL_UP ||
-                    board[r1x][r1y + 1].tileType == TileType.WALL_CORNER_LARGE_RIGHT ||
-                    board[r1x][r1y + 1].tileType == TileType.WALL_CORNER_LARGE_LEFT)
-                {
-                    board[r1x][r1y + 1].SetTileType(TileType.FLOOR);
-                }
-
-                //down
-                if (board[r1x][r1y - 1].tileType == TileType.VOID ||
-                    board[r1x][r1y - 1].tileType == TileType.WALL_UP ||
-                    board[r1x][r1y - 1].tileType == TileType.WALL_CORNER_SHORT_LEFT ||
-                    board[r1x][r1y - 1].tileType == TileType.WALL_CORNER_SHORT_RIGHT)
-                {
-                    board[r1x][r1y - 1].SetTileType(TileType.WALL_UP);
-                }
-                else
-                if (board[r1x][r1y - 1].tileType == TileType.WALL_RIGHT ||
-                    board[r1x][r1y - 1].tileType == TileType.WALL_CORNER_LARGE_RIGHT)
-                {
-                    board[r1x][r1y - 1].SetTileType(TileType.WALL_CORNER_LARGE_RIGHT);
-                }
-                else
-                if (board[r1x][r1y - 1].tileType == TileType.WALL_LEFT ||
-                    board[r1x][r1y - 1].tileType == TileType.WALL_CORNER_LARGE_LEFT)
-                {
-                    board[r1x][r1y - 1].SetTileType(TileType.WALL_CORNER_LARGE_LEFT);
-                }
-                else
-                if (board[r1x][r1y - 1].tileType == TileType.WALL_DOWN)
-                {
-                    board[r1x][r1y - 1].SetTileType(TileType.FLOOR);
-                }
-
                 r1x += (r1x < r2x) ? 1 : -1;
-
-                lastDirection = (r1x < r2x) ? Vector3.right : Vector3.left;
-                
             }
-            else //move up/down
+            else
             {
-                board[r1x][r1y].SetTileType(TileType.FLOOR);
-
-                //l is v
-                if (board[r1x - 1][r1y].tileType == TileType.VOID ||
-                    board[r1x - 1][r1y].tileType == TileType.WALL_RIGHT ||
-                    board[r1x - 1][r1y].tileType == TileType.WALL_CORNER_SHORT_RIGHT)
-                {
-                    board[r1x - 1][r1y].SetTileType(TileType.WALL_RIGHT);
-                }
-                else
-                if (board[r1x - 1][r1y].tileType == TileType.WALL_DOWN)
-                {
-                    board[r1x - 1][r1y].SetTileType(TileType.WALL_DOWN);
-                }
-                else
-                if (board[r1x - 1][r1y].tileType == TileType.WALL_UP ||
-                    board[r1x - 1][r1y].tileType == TileType.WALL_CORNER_LARGE_RIGHT ||
-                    board[r1x - 1][r1y].tileType == TileType.WALL_CORNER_SHORT_LEFT)
-                {
-                    board[r1x - 1][r1y].SetTileType(TileType.WALL_CORNER_LARGE_RIGHT);
-                }
-                else
-                if (board[r1x - 1][r1y].tileType == TileType.WALL_LEFT ||
-                    board[r1x - 1][r1y].tileType == TileType.WALL_CORNER_LARGE_LEFT ||
-                    board[r1x - 1][r1y].tileType == TileType.WALL_CORNER_SHORT_LEFT)
-                {
-                    board[r1x - 1][r1y].SetTileType(TileType.FLOOR);
-                }
-                    
-
-                // r is v
-                if (board[r1x + 1][r1y].tileType == TileType.VOID ||
-                    board[r1x + 1][r1y].tileType == TileType.WALL_LEFT ||
-                    board[r1x + 1][r1y].tileType == TileType.WALL_CORNER_SHORT_LEFT)
-                {
-                    board[r1x + 1][r1y].SetTileType(TileType.WALL_LEFT);
-                }
-                else
-                if (board[r1x + 1][r1y].tileType == TileType.WALL_DOWN)
-                {
-                    board[r1x + 1][r1y].SetTileType(TileType.WALL_DOWN);
-                }
-                else
-                if (board[r1x + 1][r1y].tileType == TileType.WALL_UP ||
-                    board[r1x + 1][r1y].tileType == TileType.WALL_CORNER_LARGE_LEFT ||
-                    board[r1x + 1][r1y].tileType == TileType.WALL_CORNER_SHORT_RIGHT)
-                {
-                    board[r1x + 1][r1y].SetTileType(TileType.WALL_CORNER_LARGE_LEFT);
-                }
-                if (board[r1x + 1][r1y].tileType == TileType.WALL_RIGHT ||
-                    board[r1x + 1][r1y].tileType == TileType.WALL_CORNER_LARGE_RIGHT)
-                {
-                    board[r1x + 1][r1y].SetTileType(TileType.FLOOR);
-                }
-
                 r1y += (r1y < r2y) ? 1 : -1;
-
-                Debug.Log(lastDirection);
-                if(lastDirection == Vector3.left)
-                {
-                    Debug.Log("he entrad");
-                    if(r1y < 0) //moving down
-                    {
-                        Debug.Log("he entrad  menor");
-                        board[r1x][r1y + 1].SetTileType(TileType.WALL_DOWN);
-                        board[r1x + 1][r1y + 1].SetTileType(TileType.WALL_LEFT);
-                    }
-                    else //moving up
-                    {
-                        board[r1x][r1y - 1].SetTileType(TileType.WALL_UP);
-                        board[r1x + 1][r1y - 1].SetTileType(TileType.WALL_CORNER_SHORT_LEFT);
-                    }
-                }
-                /*
-                if(lastDirection == Vector3.right)
-                {
-                    if (r1y < 0) //moving down
-                    {
-                        board[r1x][r1y + 1].SetTileType(TileType.WALL_DOWN);
-                        
-                    }
-                    else
-                    {
-
-                    }
-                }
-
-                lastDirection = (r1y < r2y) ? Vector3.up : Vector3.down;
             }
+            Vector3Int currentPosition = new Vector3Int(r1x, r1y, 0);
+            dungeonTileMap.SetTile(currentPosition, dungeonTile);
+            DrawAdjacentPositions(currentPosition);
         }
     }
-    */
+
+    private void DrawAdjacentPositions(Vector3Int position)
+    {
+        dungeonTileMap.SetTile(new Vector3Int(position.x - 1, position.y + 1, 0), dungeonTile); //up-left
+        dungeonTileMap.SetTile(new Vector3Int(position.x, position.y + 1, 0), dungeonTile); //up
+        dungeonTileMap.SetTile(new Vector3Int(position.x + 1, position.y + 1, 0), dungeonTile); //up-right
+        dungeonTileMap.SetTile(new Vector3Int(position.x - 1, position.y, 0), dungeonTile); //left
+        dungeonTileMap.SetTile(new Vector3Int(position.x, position.y, 0), dungeonTile); //center
+        dungeonTileMap.SetTile(new Vector3Int(position.x + 1, position.y, 0), dungeonTile); //right
+        dungeonTileMap.SetTile(new Vector3Int(position.x - 1, position.y - 1, 0), dungeonTile); //down-left
+        dungeonTileMap.SetTile(new Vector3Int(position.x, position.y - 1, 0), dungeonTile); //down
+        dungeonTileMap.SetTile(new Vector3Int(position.x + 1, position.y - 1, 0), dungeonTile); //down-right
+    }
     #endregion
 
 
@@ -553,16 +407,16 @@ public class Board : MonoBehaviour
 
                 reachableNeighbours = new List<Tile>();
 
-                if (x > 0 && board[x - 1][y].IsReachable()) //left
+                if (x > 0 && board[x - 1][y].IsReachable()) //left neighbour
                     reachableNeighbours.Add(board[x - 1][y]);
 
-                if(x < columns-1 && board[x + 1][y].IsReachable()) //right
+                if(x < columns-1 && board[x + 1][y].IsReachable()) //right neighbour
                     reachableNeighbours.Add(board[x + 1][y]);
 
-                if (y > 0 && board[x][y - 1].IsReachable()) //bottom
+                if (y > 0 && board[x][y - 1].IsReachable()) //bottom neighbour
                     reachableNeighbours.Add(board[x][y - 1]);
 
-                if (y < rows-1  && board[x][y + 1].IsReachable()) //up
+                if (y < rows-1  && board[x][y + 1].IsReachable()) //up neighbour
                     reachableNeighbours.Add(board[x][y + 1]);
 
                 board[x][y].SetReachableNeighbours(reachableNeighbours);
@@ -616,24 +470,32 @@ public class Board : MonoBehaviour
                         break;
                 }
 
-                if(toInstantiate != _void)
-                {
-                    dungeonTileMap.SetTile(new Vector3Int(x, y, 0), dungeonTile);
-                }
-                //instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
-                //instance.transform.SetParent(boardTransform);
+                instance = Instantiate(toInstantiate, new Vector3(x, y, 0f), Quaternion.identity) as GameObject;
+                instance.transform.SetParent(boardTransform);
             }
         }
     }
 
     public Tile GetTile(Vector3 position)
     {
-        return board[(int)position.x][(int)position.y];
+        int x = Mathf.RoundToInt(position.x);
+        int y = Mathf.RoundToInt(position.y);
+        return board[x][y];
     }
     
     public void SetOccupiedTile(Vector3 position, bool occupied)
     {
-        board[(int)position.x][(int)position.y].isOccupied = occupied;
+        int x = Mathf.RoundToInt(position.x);
+        int y = Mathf.RoundToInt(position.y);
+        board[x][y].isOccupied = occupied;
+        /*if (occupied)
+        {
+            debugTilemap.SetTile(new Vector3Int((int)position.x, (int)position.y, 0), debugtile);
+        }
+        else
+        {
+            debugTilemap.SetTile(new Vector3Int((int)position.x, (int)position.y, 0), null);
+        }*/
     }
 }
 

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Player : Character
@@ -44,12 +43,12 @@ public class Player : Character
         vertical = (int)(Input.GetAxisRaw("Vertical"));
 
         if (Input.GetKeyDown(KeyCode.Space)){
+            //TODO: move animation and sfx inside parent method
             animator.SetTrigger("Attack");
             AudioManager.instance.Play("PlayerAttack");
-            this.TakeDamage(2); 
             Attack <Enemy>();
-            //end player's turn if it moved
-            GameManager.instance.playersTurn = false;// controlar esto mejor. Ahora solo está en pla debug
+           
+            GameManager.instance.playersTurn = false;
         }
 
         if (horizontal != 0)    //avoid diagonal movement
@@ -57,13 +56,12 @@ public class Player : Character
 
         if (horizontal != 0 || vertical != 0)
         {
-            if (!base.isMoving) //really needed?
+            if (!base.isMoving)
             {
                 Vector3 direction = new Vector3(horizontal, vertical);
                 bool hasMoved = base.Move(direction);
                 if (!hasMoved)
                 {
-                    //Debug.Log("Going to face");
                     UpdateAnimatorFacing(direction);
                     this.direction = direction; //update where player is facing
                 }
@@ -84,10 +82,17 @@ public class Player : Character
         enemy.TakeDamage(attackPoints);
     }
 
+    protected override void Die()
+    {
+        base.Die();
+        GameManager.instance.GameOver();
+    }
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if(collider.tag == "Ladder")
         {
+            GameManager.instance.playersTurn = false;
             Invoke("RestartScene", restartLevelDelay);
         }
 

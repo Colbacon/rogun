@@ -10,16 +10,16 @@ TextureImporter:
     second: Dungeon_Tileset_0
   - first:
       213: -3590207636862898149
-    second: Dungeon_Tileset_1
+    second: Wall_Down_0
   - first:
       213: -6941422852762540485
-    second: Dungeon_Tileset_2
+    second: Wall_Down_1
   - first:
       213: -6419999111262848172
-    second: Dungeon_Tileset_3
+    second: Wall_Down_2
   - first:
       213: 5094737752361063794
-    second: Dungeon_Tileset_4
+    second: Wall_Down_3
   - first:
       213: 4023018930920339469
     second: Dungeon_Tileset_5
@@ -411,7 +411,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dungeon_Tileset_1
+      name: Wall_Down_0
       rect:
         serializedVersion: 2
         x: 16
@@ -432,7 +432,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dungeon_Tileset_2
+      name: Wall_Down_1
       rect:
         serializedVersion: 2
         x: 32
@@ -453,7 +453,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dungeon_Tileset_3
+      name: Wall_Down_2
       rect:
         serializedVersion: 2
         x: 48
@@ -474,7 +474,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dungeon_Tileset_4
+      name: Wall_Down_3
       rect:
         serializedVersion: 2
         x: 64

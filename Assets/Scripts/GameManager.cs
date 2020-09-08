@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
 {
     public float startLevelDelay= 2f;
     public float turnDelay = 0.1f;
-    //public BoardManager boardScript;
     public Board boardScript;
     public static GameManager instance = null;
     public bool playersTurn = true;
@@ -33,27 +32,13 @@ public class GameManager : MonoBehaviour
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
 
-        SceneManager.sceneLoaded += OnSceneLoaded;
-        Debug.Log("suscribed");
+        SceneManager.sceneLoaded += OnSceneLoaded; //subscribe CallBack to sceneLoaded event
 
         AudioManager.instance.Play("Theme");
 
         enemies = new List<Enemy>();
         boardScript = GetComponent<Board>();
-
-        /*
-        instance.level++;
-        instance.InitGame();
-        */
     }
-
-    /*
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-    static public void CallbackInitialization()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-    */
 
     static private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
@@ -63,13 +48,9 @@ public class GameManager : MonoBehaviour
 
     void InitGame()
     {
-        doingSetup = true;
-        //for debugging
+        Debug.Log("Setting up level " + level + "- GetInstanceID: " + gameObject.GetInstanceID());
 
-        /*GameObject canvasLevelTrans = GameObject.Find("LevelImage");
-        canvasLevelTrans.SetActive(true);
-        */
-        //levelImage.SetActive(true); //delete
+        doingSetup = true;
         
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
@@ -79,8 +60,14 @@ public class GameManager : MonoBehaviour
         Invoke("HideLevelImage", startLevelDelay);
         
         enemies.Clear();
-        Debug.Log("Setting up level " + level + "- GetInstanceID: " + gameObject.GetInstanceID());
+
+        var watch = System.Diagnostics.Stopwatch.StartNew();
+
         boardScript.BoardSetUp();
+
+        watch.Stop();
+        var elapsedMs = watch.ElapsedMilliseconds;
+        Debug.LogWarning("Board setup time: " + elapsedMs);
     }
 
     void HideLevelImage()
@@ -93,50 +80,32 @@ public class GameManager : MonoBehaviour
     {
         
         if (playersTurn || enemiesMoving || doingSetup)
-            //Debug.Log(" p: " + playersTurn  + " e: "+ enemiesMoving + " s: " + doingSetup);
             return;
-        StartCoroutine(MoveEnemies());
+        StartCoroutine(EnemiesTurn());
         
     }
 
-    public void GameOver()
-    {
-        //GameOver transition
-
-
-        AudioManager.instance.Stop("Theme");
-
-        //https://answers.unity.com/questions/1491238/undo-dontdestroyonload.html
-        
-        SceneManager.MoveGameObjectToScene(Inventory.instance.gameObject, SceneManager.GetActiveScene());
-        SceneManager.MoveGameObjectToScene(Player.instance.gameObject, SceneManager.GetActiveScene());
-        SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
-
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-        Debug.Log("unsuscribe");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1, LoadSceneMode.Single);
-    }
-
-    IEnumerator MoveEnemies()
+    private IEnumerator EnemiesTurn()
     {
         enemiesMoving = true;
 
-        yield return new WaitForSeconds(0.2f);
-
-        if (enemies.Count == 0)
-        {
-            yield return new WaitForSeconds(turnDelay);
-        }
+        yield return new WaitForSeconds(Player.instance.moveTime + turnDelay);
 
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].MoveEnemy();
-
-            //yield return new WaitForSeconds(1f / enemies[i].speed);
-            yield return new WaitForSeconds(enemies[i].moveTime + 0.2f);
+            if (IsOutOfCamera(enemies[i].transform))
+            {
+                enemies[i].EnemyTurn(true);
+                //Debug.LogWarning(enemies[i].transform.position + " is out of camera");
+                yield return new WaitForSeconds(0.05f);
+            }
+            else
+            {
+                enemies[i].EnemyTurn(false);
+                yield return new WaitForSeconds(enemies[i].moveTime + turnDelay);
+            }
         }
 
-        yield return new WaitForSeconds(0.1f); //colchonsito de seguridad
         playersTurn = true;
         enemiesMoving = false;
     }
@@ -149,5 +118,26 @@ public class GameManager : MonoBehaviour
     public void RemoveEnemy(Enemy enemy)
     {
         enemies.Remove(enemy);
+    }
+
+    public bool IsOutOfCamera (Transform target)
+    {
+        Vector3 viewPos = Camera.main.WorldToViewportPoint(target.position);
+        return !(viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0);
+    }
+
+    public void GameOver()
+    {
+        //TODO: GameOver transition
+        AudioManager.instance.Stop("Theme");
+
+        //Undo dontDestroyOnLoad, to destroy automatically these gameObjects when change to main menu scene
+        //https://answers.unity.com/questions/1491238/undo-dontdestroyonload.html
+        SceneManager.MoveGameObjectToScene(Inventory.instance.gameObject, SceneManager.GetActiveScene());
+        SceneManager.MoveGameObjectToScene(Player.instance.gameObject, SceneManager.GetActiveScene());
+        SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
+
+        SceneManager.sceneLoaded -= OnSceneLoaded; //unsuscribe OnSceneLoaded Callback from sceneLoaded event
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1, LoadSceneMode.Single); //Load main menu scene
     }
 }

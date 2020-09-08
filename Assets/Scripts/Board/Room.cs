@@ -9,7 +9,7 @@ public class Room
     public int width;
     public int height;
 
-    public List<Tile> innerTiles;
+    public List<Tile> floorTiles;
     public List<Tile> borderTiles;
 
     public Room(int x, int y, int width, int height)
@@ -20,29 +20,6 @@ public class Room
         this.height = height;
     }
 
-    /*
-    private void SetRoomTiles()
-    {
-        innerTiles = new List<Tile>();
-        borderTiles = new List<Tile>();
-
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                /
-                if (x == 0 || x == width - 1 || y == 0 || y == height - 1)
-                {
-                    borderTiles.Add()
-                }
-                else
-                {
-
-                }
-            }
-        }
-    }
-    */
     /// <summary>
     /// Check if there is an intersection with another room.
     /// </summary>
@@ -70,12 +47,12 @@ public class Room
         return new Vector2(Mathf.Floor(x + (x + width)) / 2, Mathf.Floor(y + (y + height)) / 2);
     }
 
-    public Tile GetRandomInnerTile()
+    public Tile GetRandomFloorTile()
     {
-        Tile tile = innerTiles[Random.Range(0, innerTiles.Count)];
+        Tile tile = floorTiles[Random.Range(0, floorTiles.Count)];
         
         //remove from list to avoid get one tile more than once (p.e place units or items)
-        innerTiles.Remove(tile);
+        floorTiles.Remove(tile);
 
         return tile;
     }

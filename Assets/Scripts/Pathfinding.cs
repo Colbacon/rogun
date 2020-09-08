@@ -75,7 +75,7 @@ public static class Pathfinding
             }
             else
             {
-                break; //needed?
+                break;
             }
         }
         path.Reverse();

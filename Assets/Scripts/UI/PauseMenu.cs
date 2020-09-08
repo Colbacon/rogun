@@ -14,6 +14,8 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
+        if (InventoryUI.openedInventory) return;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (gameIsPaused)
@@ -40,16 +42,18 @@ public class PauseMenu : MonoBehaviour
     public void Resume()
     {
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
         gameIsPaused = false;
-        
+        Time.timeScale = 1f;
+
         AudioManager.instance.Play("MenuClose");
     }
 
     public void AbandonRun()
     {
+        pauseMenuUI.SetActive(false);
+        gameIsPaused = false;
         Time.timeScale = 1f;
-        //gameIsPaused = false;
+
         GameManager.instance.GameOver();
     }
 

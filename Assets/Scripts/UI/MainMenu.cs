@@ -15,7 +15,7 @@ public class MainMenu : MonoBehaviour
         //highlight default option
         EventSystem.current.SetSelectedGameObject(defaultOption);
 
-        Play();
+        //Play();
     }
 
     void Update()

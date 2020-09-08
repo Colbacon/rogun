@@ -17,81 +17,52 @@ public class Enemy : Character
         base.Start();
     }
 
-    public void MoveEnemy()
+    public void EnemyTurn(bool outOfCamera)
     {
-        Vector3 direction;
-
-        /*
-        //try to move
-        if (Mathf.Abs(player.position.x - transform.position.x) < float.Epsilon)
-        {
-            direction = player.position.y > transform.position.y ? Vector3.up : Vector3.down;
-        }
-        else
-        {
-            direction = player.position.x > transform.position.x ? Vector3.right : Vector3.left;
-        }
-        */
-
-        ChasePlayer();
-
-        //bool canMove = base.Move(direction);
-
-        //if cant move, attack player
-        //base.Attack<Player>();
-        
-    }
-
-    private void ChasePlayer()
-    {
-        // the code that you want to measure comes here
-
-        /*
-        Tile start = tileMap[rooms[1].x + 2][rooms[1].y + 2];
-        Tile end = tileMap[rooms[3].x + 6][rooms[3].y + 6];
-
-        var watch = System.Diagnostics.Stopwatch.StartNew();
-        List<Tile> path = Pathfinding.AStartPathfinding(start, end);
-        watch.Stop();
-        var elapsedMs = watch.ElapsedMilliseconds;
-        Debug.Log("----------TIme: " + elapsedMs);
-        if (path == null)
-            Debug.Log("nullito");
-        for (int i = 0; i < path.Count; i++)
-        {
-            int x = path[i].x;
-            int y = path[i].y;
-            Instantiate(ladder, new Vector3(x, y, 0f), Quaternion.identity);
-            Debug.Log("iteration " + i + "  x: " + x + "  y: " + y);
-        }*/
         Tile start = GameManager.instance.boardScript.GetTile(transform.position);
         Tile end = GameManager.instance.boardScript.GetTile(player.position);
+        Debug.Log(player.position);
 
         List<Tile> path = Pathfinding.AStartSorthestPath(start, end);
 
-        if (path != null)
+        if (path == null) //path to player not found, don't perform action
+            return;
+
+        //Only for debugging pourpouses
+        for (int i = 0; i < path.Count - 1; i++)
         {
-            /*Debug.Log("----------------------------");
-            Debug.Log(path[0].GetPosition());
-            Debug.Log(path[path.Count - 1].GetPosition());
-            */
-            for (int i = 0; i < path.Count - 1 ; i++)
-            {
-
-                Debug.DrawLine(new Vector3(path[i].x, path[i].y), new Vector3(path[i + 1].x, path[i + 1].y), Color.red,2);
-            }
-
-            base.Move(path[1].GetPosition());
+            Debug.DrawLine(new Vector3(path[i].x, path[i].y), new Vector3(path[i + 1].x, path[i + 1].y), Color.red, 2);
         }
+
+        Vector3 nextPosition = path[1].GetPosition();
+
+        Vector3 direction = GetDirection(nextPosition);
+
+        if (outOfCamera)
+            TelePort(nextPosition, direction);
         else
         {
-            Debug.Log("Pathfinding has not solution"); 
+            bool hasMoved = base.Move(direction);
+            if (!hasMoved)
+            {
+                UpdateAnimatorFacing(direction);
+                this.direction = direction; //update where enemy is facing
+                AudioManager.instance.Play("EnemyAttack"); //TODO: Move inside Attack method
+                Attack<Player>();
+            }
         }
+    }
 
-        //base.Move(new Vector3(path[0].x, path[0].y));
 
-        //Tile 
+    private Vector3 GetDirection(Vector3 targetPosition)
+    {
+        //try to move
+        if (Mathf.Abs(targetPosition.x - transform.position.x) < float.Epsilon)
+            direction = targetPosition.y > transform.position.y ? Vector3.up : Vector3.down;
+        else
+            direction = targetPosition.x > transform.position.x ? Vector3.right : Vector3.left;
 
+        return direction;
     }
 
     protected override void DealDamage<T>(T component)

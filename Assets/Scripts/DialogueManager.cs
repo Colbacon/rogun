@@ -22,7 +22,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject dialogueUI;
     public Text dialogueText;
 
-    public float sentenceDelay = 2;
+    public float sentenceDelay = 3f;
 
     private Queue<string> sentences = new Queue<string>();
 
@@ -37,11 +37,7 @@ public class DialogueManager : MonoBehaviour
         {
             this.sentences.Enqueue(sentence);
         }
-
-        
-        StartCoroutine(DisplaySentences());
-        //DisplayNextSentence();
-        
+        StartCoroutine(DisplaySentences());        
     }
 
     IEnumerator DisplaySentences()
@@ -58,19 +54,6 @@ public class DialogueManager : MonoBehaviour
 
         EndDialogue();
     }
-
-    /*
-    public void DisplayNextSentence()
-    {
-        if(sentences.Count == 0)
-        {
-            EndDialogue();
-            return;
-        }
-
-        string sentence = sentences.Dequeue();
-        dialogueText.text = sentence;
-    }*/
 
     private void EndDialogue()
     {

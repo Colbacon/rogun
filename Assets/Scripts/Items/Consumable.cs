@@ -7,7 +7,6 @@ public class Consumable : Item
 
     public override void Use()
     {
-
         if(heal >= 0)
         {
             Player.instance.Heal(heal);

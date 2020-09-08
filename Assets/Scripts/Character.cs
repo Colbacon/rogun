@@ -13,7 +13,7 @@ public abstract class Character : MonoBehaviour
 
     protected Vector3 direction;
     public LayerMask collisionLayer;
-    public float moveTime = 0.1f; //Time taken to move one tile 0.1
+    public float moveTime; //Time taken to move one tile 0.1
     private BoxCollider2D boxCollider;
     private Rigidbody2D rigidBody;
     private float inverseMoveTime;
@@ -52,10 +52,10 @@ public abstract class Character : MonoBehaviour
 
         this.direction = direction; //update where character is facing
 
-        StartCoroutine(SmoothMovement(targetPosition));
-
         GameManager.instance.boardScript.SetOccupiedTile(initPosition, false);
+        StartCoroutine(SmoothMovement(targetPosition));
         GameManager.instance.boardScript.SetOccupiedTile(targetPosition, true);
+        //Debug.DrawLine(initPosition, targetPosition, Color.blue, 2);
 
         return true;
     }
@@ -81,6 +81,16 @@ public abstract class Character : MonoBehaviour
 
         UpdateAnimatorWalk(Vector3.zero);
         isMoving = false;
+    }
+
+    protected void TelePort(Vector3 targetPosition, Vector3 direction)
+    {
+        GameManager.instance.boardScript.SetOccupiedTile(transform.position, false);
+        GameManager.instance.boardScript.SetOccupiedTile(targetPosition, true);
+
+        UpdateAnimatorFacing(direction);
+        this.direction = direction; //update where enemy is facing
+        transform.position = targetPosition;
     }
 
     /**
@@ -131,6 +141,7 @@ public abstract class Character : MonoBehaviour
         //reproduce sound dying
         this.enabled = false;
         boxCollider.enabled = false;
+        GameManager.instance.boardScript.SetOccupiedTile(transform.position, false);
         Destroy(gameObject);
     }
 
@@ -155,7 +166,7 @@ public abstract class Character : MonoBehaviour
         //disable the boxcollider so linecast doesn't hit object's own collider
         boxCollider.enabled = false;
 
-        Debug.DrawLine(initPosition, targetPosition, Color.red);
+        //Debug.DrawLine(initPosition, targetPosition, Color.blue, 8);
         RaycastHit2D hit = Physics2D.Linecast(initPosition, targetPosition, collisionLayer);
 
         boxCollider.enabled = true;
@@ -174,13 +185,6 @@ public abstract class Character : MonoBehaviour
 
     protected void UpdateAnimatorWalk(Vector3 direction)
     {
-        /* animator.SetInteger("WalkX", direction.x < 0 ? -1 : direction.x > 0 ? 1 : 0);
-         animator.SetInteger("WalkY", direction.y < 0 ? -1 : direction.y > 0 ? 1 : 0);
-         /*
-         Debug.Log("-----------------------------");
-         Debug.Log("walkx" + (direction.x < 0 ? -1 : direction.x > 0 ? 1 : 0));
-         Debug.Log("walky" + (direction.y < 0 ? -1 : direction.y > 0 ? 1 : 0));
-         */
 
         if (direction == Vector3.up)
             animator.SetBool("WalkUp", true);

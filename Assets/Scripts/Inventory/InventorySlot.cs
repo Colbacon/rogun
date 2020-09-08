@@ -7,7 +7,14 @@ public class InventorySlot : MonoBehaviour
     public Text useItemText;
     public Image removeItemImage;
 
-    Item item;
+    private Item item;
+
+    private InventoryUI inventoryUI;
+
+    private void Start()
+    {
+        inventoryUI = FindObjectOfType<InventoryUI>();    
+    }
 
     public void AddItem (Item item)
     {
@@ -45,7 +52,7 @@ public class InventorySlot : MonoBehaviour
 
             Inventory.instance.Remove(item);
 
-            FindObjectOfType<InventoryUI>().CloseInventory();
+            inventoryUI.CloseInventory();
         }
     }
 
@@ -55,6 +62,8 @@ public class InventorySlot : MonoBehaviour
         {
             AudioManager.instance.Play("InventoryRemoveItem");
             DialogueManager.instance.StartDialogue(new string[1] { "You dropped " + item.name });
+
+            inventoryUI.CloseInventory();
             Inventory.instance.Remove(item);
         }
     }

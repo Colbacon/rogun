@@ -31,6 +31,8 @@ public class InventoryUI : MonoBehaviour
 
     void Update()
     {
+        if (PauseMenu.gameIsPaused) return;
+
         if (Input.GetKeyDown(KeyCode.I))
         {
 
@@ -43,6 +45,16 @@ public class InventoryUI : MonoBehaviour
             {
                 CloseInventory();
             }
+        }
+
+        //avoid mouse stole button highlight
+        if (EventSystem.current.currentSelectedGameObject == null)
+        {
+            EventSystem.current.SetSelectedGameObject(lastSelected);
+        }
+        else
+        {
+            lastSelected = EventSystem.current.currentSelectedGameObject;
         }
     }
 

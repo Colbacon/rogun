@@ -4,6 +4,10 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
+  - dungeonTileMap: {instanceID: 0}
+  - debugTilemap: {instanceID: 0}
+  - dungeonTile: {fileID: 11400000, guid: fe853c953f75c774fbea8e571244cd2f, type: 2}
+  - debugtile: {fileID: 11400000, guid: a79ef9f0c368709499c38790d8bc2698, type: 2}
   - _void: {fileID: 4549808191876422352, guid: d1001cb06e746d14b8b9278507bc3bbf, type: 3}
   - floor: {fileID: 2853706433295622151, guid: 446348c10aaed0e418dfa922e74445ab, type: 3}
   - wall: {fileID: 3262697631214554028, guid: 586d16c1bc2099b458c7916d73214ccb, type: 3}
@@ -27,6 +31,7 @@ MonoImporter:
       type: 3}
   - player: {fileID: 935485557199254649, guid: 20999bb186c915e43be93b38a67d066e, type: 3}
   - enemy: {fileID: 5644467325131133773, guid: c124855430e43e140840ca01ad4a0d62, type: 3}
+  - item: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
         {
             //Vector3 desiredPosition = player.position + offset;
             //Vector3 smoothedPosition = Vector3.Slerp(transform.position, desiredPosition, smoothSpeed);
-            //transform.position = desiredPosition;
+            //transform.position = smoothedPosition;
             transform.position = player.position + offset;
         }
     }
