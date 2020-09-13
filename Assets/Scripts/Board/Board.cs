@@ -9,9 +9,12 @@ public class Board : MonoBehaviour
 {
 
     public Tilemap dungeonTileMap;
+    public Tilemap dungeonObjectsTileMap;
     public Tilemap debugTilemap;
     public TileBase dungeonTile;
-    public TileBase debugtile;
+    public TileBase debugTile;
+    public TileBase torchTile;
+    public TileBase torchSideTile;
     
     //bidimensional array representing the board
     public Tile[][] board;
@@ -53,6 +56,7 @@ public class Board : MonoBehaviour
     {
         boardTransform = new GameObject("Board").transform;
         dungeonTileMap = GameObject.Find("Dungeon").GetComponent<Tilemap>();
+        dungeonObjectsTileMap = GameObject.Find("Dungeon_objects").GetComponent<Tilemap>();
         debugTilemap = GameObject.Find("Debug").GetComponent<Tilemap>();
 
         InitTileMap();
@@ -64,7 +68,35 @@ public class Board : MonoBehaviour
         //InstantiateTiles();
 
         PlaceObjectsOnBoard();
+        PlaceDecorationOnBoard();
         //DebugPlaceObjectsOnBoard();
+    }
+
+    private void PlaceDecorationOnBoard()
+    {
+
+        Room room = rooms[Random.Range(0, rooms.Count)];
+        for (int i = 0; i < 2; i++)
+        {
+            Tile tile = room.GetRandomDownWallTile();
+            Vector3 pos = tile.GetPosition();
+            dungeonObjectsTileMap.SetTile(new Vector3Int((int)pos.x, (int)pos.y, 0), torchTile);
+        }
+
+        for (int i = 0; i < 2; i++)
+        {
+            Tile tile = room.GetRandomRightWallTile();
+            Vector3 pos = tile.GetPosition();
+            dungeonObjectsTileMap.SetTile(new Vector3Int((int)pos.x + 1, (int)pos.y, 0), torchSideTile);
+        }
+
+        for (int i = 0; i < 2; i++)
+        {
+            Tile tile = room.GetRandomLeftWallTile();
+            Vector3 pos = tile.GetPosition();
+            dungeonObjectsTileMap.SetTile(new Vector3Int((int)pos.x - 1, (int)pos.y, 0), torchSideTile);
+            RotateTile(dungeonObjectsTileMap, new Vector3(pos.x - 1, pos.y, 0f), 0f, true);
+        }
     }
 
     private void LoadTilesFromTileMap()
@@ -112,7 +144,7 @@ public class Board : MonoBehaviour
         */
         //room = rooms[Random.Range(0, rooms.Count)];
 
-        
+        /*
         room = rooms[Random.Range(0, rooms.Count)];
         tile = room.GetRandomFloorTile();
         tile.isOccupied = true;
@@ -127,7 +159,7 @@ public class Board : MonoBehaviour
         tile = room.GetRandomFloorTile();
         tile.isOccupied = true;
         Instantiate(enemy, tile.GetPosition(), Quaternion.identity);
-        
+        */
         room = rooms[Random.Range(0, rooms.Count)];
         tile = room.GetRandomFloorTile();
         Instantiate(ladder, tile.GetPosition(), Quaternion.identity);
@@ -285,18 +317,32 @@ public class Board : MonoBehaviour
 
     private void AddRoomsTiles()
     {
+        Tile tile;
+
         foreach (Room room in rooms)
         {
-            room.floorTiles = new List<Tile>();
-
             for (int x = 0; x < room.width; x++)
             {
                 for (int y = 0; y < room.height; y++)
                 {
-                    //add floor tiles
-                    if(board[room.x + x][room.y + y].tileType == TileType.FLOOR)
+                    tile = board[room.x + x][room.y + y];
+                    switch (tile.tileType)
                     {
-                        room.floorTiles.Add(board[room.x + x][room.y + y]);
+                        case TileType.FLOOR:
+                            room.floorTiles.Add(tile);
+                            break;
+                        case TileType.WALL_UP:
+                            room.upWallTiles.Add(tile);
+                            break;
+                        case TileType.WALL_DOWN:
+                            room.downWallTiles.Add(tile);
+                            break;
+                        case TileType.WALL_LEFT:
+                            room.leftWallTiles.Add(tile);
+                            break;
+                        case TileType.WALL_RIGHT:
+                            room.rightWallTiles.Add(tile);
+                            break;
                     }
                 }
             }
@@ -474,6 +520,13 @@ public class Board : MonoBehaviour
                 instance.transform.SetParent(boardTransform);
             }
         }
+    }
+
+    private void RotateTile(Tilemap tileMap, Vector3 position, float rotation, bool flip)
+    {
+        Vector3 scaling = !flip ? Vector3.one : new Vector3(-1, 1, 1);
+        Matrix4x4 matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, rotation), scaling);
+        tileMap.SetTransformMatrix(new Vector3Int((int) position.x, (int) position.y, 0), matrix);
     }
 
     public Tile GetTile(Vector3 position)

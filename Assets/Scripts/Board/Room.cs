@@ -9,8 +9,13 @@ public class Room
     public int width;
     public int height;
 
-    public List<Tile> floorTiles;
-    public List<Tile> borderTiles;
+    //for placing units, items and decorations
+    public List<Tile> floorTiles = new List<Tile>();
+    //for placing decoration
+    public List<Tile> upWallTiles = new List<Tile>();
+    public List<Tile> downWallTiles = new List<Tile>();
+    public List<Tile> leftWallTiles = new List<Tile>();
+    public List<Tile> rightWallTiles = new List<Tile>();
 
     public Room(int x, int y, int width, int height)
     {
@@ -57,5 +62,34 @@ public class Room
         return tile;
     }
 
+    public Tile GetRandomDownWallTile()
+    {
+        Tile tile = downWallTiles[Random.Range(0, downWallTiles.Count)];
+
+        //remove from list to avoid get one tile more than once (p.e place units or items)
+        downWallTiles.Remove(tile);
+
+        return tile;
+    }
+
+    public Tile GetRandomLeftWallTile()
+    {
+        Tile tile = leftWallTiles[Random.Range(0, leftWallTiles.Count)];
+
+        //remove from list to avoid get one tile more than once (p.e place units or items)
+        leftWallTiles.Remove(tile);
+
+        return tile;
+    }
+
+    public Tile GetRandomRightWallTile()
+    {
+        Tile tile = rightWallTiles[Random.Range(0, rightWallTiles.Count)];
+
+        //remove from list to avoid get one tile more than once (p.e place units or items)
+        rightWallTiles.Remove(tile);
+
+        return tile;
+    }
 }
 
