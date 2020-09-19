@@ -41,15 +41,16 @@ public class Room
     /// </summary>
     public float GetDistanceToRoom(Room room)
     {
-        return Vector2.Distance(GetCenterPoint(), room.GetCenterPoint());
+        //return Vector2.Distance(GetCenterPoint(), room.GetCenterPoint());
+        return Vector3Int.Distance(GetCenterPoint(), room.GetCenterPoint());
     }
 
     /// <summary>
     /// Get room's center point.
     /// </summary>
-    public Vector2 GetCenterPoint()
+    public Vector3Int GetCenterPoint()
     {
-        return new Vector2(Mathf.Floor(x + (x + width)) / 2, Mathf.Floor(y + (y + height)) / 2);
+        return new Vector3Int(Mathf.FloorToInt(x + (x + width)) / 2, Mathf.FloorToInt(y + (y + height)) / 2, 0);
     }
 
     public Tile GetRandomFloorTile()

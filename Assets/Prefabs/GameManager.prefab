@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4af61786585fb01489a4254a2ad958dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startLevelDelay: 2
+  levelTransitionDelay: 2
   turnDelay: 0.1
   boardScript: {fileID: 0}
   playersTurn: 1
@@ -61,16 +61,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dungeonTileMap: {fileID: 0}
-  dungeonDecorationTileMap: {fileID: 0}
+  dungeonObjectsTileMap: {fileID: 0}
   debugTilemap: {fileID: 0}
   dungeonTile: {fileID: 11400000, guid: fe853c953f75c774fbea8e571244cd2f, type: 2}
   debugTile: {fileID: 0}
   torchTile: {fileID: 11400000, guid: f265162e0ef0caf45aaae644eef2f728, type: 2}
   torchSideTile: {fileID: 11400000, guid: ab2cc454641630340be2bc85764b4edf, type: 2}
-  roomsMinWidth: 10
-  roomsMaxWidth: 10
-  roomsMinHeight: 10
-  roomsMaxHeight: 10
+  downWallElements:
+  - {fileID: 11400000, guid: f265162e0ef0caf45aaae644eef2f728, type: 2}
+  - {fileID: 11400000, guid: e4281319bef9021489987d8e06f0c646, type: 2}
+  - {fileID: 11400000, guid: cc3540f7c0003da48be314a4981503cc, type: 2}
+  sideWallElements:
+  - {fileID: 11400000, guid: ab2cc454641630340be2bc85764b4edf, type: 2}
+  floorElements:
+  - {fileID: 11400000, guid: 716ddc76255209341b5477e569572b2d, type: 2}
+  - {fileID: 11400000, guid: ca17d1a29600c5343b4e8011b1ea99ce, type: 2}
+  - {fileID: 11400000, guid: f6564b70fc6458a44be2c0ddfc1adf68, type: 2}
+  - {fileID: 11400000, guid: 5939e5c118bb6314f91b49b1ebedcf01, type: 2}
+  - {fileID: 11400000, guid: 9bcabcf2ca1160d48a8e05729cab9717, type: 2}
+  roomsMinWidth: 13
+  roomsMaxWidth: 13
+  roomsMinHeight: 13
+  roomsMaxHeight: 13
   _void: {fileID: 4549808191876422352, guid: d1001cb06e746d14b8b9278507bc3bbf, type: 3}
   floor: {fileID: 2853706433295622151, guid: 446348c10aaed0e418dfa922e74445ab, type: 3}
   wall: {fileID: 3262697631214554028, guid: 586d16c1bc2099b458c7916d73214ccb, type: 3}
@@ -91,7 +103,11 @@ MonoBehaviour:
     type: 3}
   ladder: {fileID: 2701800027187441370, guid: fc8880987f4f8064295d04ddc367b5f5, type: 3}
   player: {fileID: 935485557199254649, guid: 20999bb186c915e43be93b38a67d066e, type: 3}
-  enemy: {fileID: 5644467325131133773, guid: c124855430e43e140840ca01ad4a0d62, type: 3}
+  enemy: {fileID: 6302754930493205378, guid: f1a5176cb2eec674b863ca2b9686a7c4, type: 3}
+  pawn: {fileID: 18137985132913733, guid: 1954fc0736acd764db80175d6e3f43eb, type: 3}
+  patroller: {fileID: 6302754930493205378, guid: f1a5176cb2eec674b863ca2b9686a7c4,
+    type: 3}
+  chaser: {fileID: 5095126075069616931, guid: 070a5c5cf5dcd694ca7eaded303f6740, type: 3}
   item: {fileID: 5040778527403016942, guid: 7f0a22f11d2881447a84c66ba4695452, type: 3}
   commonItems:
   - {fileID: 11400000, guid: 36601dd3f38b46d4d821b1f9a74c9622, type: 2}

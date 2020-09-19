@@ -6,7 +6,7 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
-    public float startLevelDelay= 2f;
+    public float levelTransitionDelay= 2f;
     public float turnDelay = 0.1f;
     public Board boardScript;
     public static GameManager instance = null;
@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     private int level = 0;
     private List<Enemy> enemies;
     private bool enemiesMoving;
-    private bool doingSetup;
+    private bool doingLevelSetup;
 
     void Awake()
     {
@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 
         AudioManager.instance.Play("Theme");
 
+
         enemies = new List<Enemy>();
         boardScript = GetComponent<Board>();
     }
@@ -48,17 +49,12 @@ public class GameManager : MonoBehaviour
 
     void InitGame()
     {
-        Debug.Log("Setting up level " + level + "- GetInstanceID: " + gameObject.GetInstanceID());
+        //Debug.Log("Setting up level " + level + "- GetInstanceID: " + gameObject.GetInstanceID());
 
-        doingSetup = true;
-        
-        levelImage = GameObject.Find("LevelImage");
-        levelText = GameObject.Find("LevelText").GetComponent<Text>();
-        levelText.text = "Level " + level;
-        levelImage.SetActive(true);
-        
-        Invoke("HideLevelImage", startLevelDelay);
-        
+        doingLevelSetup = true;
+
+        ShowLevelTransition();
+
         enemies.Clear();
 
         var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -70,16 +66,26 @@ public class GameManager : MonoBehaviour
         Debug.LogWarning("Board setup time: " + elapsedMs);
     }
 
-    void HideLevelImage()
+    void ShowLevelTransition()
+    {
+        levelImage = GameObject.Find("LevelImage");
+        levelText = GameObject.Find("LevelText").GetComponent<Text>();
+        levelText.text = "Level " + level;
+        levelImage.SetActive(true);
+
+        Invoke("HideLevelTransition", levelTransitionDelay);
+    }
+
+    void HideLevelTransition()
     {
         levelImage.SetActive(false);
-        doingSetup = false;
+        doingLevelSetup = false;
     }
 
     private void Update()
     {
         
-        if (playersTurn || enemiesMoving || doingSetup)
+        if (playersTurn || enemiesMoving || doingLevelSetup)
             return;
         StartCoroutine(EnemiesTurn());
         
@@ -128,8 +134,10 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        //TODO: GameOver transition
         AudioManager.instance.Stop("Theme");
+
+        levelText.text = "GAME OVER";
+        levelImage.SetActive(true);
 
         //Undo dontDestroyOnLoad, to destroy automatically these gameObjects when change to main menu scene
         //https://answers.unity.com/questions/1491238/undo-dontdestroyonload.html
@@ -137,7 +145,13 @@ public class GameManager : MonoBehaviour
         SceneManager.MoveGameObjectToScene(Player.instance.gameObject, SceneManager.GetActiveScene());
         SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
 
+        Invoke("LoadMainMenu", levelTransitionDelay);   
+    }
+
+    private void LoadMainMenu()
+    {
         SceneManager.sceneLoaded -= OnSceneLoaded; //unsuscribe OnSceneLoaded Callback from sceneLoaded event
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1, LoadSceneMode.Single); //Load main menu scene
     }
+
 }

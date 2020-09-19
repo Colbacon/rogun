@@ -14,7 +14,8 @@ public enum TileType
     WALL_CORNER_LARGE_LEFT,
     WALL_CORNER_SHORT_RIGHT,
     WALL_CORNER_SHORT_LEFT,
-    LADDER
+    LADDER,
+    OBSTACLE
 }
 public class Tile
 {
@@ -60,6 +61,11 @@ public class Tile
         return tileType == TileType.FLOOR || tileType == TileType.LADDER;
     }
 
+    public bool IsIsolated()
+    {
+        return reachableNeighbours == null;
+    }
+
     /// <summary>
     /// Check if this tile is a wall.
     /// </summary>
@@ -79,8 +85,8 @@ public class Tile
         return (Mathf.Abs(this.x - target.x) + Mathf.Abs(this.y - target.y));
     }
 
-    public Vector3 GetPosition()
+    public Vector3Int GetPosition()
     {
-        return new Vector3(x, y, 0f);
+        return new Vector3Int(x, y, 0);
     }
 }

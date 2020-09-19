@@ -9,7 +9,7 @@ public static class Pathfinding
     /// The heuristic function used is the distance between two tiles.
     /// https://en.wikipedia.org/wiki/A*_search_algorithm
     /// </summary>
-    public static List<Tile> AStartSorthestPath(Tile start, Tile end)
+    public static List<Tile> AStartSorthestPath(Tile start, Tile end, bool ignoreOccupiedTiles = false)
     {
         //set of discovered  nodes that may need to be (re-)expanded
         //the nodes are ordered by f value associated to the node.
@@ -35,7 +35,7 @@ public static class Pathfinding
                 
             foreach (Tile neighbour in current.reachableNeighbours)
             {
-                if (neighbour.isOccupied && neighbour != end) //end tile tipically will be occupied by player
+                if ((!ignoreOccupiedTiles && neighbour.isOccupied) && neighbour != end) //end tile tipically will be occupied by player
                     continue;
 
                 tentativeGScore = gScore[current] + 1;

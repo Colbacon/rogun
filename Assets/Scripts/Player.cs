@@ -44,6 +44,7 @@ public class Player : Character
 
         if (Input.GetKeyDown(KeyCode.Space)){
             //TODO: move animation and sfx inside parent method
+            TakeDamage(2);
             animator.SetTrigger("Attack");
             AudioManager.instance.Play("PlayerAttack");
             Attack <Enemy>();
@@ -92,7 +93,7 @@ public class Player : Character
     {
         if(collider.tag == "Ladder")
         {
-            GameManager.instance.playersTurn = false;
+            enabled = false; //avoid to move player
             Invoke("RestartScene", restartLevelDelay);
         }
 
@@ -107,6 +108,7 @@ public class Player : Character
 
     private void RestartScene()
     {
+        enabled = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
 }

@@ -28,6 +28,7 @@ public abstract class Character : MonoBehaviour
         animator = GetComponent<Animator>();
         inverseMoveTime = 1f / moveTime;
         healthbar.SetMaxHealth(maxHealthPoints);
+        GameManager.instance.boardScript.SetOccupiedTile(transform.position, true);
         isMoving = false;
     }
 
@@ -62,6 +63,7 @@ public abstract class Character : MonoBehaviour
 
     protected virtual IEnumerator SmoothMovement(Vector3 targetPosition)
     {
+        var watch = System.Diagnostics.Stopwatch.StartNew();
         isMoving = true;
         UpdateAnimatorWalk(direction);
 
@@ -69,7 +71,7 @@ public abstract class Character : MonoBehaviour
         while (sqrRemainingDistance > float.Epsilon) //epsilon is almost 0
         {
             
-            Vector3 position = Vector3.MoveTowards(rigidBody.position, targetPosition, inverseMoveTime * Time.deltaTime);
+            Vector3 position = Vector3.MoveTowards(rigidBody.position, targetPosition, inverseMoveTime * Time.fixedDeltaTime);
             rigidBody.MovePosition(position);
             
             sqrRemainingDistance = (transform.position - targetPosition).sqrMagnitude;
@@ -81,6 +83,9 @@ public abstract class Character : MonoBehaviour
 
         UpdateAnimatorWalk(Vector3.zero);
         isMoving = false;
+        watch.Stop();
+        var elapsedMs = watch.ElapsedMilliseconds;
+        //Debug.Log("move time: " + elapsedMs + " delta: "+ Time.fixedDeltaTime);
     }
 
     protected void TelePort(Vector3 targetPosition, Vector3 direction)
