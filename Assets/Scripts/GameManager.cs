@@ -95,20 +95,19 @@ public class GameManager : MonoBehaviour
     {
         enemiesMoving = true;
 
-        yield return new WaitForSeconds(Player.instance.moveTime + turnDelay);
+        yield return new WaitForSeconds(Player.instance.moveTime);
 
         for (int i = 0; i < enemies.Count; i++)
         {
             if (IsOutOfCamera(enemies[i].transform))
             {
                 enemies[i].EnemyTurn(true);
-                //Debug.LogWarning(enemies[i].transform.position + " is out of camera");
-                yield return new WaitForSeconds(0.05f);
+                //yield return new WaitForSeconds(0.05f);
             }
             else
             {
                 enemies[i].EnemyTurn(false);
-                yield return new WaitForSeconds(enemies[i].moveTime + turnDelay);
+                yield return new WaitForSeconds(enemies[i].moveTime);
             }
         }
 

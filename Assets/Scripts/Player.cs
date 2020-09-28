@@ -44,7 +44,6 @@ public class Player : Character
 
         if (Input.GetKeyDown(KeyCode.Space)){
             //TODO: move animation and sfx inside parent method
-            TakeDamage(2);
             animator.SetTrigger("Attack");
             AudioManager.instance.Play("PlayerAttack");
             Attack <Enemy>();

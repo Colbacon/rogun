@@ -9,16 +9,16 @@ public static class Pathfinding
     /// The heuristic function used is the distance between two tiles.
     /// https://en.wikipedia.org/wiki/A*_search_algorithm
     /// </summary>
-    public static List<Tile> AStartSorthestPath(Tile start, Tile end, bool ignoreOccupiedTiles = false)
+    public static List<_Tile> AStartSorthestPath(_Tile start, _Tile end, bool ignoreOccupiedTiles = false)
     {
         //set of discovered  nodes that may need to be (re-)expanded
         //the nodes are ordered by f value associated to the node.
-        SimplePriorityQueue<Tile> openSet = new SimplePriorityQueue<Tile>();
+        SimplePriorityQueue<_Tile> openSet = new SimplePriorityQueue<_Tile>();
         //for node n, cameFrom[n] is the node inmmediately preceding it on the cheapest path from start
-        Dictionary<Tile, Tile> cameFrom = new Dictionary<Tile, Tile>();
+        Dictionary<_Tile, _Tile> cameFrom = new Dictionary<_Tile, _Tile>();
         //for node n, gScore[n] is the cost of the cheapest path from start to n currently know.
-        Dictionary<Tile, float> gScore = new Dictionary<Tile, float>();
-        Tile current = null;
+        Dictionary<_Tile, float> gScore = new Dictionary<_Tile, float>();
+        _Tile current = null;
         float tentativeGScore;
         float f; //f(n) = g(n) + h(n)
 
@@ -33,7 +33,7 @@ public static class Pathfinding
             if (current == end)
                 break;
                 
-            foreach (Tile neighbour in current.reachableNeighbours)
+            foreach (_Tile neighbour in current.reachableNeighbours)
             {
                 if ((!ignoreOccupiedTiles && neighbour.isOccupied) && neighbour != end) //end tile tipically will be occupied by player
                     continue;
@@ -64,7 +64,7 @@ public static class Pathfinding
             return null;
 
         //reconstruct the solution path
-        List<Tile> path = new List<Tile>();
+        List<_Tile> path = new List<_Tile>();
 
         while (current != null)
         {

@@ -21,11 +21,11 @@ public class Enemy : Character
 
     protected Vector3 GetNextPositionPathfinding(Vector3 start, Vector3 end, bool ignoreOccupiedTiles = false)
     {
-        Tile startTile = GameManager.instance.boardScript.GetTile(start);
-        Tile endTile = GameManager.instance.boardScript.GetTile(end);
+        _Tile startTile = GameManager.instance.boardScript.GetTile(start);
+        _Tile endTile = GameManager.instance.boardScript.GetTile(end);
         //Debug.Log(player.position);
 
-        List<Tile> path = Pathfinding.AStartSorthestPath(startTile, endTile, ignoreOccupiedTiles);
+        List<_Tile> path = Pathfinding.AStartSorthestPath(startTile, endTile, ignoreOccupiedTiles);
 
         if (path == null) //path to player not found, don't perform action
             return Vector3.zero;

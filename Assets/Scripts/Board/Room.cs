@@ -10,12 +10,12 @@ public class Room
     public int height;
 
     //for placing units, items and decorations
-    public List<Tile> floorTiles = new List<Tile>();
+    public List<_Tile> floorTiles = new List<_Tile>();
     //for placing decoration
-    public List<Tile> upWallTiles = new List<Tile>();
-    public List<Tile> downWallTiles = new List<Tile>();
-    public List<Tile> leftWallTiles = new List<Tile>();
-    public List<Tile> rightWallTiles = new List<Tile>();
+    public List<_Tile> upWallTiles = new List<_Tile>();
+    public List<_Tile> downWallTiles = new List<_Tile>();
+    public List<_Tile> leftWallTiles = new List<_Tile>();
+    public List<_Tile> rightWallTiles = new List<_Tile>();
 
     public Room(int x, int y, int width, int height)
     {
@@ -53,9 +53,9 @@ public class Room
         return new Vector3Int(Mathf.FloorToInt(x + (x + width)) / 2, Mathf.FloorToInt(y + (y + height)) / 2, 0);
     }
 
-    public Tile GetRandomFloorTile()
+    public _Tile GetRandomFloorTile()
     {
-        Tile tile = floorTiles[Random.Range(0, floorTiles.Count)];
+        _Tile tile = floorTiles[Random.Range(0, floorTiles.Count)];
         
         //remove from list to avoid get one tile more than once (p.e place units or items)
         floorTiles.Remove(tile);
@@ -63,9 +63,9 @@ public class Room
         return tile;
     }
 
-    public Tile GetRandomDownWallTile()
+    public _Tile GetRandomDownWallTile()
     {
-        Tile tile = downWallTiles[Random.Range(0, downWallTiles.Count)];
+        _Tile tile = downWallTiles[Random.Range(0, downWallTiles.Count)];
 
         //remove from list to avoid get one tile more than once (p.e place units or items)
         downWallTiles.Remove(tile);
@@ -73,9 +73,9 @@ public class Room
         return tile;
     }
 
-    public Tile GetRandomLeftWallTile()
+    public _Tile GetRandomLeftWallTile()
     {
-        Tile tile = leftWallTiles[Random.Range(0, leftWallTiles.Count)];
+        _Tile tile = leftWallTiles[Random.Range(0, leftWallTiles.Count)];
 
         //remove from list to avoid get one tile more than once (p.e place units or items)
         leftWallTiles.Remove(tile);
@@ -83,9 +83,9 @@ public class Room
         return tile;
     }
 
-    public Tile GetRandomRightWallTile()
+    public _Tile GetRandomRightWallTile()
     {
-        Tile tile = rightWallTiles[Random.Range(0, rightWallTiles.Count)];
+        _Tile tile = rightWallTiles[Random.Range(0, rightWallTiles.Count)];
 
         //remove from list to avoid get one tile more than once (p.e place units or items)
         rightWallTiles.Remove(tile);

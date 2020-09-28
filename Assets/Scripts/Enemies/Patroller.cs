@@ -11,7 +11,7 @@ public class Patroller : Enemy
     protected override void Start()
     {
         position1 = Vector3Int.RoundToInt(transform.position);
-        Tile tile = GameManager.instance.boardScript.GetRandomFloorTile();
+        _Tile tile = GameManager.instance.boardScript.GetRandomFloorTile();
         position2 = tile.GetPosition();
         patrolTargetPosition = position2;
 

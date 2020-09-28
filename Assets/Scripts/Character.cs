@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 
 public abstract class Character : MonoBehaviour
 {
@@ -86,6 +86,7 @@ public abstract class Character : MonoBehaviour
         watch.Stop();
         var elapsedMs = watch.ElapsedMilliseconds;
         //Debug.Log("move time: " + elapsedMs + " delta: "+ Time.fixedDeltaTime);
+        //GameObject.Find("MoveTimeText").GetComponent<Text>().text= "MOVETIME: "+ elapsedMs;
     }
 
     protected void TelePort(Vector3 targetPosition, Vector3 direction)

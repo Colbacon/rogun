@@ -521,4 +521,4 @@ MonoBehaviour:
   collisionLayer:
     serializedVersion: 2
     m_Bits: 256
-  moveTime: 0.2
+  moveTime: 0.4

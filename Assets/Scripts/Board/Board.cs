@@ -17,15 +17,17 @@ public class Board : MonoBehaviour
     public TileBase[] downWallElements;
     public TileBase[] sideWallElements;
     public TileBase[] floorElements;
+    public TileBase probeTile;
+    public TileBase probeAnimTile;
     
     //bidimensional array representing the board
-    public Tile[][] board;
+    public _Tile[][] board;
 
-    public static int rows = 100;
-    public static int columns = 100;
+    public static int rows = 50;
+    public static int columns = 50;
     
     //number of rooms to attempt to place on board
-    public static int roomsToAttemp = 30;
+    public static int roomsToAttemp = 3;
     public int roomsMinWidth;
     public int roomsMaxWidth;
     public int roomsMinHeight;
@@ -72,14 +74,12 @@ public class Board : MonoBehaviour
         CreateRoomsInnerWalls();
         LoadTilesFromTileMap();
         AddRoomsTiles();
-        AddTilesNeighbours();
-        //InstantiateTiles();
-
-        
-        
         PlaceObjectsOnBoard();
+        
+
+        AddTilesNeighbours();
         PlaceUnitsAndItemsOnBoard();
-        //DebugPlaceObjectsOnBoard();
+
     }
 
 
@@ -93,33 +93,42 @@ public class Board : MonoBehaviour
             maxObjects = Mathf.RoundToInt(room.rightWallTiles.Count * 0.2f);
             for (int i = 0; i < maxObjects; i++)
             {
-                Tile tile = room.GetRandomRightWallTile();
+                _Tile tile = room.GetRandomRightWallTile();
                 objects = sideWallElements[Random.Range(0, sideWallElements.Count())];
-                PlaceTile(dungeonObjectsTileMap, objects, tile.GetPosition() + Vector3Int.right, false, false);
+                PlaceObjectTile(dungeonObjectsTileMap, objects, tile.GetPosition() + Vector3Int.right, false, false);
             }
 
             maxObjects = Mathf.RoundToInt(room.leftWallTiles.Count * 0.2f);
             for (int i = 0; i < maxObjects; i++)
             {
-                Tile tile = room.GetRandomLeftWallTile();
+                _Tile tile = room.GetRandomLeftWallTile();
                 objects = sideWallElements[Random.Range(0, sideWallElements.Count())];
-                PlaceTile(dungeonObjectsTileMap, objects, tile.GetPosition() + Vector3Int.left, true, false);
+                PlaceObjectTile(dungeonObjectsTileMap, objects, tile.GetPosition() + Vector3Int.left, true, false);
             }
 
             maxObjects = Mathf.RoundToInt(room.downWallTiles.Count * 0.2f);
             for (int i = 0; i < maxObjects; i++)
             {
-                Tile tile = room.GetRandomDownWallTile();
+                _Tile tile = room.GetRandomDownWallTile();
                 objects = downWallElements[Random.Range(0, downWallElements.Count())];
-                PlaceTile(dungeonObjectsTileMap, objects, tile.GetPosition(), false, false);
+                PlaceObjectTile(dungeonObjectsTileMap, objects, tile.GetPosition(), false, false);
             }
+
 
             maxObjects = Mathf.RoundToInt(room.floorTiles.Count * 0.04f);
             for (int i = 0; i < maxObjects; i++)
             {
-                Tile tile = room.GetRandomFloorTile();
+                _Tile tile = room.GetRandomFloorTile();
                 objects = floorElements[Random.Range(0, floorElements.Count())];
-                PlaceTile(dungeonObjectsTileMap, objects, tile.GetPosition(), false, false);
+
+                bool obstacle = IsObstacle(objects);
+                //UnityEngine.Tilemaps.Tile til2 = (Tile)objects;
+                //Debug.Log(dungeonObjectsTileMap.GetColliderType(tile.GetPosition()) + ": " + tile.GetPosition());
+                //Debug.Log("coll type: "+ til2.colliderType);
+
+                if (obstacle)
+                    debugTilemap.SetTile(tile.GetPosition(), debugTile);
+                PlaceObjectTile(dungeonObjectsTileMap, objects, tile.GetPosition(), false, IsObstacle(objects));
             }
         }
         //redrawing dungeonObjectsTilemap to null on corridors, avoiding objects obstacilize room entrance
@@ -131,8 +140,25 @@ public class Board : MonoBehaviour
         }
     }
 
-    
+    private bool IsObstacle(TileBase tile)
+    {
+        bool obstacle = false;
 
+        System.Type type = tile.GetType();
+        if (type.Equals(typeof(Tile)))
+        {
+            Tile auxTile = (Tile)tile;
+            obstacle = auxTile.colliderType.Equals(Tile.ColliderType.Sprite);
+        }
+        if (type.Equals(typeof(AnimatedTile)))
+        {
+            AnimatedTile auxTile = (AnimatedTile)tile;
+            obstacle = auxTile.m_TileColliderType.Equals(Tile.ColliderType.Sprite);
+        }
+
+        return obstacle;
+    }
+    
     private void PlaceUnitsAndItemsOnBoard()
     {
 
@@ -143,7 +169,7 @@ public class Board : MonoBehaviour
         else
         {
             Room room = rooms[Random.Range(0, rooms.Count)];
-            Tile tile = room.GetRandomFloorTile();
+            _Tile tile = room.GetRandomFloorTile();
             while (tile.IsIsolated())
             {
                 tile = room.GetRandomFloorTile();
@@ -152,8 +178,8 @@ public class Board : MonoBehaviour
         }
 
 
-        InstantiateGameObject(patroller);
-        InstantiateGameObject(patroller);
+        //InstantiateGameObject(patroller);
+        InstantiateGameObject(chaser);
         InstantiateGameObject(patroller);
 
 
@@ -163,7 +189,7 @@ public class Board : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             Room room = rooms[Random.Range(0, rooms.Count)];
-            Tile tile = room.GetRandomFloorTile();
+            _Tile tile = room.GetRandomFloorTile();
             itemData.SetItem(commonItems[Random.Range(0, commonItems.Length)]);
             Instantiate(item, tile.GetPosition(), Quaternion.identity);
         }
@@ -171,7 +197,7 @@ public class Board : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             Room room = rooms[Random.Range(0, rooms.Count)];
-            Tile tile = room.GetRandomFloorTile();
+            _Tile tile = room.GetRandomFloorTile();
             itemData.SetItem(rareItems[Random.Range(0, rareItems.Length)]);
             Instantiate(item, tile.GetPosition(), Quaternion.identity);
         }
@@ -181,12 +207,13 @@ public class Board : MonoBehaviour
     private void InstantiateGameObject(GameObject gameObject)
     {
         Room room = rooms[Random.Range(0, rooms.Count)];
-        Tile tile = room.GetRandomFloorTile();
+        _Tile tile = room.GetRandomFloorTile();
         while (tile.IsIsolated())
         {
             tile = room.GetRandomFloorTile();
         }
         Instantiate(gameObject, tile.GetPosition(), Quaternion.identity);
+        //gameObject.transform.SetParent(boardTransform);
     }
 
     /// <summary>
@@ -194,17 +221,17 @@ public class Board : MonoBehaviour
     /// </summary>
     private void InitTileMap()
     {
-        board = new Tile[columns][];
+        board = new _Tile[columns][];
         for (int i = 0; i < board.Length; i++)
         {
-            board[i] = new Tile[rows];
+            board[i] = new _Tile[rows];
         }
 
         for (int x = 0; x < columns; x++)
         {
             for (int y = 0; y < rows; y++)
             {
-                board[x][y] = new Tile(x, y, TileType.VOID);
+                board[x][y] = new _Tile(x, y, TileType.VOID);
             }
         }
     }
@@ -353,7 +380,7 @@ public class Board : MonoBehaviour
 
     private void AddRoomsTiles()
     {
-        Tile tile;
+        _Tile tile;
 
         foreach (Room room in rooms)
         {
@@ -416,7 +443,7 @@ public class Board : MonoBehaviour
         int extraEdges = Mathf.CeilToInt(rooms.Count * 0.30f);
         int count = 0;
         
-        while(count <= extraEdges)
+        while(count <= extraEdges && edges.Count > 0)
         {
             edge = edges[Random.Range(0, edges.Count)];
             if (!corridors.Contains(edge))
@@ -424,6 +451,7 @@ public class Board : MonoBehaviour
                 corridors.Add(edge);
                 count++;
             }
+            edges.Remove(edge);
         }
         
         for (int i = 0; i < corridors.Count; i++)
@@ -454,6 +482,9 @@ public class Board : MonoBehaviour
             }
             Vector3Int currentPosition = new Vector3Int(r1x, r1y, 0);
             tilemap.SetTile(currentPosition, tile);
+            //temporal, hacerlo bien
+            GetTile(currentPosition).SetTileType(TileType.FLOOR);
+            debugTilemap.SetTile(currentPosition, null);
             if(drawAdjancentTiles)
                 DrawAdjacentPositions(tilemap, tile, currentPosition);
         }
@@ -477,7 +508,7 @@ public class Board : MonoBehaviour
     /// </summary>
     private void AddTilesNeighbours()
     {
-        List<Tile> reachableNeighbours;
+        List<_Tile> reachableNeighbours;
 
         for (int x = 0; x < columns; x++)
         {
@@ -486,7 +517,7 @@ public class Board : MonoBehaviour
                 if (!board[x][y].IsReachable())
                     continue;
 
-                reachableNeighbours = new List<Tile>();
+                reachableNeighbours = new List<_Tile>();
 
                 if (x > 0 && board[x - 1][y].IsReachable()) //left neighbour
                     reachableNeighbours.Add(board[x - 1][y]);
@@ -557,13 +588,18 @@ public class Board : MonoBehaviour
         }
     }
 
-    private void PlaceTile(Tilemap tileMap, TileBase tile, Vector3Int position, bool flip, bool obstacle)
+    private void PlaceObjectTile(Tilemap tileMap, TileBase tile, Vector3Int position, bool flip, bool obstacle)
     {
         tileMap.SetTile(position, tile);
         if (flip)
+        {
             UpdateTileTransform(tileMap, position, 0f, true);
+        }      
         if (obstacle)
+        {
             GetTile(position).SetTileType(TileType.OBSTACLE);
+            tileMap.SetColliderType(position, Tile.ColliderType.Sprite);
+        }
     }
 
     private void UpdateTileTransform(Tilemap tileMap, Vector3 position, float rotation, bool flip)
@@ -573,7 +609,7 @@ public class Board : MonoBehaviour
         tileMap.SetTransformMatrix(Vector3Int.RoundToInt(position), matrix);
     }
 
-    public Tile GetTile(Vector3 position)
+    public _Tile GetTile(Vector3 position)
     {
         int x = Mathf.RoundToInt(position.x);
         int y = Mathf.RoundToInt(position.y);
@@ -581,7 +617,7 @@ public class Board : MonoBehaviour
     }
 
     //TODO: control if there is no more floortiles in room
-    public Tile GetRandomFloorTile()
+    public _Tile GetRandomFloorTile()
     {
         Room room = rooms[Random.Range(0, rooms.Count)];
         Debug.LogWarning(rooms.Count + " " + room);

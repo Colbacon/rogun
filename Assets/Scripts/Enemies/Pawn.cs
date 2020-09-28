@@ -17,7 +17,7 @@ public class Pawn : Enemy
 
         if (!IsTargetInRange(Vector3Int.RoundToInt(player.position), range))
         {
-            Tile tile = GameManager.instance.boardScript.GetTile(transform.position);
+            _Tile tile = GameManager.instance.boardScript.GetTile(transform.position);
             nextPosition = tile.reachableNeighbours[Random.Range(0, tile.reachableNeighbours.Count)].GetPosition();
         }
         else

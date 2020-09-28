@@ -17,7 +17,7 @@ public enum TileType
     LADDER,
     OBSTACLE
 }
-public class Tile
+public class _Tile
 {
     public int x;
     public int y;
@@ -27,9 +27,9 @@ public class Tile
     public bool isOccupied; //tile is coccupied by a character
 
     //list of neighbours tiles (up, down, right, top) where a character could pass
-    public List<Tile> reachableNeighbours;
+    public List<_Tile> reachableNeighbours;
 
-    public Tile(int x, int y, TileType tileType = TileType.VOID)
+    public _Tile(int x, int y, TileType tileType = TileType.VOID)
     {
         this.x = x;
         this.y = y;
@@ -48,7 +48,7 @@ public class Tile
     /// <summary>
     /// Set reachable neighbours tiles.
     /// </summary>
-    public void SetReachableNeighbours(List<Tile> reachableNeighbours)
+    public void SetReachableNeighbours(List<_Tile> reachableNeighbours)
     {
         this.reachableNeighbours = reachableNeighbours;
     }
@@ -80,7 +80,7 @@ public class Tile
     /// <summary>
     /// Calculate the distance between two tiles.
     /// </summary>
-    public float Distance(Tile target)
+    public float Distance(_Tile target)
     {
         return (Mathf.Abs(this.x - target.x) + Mathf.Abs(this.y - target.y));
     }

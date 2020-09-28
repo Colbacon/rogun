@@ -64,13 +64,11 @@ MonoBehaviour:
   dungeonObjectsTileMap: {fileID: 0}
   debugTilemap: {fileID: 0}
   dungeonTile: {fileID: 11400000, guid: fe853c953f75c774fbea8e571244cd2f, type: 2}
-  debugTile: {fileID: 0}
-  torchTile: {fileID: 11400000, guid: f265162e0ef0caf45aaae644eef2f728, type: 2}
-  torchSideTile: {fileID: 11400000, guid: ab2cc454641630340be2bc85764b4edf, type: 2}
+  debugTile: {fileID: 11400000, guid: a79ef9f0c368709499c38790d8bc2698, type: 2}
   downWallElements:
-  - {fileID: 11400000, guid: f265162e0ef0caf45aaae644eef2f728, type: 2}
-  - {fileID: 11400000, guid: e4281319bef9021489987d8e06f0c646, type: 2}
   - {fileID: 11400000, guid: cc3540f7c0003da48be314a4981503cc, type: 2}
+  - {fileID: 11400000, guid: e4281319bef9021489987d8e06f0c646, type: 2}
+  - {fileID: 11400000, guid: f265162e0ef0caf45aaae644eef2f728, type: 2}
   sideWallElements:
   - {fileID: 11400000, guid: ab2cc454641630340be2bc85764b4edf, type: 2}
   floorElements:
@@ -79,10 +77,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6564b70fc6458a44be2c0ddfc1adf68, type: 2}
   - {fileID: 11400000, guid: 5939e5c118bb6314f91b49b1ebedcf01, type: 2}
   - {fileID: 11400000, guid: 9bcabcf2ca1160d48a8e05729cab9717, type: 2}
-  roomsMinWidth: 13
-  roomsMaxWidth: 13
-  roomsMinHeight: 13
-  roomsMaxHeight: 13
+  probeTile: {fileID: 11400000, guid: 5939e5c118bb6314f91b49b1ebedcf01, type: 2}
+  probeAnimTile: {fileID: 11400000, guid: ca17d1a29600c5343b4e8011b1ea99ce, type: 2}
+  roomsMinWidth: 11
+  roomsMaxWidth: 15
+  roomsMinHeight: 11
+  roomsMaxHeight: 15
   _void: {fileID: 4549808191876422352, guid: d1001cb06e746d14b8b9278507bc3bbf, type: 3}
   floor: {fileID: 2853706433295622151, guid: 446348c10aaed0e418dfa922e74445ab, type: 3}
   wall: {fileID: 3262697631214554028, guid: 586d16c1bc2099b458c7916d73214ccb, type: 3}
